@@ -853,7 +853,22 @@ function pc_name($system_id = '') {
 }
 
 
-function add_points($member_id = 0,$earn_points = 0) {
+function updatePoints($member_id = 0,$point = 0) {
+  global $wpdb;
+  $member_table       =   $wpdb->prefix.'chaos_members';
+  $member_update      =   $wpdb->query("UPDATE {$member_table} SET `earned_points` = (`earned_points` + $points) WHERE `user_id` = $member_id");
+  balancePoints($member_id);
+}
+
+function balancePoints($member_id = 0) {
+  global $wpdb;
+  $member_table       =   $wpdb->prefix.'chaos_members';
+  $member_update      =   $wpdb->query("UPDATE {$member_table} SET `balance_points` = (`earned_points` - `redeem_points`) WHERE `user_id` = $member_id");
+
+}
+
+
+function update_points($member_id = 0,$earn_points = 0) {
   global $wpdb;
   $member_table       =  $wpdb->prefix.'chaos_members';
   $credit_table       =  $wpdb->prefix.'chaos_credits_points';
@@ -876,6 +891,7 @@ function add_points($member_id = 0,$earn_points = 0) {
   }
 
 }
+
 
 
 function addPointsInCreditPointsTable($member_id = 0,$earn_points = 0,$key_value = '',$key_id = 0) {

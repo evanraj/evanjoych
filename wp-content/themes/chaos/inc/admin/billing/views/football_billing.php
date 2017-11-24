@@ -41,7 +41,7 @@ if(isset($_POST['action']) AND $_POST['action'] == 'football_billing_submit'  ) 
 			$wpdb->insert($credit_table,$credit_data);
 
 			
-			$add_points = add_points($_POST['member_id'],$credit);
+			$add_points = updatePoints($_POST['member_id'],$credit);
 			$credit_point_table = addPointsInCreditPointsTable($_POST['member_id'],$credit,'foot_ball',$_POST['billing_id']);
 			
 		}
@@ -132,6 +132,8 @@ if(isset($_POST['action']) AND $_POST['action'] == 'football_billing_submit'  ) 
 			'credit_points' => $credit,
 			);
 			$wpdb->update($credit_table,$credit_data,array('bill_id' => $bill_no,'game_name' => 'football'));
+
+			$credit_point_table = addPointsInCreditPointsTable($_POST['member_id'],$credit,'foot_ball',$_POST['billing_id']);
 
 		}
 
