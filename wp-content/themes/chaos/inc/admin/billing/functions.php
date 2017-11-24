@@ -875,29 +875,7 @@ function add_points($member_id = 0,$earn_points = 0) {
 }
 
 
-function add_points($member_id = 0,$earn_points = 0) {
-  global $wpdb;
-  $member_table       =  $wpdb->prefix.'chaos_members';
-  $credit_table       =  $wpdb->prefix.'chaos_credits_points';
-  $member_query       = "SELECT * from {$member_table} where id= $member_id";
-  if($member_data =  $wpdb->get_row($member_query)) {
 
-      $old_earn_points      = $member_data->earned_points;
-      $old_redeem_points    = $member_data->redeem_points;
-      $old_balance_points   = $member_data->balance_points;
-
-      $current_earn_points = $old_earn_points + $earn_points;
-      $current_balance_points = $current_earn_points - $old_redeem_points;
-      $points_data = array(
-        'earned_points' => $current_earn_points,
-        'balance_points' => $current_balance_points
-        );
-
-      $wpdb->update($member_table,$points_data,array('id'=>$member_id));
-
-  }
-
-}
 
 
 
