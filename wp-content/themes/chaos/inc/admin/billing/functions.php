@@ -217,8 +217,11 @@ function ft_member_insert() {
 
 
   $wpdb->update( $football , $football_bill_no ,array( 'id' => $id ));
-  echo $member_id='INV'.$id;
+  $data['member_id'] ='INV'.$id;
+  $data['id']       = $id; 
+  echo json_encode($data);
   die();
+
 }
 
 add_action( 'wp_ajax_ft_member_insert','ft_member_insert' );
@@ -875,6 +878,25 @@ function add_points($member_id = 0,$earn_points = 0) {
 }
 
 
+function addPointsInCreditPointsTable($member_id = 0,$earn_points = 0,$key_value = '',$key_id = 0) {
+  global $wpdb;
+  $credit_table             =  $wpdb->prefix.'chaos_credits_points';
+  $credit_query             = "SELECT * from {$credit_table} where key_value = $key_value and key_id = $key_id";
+    if($wpdb->get_row($credit_query)) {
+
+        $wpdb->update($credit_table,array('credit_points' =>$earn_points ),array('id'=>$member_id));
+    }
+    else {
+      $credit_data = array(
+        'member_id'     =>  $member_id,
+        'credit_points' =>  $earn_points,
+        'key_value'     =>  $key_value,
+        'key_id'        =>  $key_id,
+        );
+      $wpdb->insert($credit_table,$credit_data);
+    }
+
+}
 
 
 

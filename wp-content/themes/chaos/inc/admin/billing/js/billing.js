@@ -175,7 +175,8 @@ jQuery(document).ready(function () {
           billing_date                     : date,
 
         },
-        success: function (member_no) {
+        success: function (data) {
+          console.log(data);
 
         var bill = jQuery('#billing_no').val(member_no);
         jQuery('.discount').val(10);
