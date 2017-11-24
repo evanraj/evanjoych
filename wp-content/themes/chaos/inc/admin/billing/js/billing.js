@@ -145,7 +145,7 @@ jQuery(document).ready(function () {
                     return {
                         results: jQuery.map(data.items, function(obj) {
                           
-                            return { id: obj.id, name:obj.user_login, phone:obj.phone, membership_no:obj.membership_no};
+                            return { id: obj.user_id,name:obj.user_login, phone:obj.phone, membership_no:obj.membership_no};
                         })
                     };
                 },
@@ -162,7 +162,7 @@ jQuery(document).ready(function () {
       var id            = jQuery('#member_id').val(e.params.data.id);
       var membership_no = jQuery('#member_no').val(e.params.data.membership_no);
       var date          = jQuery('#billing_date').val(); 
-
+   
       
 
       jQuery.ajax({
@@ -364,9 +364,10 @@ jQuery(document).ready(function () {
         billing_date                     : date,
 
       },
-      success: function (member_no) {
+      success: function (data) {
 
-      var bill = jQuery('#gaming_billing_no').val(member_no);
+      var bill = jQuery('#gaming_billing_no').val(data.member_no);
+      jQuery('.billing_id').val(data.id);
       jQuery('.gaming_member_discount').val(10);
       jQuery('.gaming_member_discount_per').text('10%');
               
@@ -404,6 +405,7 @@ jQuery(document).ready(function () {
           success: function (data) {
 
             var bill =jQuery('#gaming_billing_no').val(data);
+            jQuery('.billing_id').val(data.id);
             var bill =jQuery('.gaming_billing_no_div').text(data);
             
 
@@ -713,9 +715,10 @@ jQuery(document).ready(function () {
         billing_date                     : date,
 
       },
-      success: function (member_no) {
+      success: function (data) {
 
-        var bill = jQuery('#lazertag_billing_no').val(member_no);
+        var bill = jQuery('#lazertag_billing_no').val(data.member_no);
+        jQuery('.billing_id').val(data.id);
         jQuery('.discount_lazertag').val(10);
         jQuery('.discount_per_lazertag').text('10%');
               
@@ -751,8 +754,9 @@ jQuery(document).ready(function () {
       },
       success: function (data) {
 
-        var bill =jQuery('#lazertag_billing_no').val(data);
-        var bill =jQuery('.lazertag_billing_no_div').text(data);
+        var bill =jQuery('#lazertag_billing_no').val(data.member_no);
+        jQuery('.billing_id').val(data.id);
+        var bill =jQuery('.lazertag_billing_no_div').text(data.member_no);
         
 
       }

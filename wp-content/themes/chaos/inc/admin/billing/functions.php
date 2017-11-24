@@ -218,7 +218,7 @@ function ft_member_insert() {
 
   $wpdb->update( $football , $football_bill_no ,array( 'id' => $id ));
   $data['member_no']  ='INV'.$id;
-  $data['id']         = $id; 
+  $data['user_id']         = $id; 
   echo json_encode($data);
   die();
 
@@ -290,7 +290,9 @@ function gaming_member_insert() {
 
 
     $wpdb->update( $gaming , $gaming_data_update ,array( 'id' => $id ));
-    echo $member_id='INV'.$id;
+    $data['member_no']  ='INV'.$id;
+    $data['user_id']         = $id; 
+    echo json_encode($data);
     die();
 }
 
@@ -355,7 +357,9 @@ function lazertag_member_insert() {
 
 
     $wpdb->update( $lazertag , $lazertag_data_update ,array( 'id' => $id ));
-    echo $member_id='INV'.$id;
+    $data['member_no']  ='INV'.$id;
+    $data['user_id']         = $id; 
+    echo json_encode($data);
     die();
 }
 
@@ -856,7 +860,7 @@ function pc_name($system_id = '') {
 function updatePoints($member_id = 0,$point = 0) {
   global $wpdb;
   $member_table       =   $wpdb->prefix.'chaos_members';
-  $member_update      =   $wpdb->query("UPDATE {$member_table} SET `earned_points` = (`earned_points` + $points) WHERE `user_id` = $member_id");
+  $member_update      =   $wpdb->query("UPDATE {$member_table} SET `earned_points` = (`earned_points` + $point) WHERE `user_id` = $member_id");
   balancePoints($member_id);
 }
 
@@ -867,31 +871,13 @@ function balancePoints($member_id = 0) {
 
 }
 
-
-function update_points($member_id = 0,$earn_points = 0) {
+function redeemPoints($member_id = 0,$redeem_points = 0) {
   global $wpdb;
-  $member_table       =  $wpdb->prefix.'chaos_members';
-  $credit_table       =  $wpdb->prefix.'chaos_credits_points';
-  $member_query       = "SELECT * from {$member_table} where id= $member_id";
-  if($member_data =  $wpdb->get_row($member_query)) {
-
-      $old_earn_points      = $member_data->earned_points;
-      $old_redeem_points    = $member_data->redeem_points;
-      $old_balance_points   = $member_data->balance_points;
-
-      $current_earn_points = $old_earn_points + $earn_points;
-      $current_balance_points = $current_earn_points - $old_redeem_points;
-      $points_data = array(
-        'earned_points' => $current_earn_points,
-        'balance_points' => $current_balance_points
-        );
-
-      $wpdb->update($member_table,$points_data,array('id'=>$member_id));
-
-  }
+  $member_table       =   $wpdb->prefix.'chaos_members';
+  $member_update      =   $wpdb->query("UPDATE {$member_table} SET `redeem_points` = (`redeem_points` + $point) WHERE `user_id` = $member_id");
+  balancePoints($member_id);
 
 }
-
 
 
 function addPointsInCreditPointsTable($member_id = 0,$earn_points = 0,$key_value = '',$key_id = 0) {
@@ -920,28 +906,6 @@ function addPointsInCreditPointsTable($member_id = 0,$earn_points = 0,$key_value
 
 
 
-function redeem_points($member_id = 0,$redeem_points = 0) {
-  global $wpdb;
-  $member_table       =  $wpdb->prefix.'chaos_members';
-  $member_query       = "SELECT * from {$member_table} where id= $member_id ";
-  if( $member_data =  $wpdb->get_row($member_query)){
-
-      $old_earn_points      = $member_data->earned_points;
-      $old_redeem_points    = $member_data->redeem_points;
-      $old_balance_points   = $member_data->balance_points;
-
-      $current_redeem_points = $old_redeem_points + $redeem_points;
-      $current_balance_points = $old_earn_points - $current_redeem_points;
-      $points_data = array(
-        'redeem_points' => $current_redeem_points,
-        'balance_points' => $current_balance_points
-        );
-
-      $wpdb->update($member_table,$points_data,array('id'=>$member_id));
-
-  }
-
-}
 
 
 

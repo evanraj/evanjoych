@@ -38,7 +38,13 @@ if(isset($_POST['action']) AND $_POST['action'] == 'lazertag_billing_submit'  ) 
 			);
 
 			$wpdb->insert($credit_table,$credit_data);
+			$add_points = updatePoints($_POST['member_id'],$credit);
+			$credit_point_table = addPointsInCreditPointsTable($_POST['member_id'],$credit,'lazertag_bill',$_POST['billing_id']);
 		}
+		else {
+			$credit = 0;
+		}
+
 
 	 $player = ($_POST['gametype'] ==  'slot') ? $_POST['slot_player'] : $_POST['hour_player'];
 
@@ -58,6 +64,7 @@ if(isset($_POST['action']) AND $_POST['action'] == 'lazertag_billing_submit'  ) 
 			'lazertag_hours'						=> $_POST['lazer_hours'],
 			'lazertag_amount'						=> $_POST['per_hour_price_lazertag'],
 			'lazertag_total'						=> $_POST['lazertag_total_value'],
+			'lazertag_credit_points'                => $credit,
 			'lazertag_vat'							=> $_POST['lazertag_vat'],
 			'lazertag_vat_value'					=> $_POST['lazertag_vat_value'],
 			'lazertag_member_discount'				=> $_POST['discount_lazertag'],
@@ -86,9 +93,34 @@ if(isset($_POST['action']) AND $_POST['action'] == 'lazertag_billing_submit'  ) 
 				exit();
 }
 	$update_data = false;
- 
+ 	$old_credit_points  = $_POST['old_credit_points'];
 
 	if(isset($_POST['action']) AND $_POST['action'] == 'update_lazertag_bill'  ) {
+
+
+		if(isset($_POST['lazertag_member_id']) AND $_POST['lazertag_member_id'] != 0) {
+
+			$amount =  	$_POST['lazertag_total_value'];
+			$credit = 	$amount/25;
+
+			$credit_data 	= array (
+			'member_id'  	=> $_POST['lazertag_member_id'],
+			'bill_id' 		=> $_POST['lazertag_billing_no'],
+			'game_name' 	=> 'lazertag',
+			'amount' 		=> $amount,
+			'credit_points' => $credit,
+			);
+
+			$wpdb->update($credit_table,$credit_data,array('bill_id' => $bill_no,'game_name' => 'lazertag'));
+			$new_credits 	= $credit - $old_credit_points;
+			$add_points 	= updatePoints($_POST['member_id'],$new_credits);
+
+			$credit_point_table = addPointsInCreditPointsTable($_POST['member_id'],$credit,'lazertag_bill',$_POST['billing_id']);
+		}
+		else {
+			$credit = 0;
+		}
+
 
 
 	if(isset($_POST['lazertag_member_no']) AND $_POST['lazertag_member_no'] == ''){
@@ -118,6 +150,7 @@ if(isset($_POST['action']) AND $_POST['action'] == 'lazertag_billing_submit'  ) 
 			'lazertag_hours'						=> $_POST['lazer_hours'],
 			'lazertag_amount'						=> $_POST['per_hour_price_lazertag'],
 			'lazertag_total'						=> $_POST['lazertag_total_value'],
+			'lazertag_credit_points'                => $credit,
 			'lazertag_vat'							=> $_POST['lazertag_vat'],
 			'lazertag_vat_value'					=> $_POST['lazertag_vat_value'],
 			'lazertag_member_discount'				=> $_POST['discount_lazertag'],
@@ -129,22 +162,6 @@ if(isset($_POST['action']) AND $_POST['action'] == 'lazertag_billing_submit'  ) 
 			);  
 
 		$wpdb->update($lazertag_billing,$insert_data,array('lazertag_bill_no' => $bill_no));
-
-		if(isset($_POST['lazertag_member_id']) AND $_POST['lazertag_member_id'] != 0) {
-
-			$amount =  	$_POST['lazertag_total_value'];
-			$credit = 	$amount/25;
-
-			$credit_data 	= array (
-			'member_id'  	=> $_POST['lazertag_member_id'],
-			'bill_id' 		=> $_POST['lazertag_billing_no'],
-			'game_name' 	=> 'lazertag',
-			'amount' 		=> $amount,
-			'credit_points' => $credit,
-			);
-
-			$wpdb->update($credit_table,$credit_data,array('bill_id' => $bill_no,'game_name' => 'lazertag'));
-		}
 
 		//Send mail to admin
 
@@ -260,6 +277,8 @@ if(isset($_POST['action']) AND $_POST['action'] == 'lazertag_billing_submit'  ) 
 					<div class="billing_name_left">
 						<span class="billing" style="padding: 8px 28px;"><label>Bill No : </label></span>
 						<input type="text" name="lazertag_billing_no" id="lazertag_billing_no" class="lazertag_billing_no" value="<?php echo $update_data->lazertag_bill_no; ?>" readonly>
+						<input type="hidden" name="billing_id" id="billing_id" class="billing_id" value="<?php echo $update_data->id; ?>">
+						<input type="hidden" name="old_credit_points" id="old_credit_points" class="old_credit_points" value="<?php if($update_data){ echo $update_data->lazertag_credit_points; } else { echo ''; } ?>">
 						<br>
 						<br>
 						<label class="billing">Bill For :</label><span class="bill_for_lazertag"><?php echo $price_per_hour['for']; ?></span>

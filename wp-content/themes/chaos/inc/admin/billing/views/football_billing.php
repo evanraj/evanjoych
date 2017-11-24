@@ -11,6 +11,7 @@ $credit_points_table  	= $wpdb->prefix. 'chaos_credits_points';
 
 $price_per_hour = getFootballPrice($date, $time);
 
+
 if(isset($_POST['action']) AND $_POST['action'] == 'football_billing_submit'  ) {
 	
 
@@ -24,7 +25,7 @@ if(isset($_POST['action']) AND $_POST['action'] == 'football_billing_submit'  ) 
 		$member_name    = $_POST['old_member_name'];
 
 	} 
-
+	
 		if(isset($_POST['member_id']) AND $_POST['member_id'] != 0) {
 
 			$amount =  	$_POST['total_value'];
@@ -45,7 +46,10 @@ if(isset($_POST['action']) AND $_POST['action'] == 'football_billing_submit'  ) 
 			$credit_point_table = addPointsInCreditPointsTable($_POST['member_id'],$credit,'foot_ball',$_POST['billing_id']);
 			
 		}
-
+		else {
+			$credit = 0;
+		}
+//320
 
 		$bill_no = $_POST['billing_no'];
 
@@ -57,6 +61,7 @@ if(isset($_POST['action']) AND $_POST['action'] == 'football_billing_submit'  ) 
 			'ft_bill_time'    				=> $_POST['time'],
 			'ft_member_phone_number'        => $_POST['phone_number'], 
 			'ft_total'        				=> $_POST['total_value'],
+			'ft_credit_points'              => $credit,
 			'ft_no_of_hours'  				=> $_POST['player'],
 			'ft_no_of_member'  				=> $_POST['no_of_members'],
 			'ft_amount_value'  				=> $_POST['per_hour_price'],
@@ -92,8 +97,29 @@ if(isset($_POST['action']) AND $_POST['action'] == 'football_billing_submit'  ) 
 		
 }
 	$update_data = false;
-
+	$old_credit_points  = $_POST['old_credit_points'];
 	if(isset($_POST['action']) AND $_POST['action'] == 'update_football_bill'  ) {
+
+		if(isset($_POST['member_id']) AND $_POST['member_id'] != 0) {
+			
+			$amount =  	$_POST['total_value'];
+			$credit = 	$_POST['total_value']/25;
+
+			$credit_data 	= array (
+			'member_id'  	=> $_POST['member_id'],
+			'amount' 		=> $amount,
+			'credit_points' => $credit,
+			);
+			$wpdb->update($credit_table,$credit_data,array('bill_id' => $bill_no,'game_name' => 'football'));
+
+			$new_credits 	= $credit - $old_credit_points;
+			$add_points 	= updatePoints($_POST['member_id'],$new_credits);
+
+			$credit_point_table = addPointsInCreditPointsTable($_POST['member_id'],$credit,'foot_ball',$_POST['billing_id']);
+
+		} else {
+			$credit = 0;
+		}
 
 	
 		$bill_no = $_POST['billing_no'];
@@ -106,6 +132,7 @@ if(isset($_POST['action']) AND $_POST['action'] == 'football_billing_submit'  ) 
 			'ft_bill_time'    				=> $_POST['time'],
 			'ft_member_phone_number'        => $_POST['phone_number'],
 			'ft_total'        				=> $_POST['total_value'],
+			'ft_credit_points'              => $credit,
 			'ft_no_of_hours'  				=> $_POST['player'],
 			'ft_no_of_member'  				=> $_POST['no_of_members'],
 			'ft_amount_value'  				=> $_POST['per_hour_price'],
@@ -120,23 +147,6 @@ if(isset($_POST['action']) AND $_POST['action'] == 'football_billing_submit'  ) 
 
 			);  
 		$wpdb->update($billing_table,$insert_data,array('ft_bill_no' => $bill_no));
-
-		if(isset($_POST['member_id']) AND $_POST['member_id'] != 0) {
-			
-			$amount =  	$_POST['total_value'];
-			$credit = 	$_POST['total_value']/25;
-
-			$credit_data 	= array (
-			'member_id'  	=> $_POST['member_id'],
-			'amount' 		=> $amount,
-			'credit_points' => $credit,
-			);
-			$wpdb->update($credit_table,$credit_data,array('bill_id' => $bill_no,'game_name' => 'football'));
-
-			$credit_point_table = addPointsInCreditPointsTable($_POST['member_id'],$credit,'foot_ball',$_POST['billing_id']);
-
-		}
-
 
 		$emailid = 'sowmiya@ajnainfotech.com';
 		$subject = 'Updated In Football Billing For '.$bill_no;
@@ -153,7 +163,8 @@ if(isset($_POST['action']) AND $_POST['action'] == 'football_billing_submit'  ) 
 	if(isset($_GET['action']) AND $_GET['action'] == 'update'  ) {
 		$id  			= $_GET['id'];
 		$query        	= "SELECT * FROM {$billing_table} WHERE active = 1 AND id ='$id'";
-	   	$update_data   	= $wpdb->get_row( $query, OBJECT ); 
+	   	$update_data   	= $wpdb->get_row( $query, OBJECT );
+	  
 
 	}
 
@@ -222,6 +233,7 @@ if(isset($_POST['action']) AND $_POST['action'] == 'football_billing_submit'  ) 
 						<span class="billing" style="padding: 8px 28px;"><label>Bill No : </label></span>
 						<input type="text" name="billing_no" id="billing_no" class="billing_no" value="<?php echo $update_data->ft_bill_no; ?>" readonly>
 						<input type="hidden" name="billing_id" id="billing_id" class="billing_id" value="<?php echo $update_data->id; ?>">
+						<input type="hidden" name="old_credit_points" id="old_credit_points" class="old_credit_points" value="<?php if($update_data){ echo $update_data->ft_credit_points; } else { echo ''; } ?>">
 						<br>
 						<br>
 						<label class="billing">Bill For :</label> <?php echo $price_per_hour['for']; ?>

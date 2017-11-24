@@ -43,8 +43,15 @@ if(isset($_POST['action']) AND $_POST['action'] == 'gaming_billing_submit'  ) {
 			);
 
 			$wpdb->insert($credit_table,$credit_data);
+
+			$add_points = updatePoints($_POST['member_id'],$credit);
+			$credit_point_table = addPointsInCreditPointsTable($_POST['member_id'],$credit,'gaming_bill',$_POST['billing_id']);
 			
 		}
+		else {
+			$credit = 0;
+		}
+
 		$bill_no = $_POST['gaming_billing_no'];
 
 		$insert_data	 = array (
@@ -54,7 +61,8 @@ if(isset($_POST['action']) AND $_POST['action'] == 'gaming_billing_submit'  ) {
 			'gaming_member_name'    			=> $member_name,
 			'gaming_membership_no'    			=> $membership_no,
 			'gaming_member_phone_number'        => $_POST['gaming_phone_number'],
-			'gaming_sub_total'					=> $_POST['gaming_sub_tot'],	
+			'gaming_sub_total'					=> $_POST['gaming_sub_tot'],
+			'gaming_credit_points'              => $credit,	
 			'gaming_vat'						=> $_POST['gaming_vat'],	
 			'gaming_vat_val'					=> $_POST['gaming_vat_value'],	
 			'gaming_member_discount' 			=> $_POST['gaming_member_discount'],
@@ -110,7 +118,7 @@ if(isset($_POST['action']) AND $_POST['action'] == 'gaming_billing_submit'  ) {
  }
 	$update_data = false;
    	$update_relation_data = false;
-	
+	$old_credit_points  = $_POST['old_credit_points'];
 
 
 	if(isset($_POST['action']) AND $_POST['action'] == 'update_gaming_bill'  ) {
@@ -129,6 +137,15 @@ if(isset($_POST['action']) AND $_POST['action'] == 'gaming_billing_submit'  ) {
 			);
 
 			$wpdb->update($credit_table,$credit_data,array('bill_id' => $bill_no,'game_name' => 'gaming'));
+
+			$new_credits 	= $credit - $old_credit_points;
+			$add_points 	= updatePoints($_POST['member_id'],$new_credits);
+
+			$credit_point_table = addPointsInCreditPointsTable($_POST['member_id'],$credit,'gaming_bill',$_POST['billing_id']);
+		}
+
+		else {
+			$credit = 0;
 		}
 	
 		$insert_data	 = array (
@@ -139,6 +156,7 @@ if(isset($_POST['action']) AND $_POST['action'] == 'gaming_billing_submit'  ) {
 			'gaming_membership_no'    			=> $_POST['gaming_member_no'],
 			'gaming_member_phone_number'        => $_POST['gaming_phone_number'],
 			'gaming_sub_total'					=> $_POST['gaming_sub_tot'],
+			'gaming_credit_points'              => $credit,
 			'gaming_vat'						=> $_POST['gaming_vat'],	
 			'gaming_vat_val'					=> $_POST['gaming_vat_value'],		
 			'gaming_member_discount' 			=> $_POST['gaming_member_discount'],
@@ -270,6 +288,8 @@ if(isset($_POST['action']) AND $_POST['action'] == 'gaming_billing_submit'  ) {
 					<div class="billing_name_left">
 						<span class="billing" style="padding: 8px 28px;"><label>Bill No : </label></span>
 						<input type="text" name="gaming_billing_no" id="gaming_billing_no" class="gaming_billing_no" value="<?php echo $update_data->gaming_bill_no; ?>" readonly>
+						<input type="hidden" name="billing_id" id="billing_id" class="billing_id" value="<?php echo $update_data->id; ?>">
+						<input type="hidden" name="old_credit_points" id="old_credit_points" class="old_credit_points" value="<?php if($update_data){ echo $update_data->gaming_credit_points; } else { echo ''; } ?>">
 						<br>
 						<br>
 						<label class="billing">Bill For :</label><span class="bill_for_lazertag"><?php echo $price_per_hour['for']; ?></span>
