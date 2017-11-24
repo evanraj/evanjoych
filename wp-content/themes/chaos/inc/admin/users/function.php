@@ -162,6 +162,13 @@ add_action( 'wp_ajax_nopriv_update_admin_user', 'update_admin_user' );
        
 }   
 
+function getMemberDetails($member_id = 0){
+global $wpdb;
+$member_table = $wpdb->prefix.'chaos_members';
+$query = "SELECT * FROM ${member_table} WHERE user_id = '$member_id'";
+$member_result = $wpdb->get_row($query);
+return $member_result;
 
+}
 
 ?>

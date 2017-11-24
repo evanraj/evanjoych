@@ -170,7 +170,7 @@ function searchMember(){
   global $wpdb;
   $data['success'] = 0;
   $member_table   = $wpdb->prefix.'chaos_members';
-  $user_table   =$wpdb->prefix.'users';
+  $user_table   = $wpdb->prefix.'users';
   $search_term  = $_POST['search_key'];
   $query        = "SELECT member.*,user_table.user_login FROM {$member_table} as member left join {$user_table} as user_table on member.`user_id` = user_table.id where user_table.user_login like '%${search_term}%' or member.membership_no like '%${search_term}%' ";
 
@@ -217,8 +217,8 @@ function ft_member_insert() {
 
 
   $wpdb->update( $football , $football_bill_no ,array( 'id' => $id ));
-  $data['member_id'] ='INV'.$id;
-  $data['id']       = $id; 
+  $data['member_no']  ='INV'.$id;
+  $data['id']         = $id; 
   echo json_encode($data);
   die();
 
@@ -880,6 +880,7 @@ function add_points($member_id = 0,$earn_points = 0) {
 
 function addPointsInCreditPointsTable($member_id = 0,$earn_points = 0,$key_value = '',$key_id = 0) {
   global $wpdb;
+  $date = date('Y-m-d');
   $credit_table             =  $wpdb->prefix.'chaos_credits_points';
   $credit_query             = "SELECT * from {$credit_table} where key_value = $key_value and key_id = $key_id";
     if($wpdb->get_row($credit_query)) {
@@ -892,6 +893,7 @@ function addPointsInCreditPointsTable($member_id = 0,$earn_points = 0,$key_value
         'credit_points' =>  $earn_points,
         'key_value'     =>  $key_value,
         'key_id'        =>  $key_id,
+        'date'          => $date,
         );
       $wpdb->insert($credit_table,$credit_data);
     }

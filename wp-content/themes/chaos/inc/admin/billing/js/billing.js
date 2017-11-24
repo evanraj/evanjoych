@@ -15,32 +15,34 @@ jQuery(document).ready(function () {
   //<---- Start new user --->
  
 
-  jQuery('.new_user_a').on('click', function(){
-    jQuery('.select2-container, .new_user_a').css('display', 'none');
-    jQuery('.new_user, .old_user_a').css('display', 'inline-block');
+    jQuery('.new_user_a').on('click', function(){
+        jQuery('.select2-container, .new_user_a').css('display', 'none');
+        jQuery('.new_user, .old_user_a').css('display', 'inline-block');
 
-    jQuery('.discount_per').text(0);
-    jQuery('.discount').val(0);
-    calculation(); 
-  jQuery.ajax({
-    method: "POST",
-    url: frontendajax.ajaxurl,
-    data: {
-      action                           : 'ft_member_insert',
-      member_id                        : '',
-      name                             : '',
-      phone                            : '',
-      membership_no                    : '',
-      billing_date                     : '',
-    },
-    success: function (data) {
+        jQuery('.discount_per').text(0);
+        jQuery('.discount').val(0);
+        calculation(); 
+        jQuery.ajax({
+            method: "POST",
+            dataType: 'json',
+            url: frontendajax.ajaxurl,
+            data: {
+                action                           : 'ft_member_insert',
+                member_id                        : '',
+                name                             : '',
+                phone                            : '',
+                membership_no                    : '',
+                billing_date                     : '',
+            },
+            success: function (data) {
 
-    var bill =jQuery('#billing_no').val(data);
-    var bill =jQuery('.billing_no_div').text(data);
+            var bill =jQuery('#billing_no').val(data.member_no); 
+            jQuery('.billing_id').val(data.id);
+            jQuery('.billing_no_div').text(data);
 
-    }
-  });
-  })
+            }
+        });
+      })
 
   //<---- End new user --->
 
@@ -165,6 +167,7 @@ jQuery(document).ready(function () {
 
       jQuery.ajax({
         method: "POST",
+        dataType: 'json',
         url: frontendajax.ajaxurl,
         data: {
           action                           : 'ft_member_insert',
@@ -176,9 +179,8 @@ jQuery(document).ready(function () {
 
         },
         success: function (data) {
-          console.log(data);
-
-        var bill = jQuery('#billing_no').val(member_no);
+        var bill = jQuery('#billing_no').val(data.member_no);
+        jQuery('.billing_id').val(data.id);
         jQuery('.discount').val(10);
         jQuery('.discount_per').text('10%');
                 

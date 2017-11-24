@@ -14,6 +14,10 @@ if(isset($_GET['user_id']) && $user = get_userdata($_GET['user_id']) ) {
 	$user_id = $_GET['user_id'];
 	$current_role = implode(', ', $user->roles);
 }
+
+
+$member_details = getMemberDetails(2);
+var_dump($member_details->user_id);
 ?>
 <style>
 label{

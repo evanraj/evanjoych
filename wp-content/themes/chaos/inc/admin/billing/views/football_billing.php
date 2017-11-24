@@ -42,6 +42,7 @@ if(isset($_POST['action']) AND $_POST['action'] == 'football_billing_submit'  ) 
 
 			
 			$add_points = add_points($_POST['member_id'],$credit);
+			$credit_point_table = addPointsInCreditPointsTable($_POST['member_id'],$credit,'foot_ball',$_POST['billing_id']);
 			
 		}
 
@@ -218,6 +219,7 @@ if(isset($_POST['action']) AND $_POST['action'] == 'football_billing_submit'  ) 
 					<div class="billing_name_left">
 						<span class="billing" style="padding: 8px 28px;"><label>Bill No : </label></span>
 						<input type="text" name="billing_no" id="billing_no" class="billing_no" value="<?php echo $update_data->ft_bill_no; ?>" readonly>
+						<input type="hidden" name="billing_id" id="billing_id" class="billing_id" value="<?php echo $update_data->id; ?>">
 						<br>
 						<br>
 						<label class="billing">Bill For :</label> <?php echo $price_per_hour['for']; ?>
