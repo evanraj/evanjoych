@@ -98,7 +98,7 @@ function chaos_login_redirect ($redirect_to, $url, $user) {
 			if( in_array( 'administrator', $user->roles ) ) {
 				$redirect_to = admin_url();
 			} else {
-				$redirect_to = site_url('/login/');
+				$redirect_to = site_url('/account/');
 			}
 		}
         return $redirect_to;

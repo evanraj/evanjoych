@@ -16,8 +16,7 @@ if(isset($_GET['user_id']) && $user = get_userdata($_GET['user_id']) ) {
 }
 
 
-$member_details = getMemberDetails(2);
-var_dump($member_details->user_id);
+
 ?>
 <style>
 label{
