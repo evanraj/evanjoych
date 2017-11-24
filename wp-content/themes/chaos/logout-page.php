@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Login Page
+ * Template Name: Logout Page
  *
  * This is the template that displays full width page without sidebar
  *
