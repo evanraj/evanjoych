@@ -9,8 +9,39 @@
                             <img src="<?php echo get_template_directory_uri() ?>/inc/img/logo.png" alt="" class="img-responsive">
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6">
+                    <style type="text/css">
+                        
+                        .home-login-button {
+                            float: right;
+                            color: white;                            
+                            font-size: 35px;
+                            font-size: 18px;                             
+                            margin: 52px 60px 0 0 ;
+                        }
+
+                        .home-login-button a {
+                                color: #fff !important;
+                                text-decoration: none;
+                            }
+
+                            .home-login-button a:hover {
+                                color: #ffb514 !important;
+                            }
+
+                        @media  screen and (max-width: 991px)  {
+                            .home-login-button {
+                                margin: 22px 60px;
+                            }
+
+                        }
+                    </style>
+                    <div class="col-lg-6 col-md-6"> 
+                        <div class="home-login-button" >
+                            <a href="<?php echo site_url(); ?>/login">Log In</a>
+                        </div>                                               
+                        
                         <div class="menu-bar">
+
                             <nav>
                                 <!-- <a id="menu-toggle" href="#" class="btn btn-primary btn-lg toggle"><i class="fa fa-chevron-down"></i></a> -->
                                 <a id="menu-toggle" href="#" class="btn btn-primary btn-lg toggle"><i class="fa fa-bars" aria-hidden="true"></i></a>
@@ -18,7 +49,7 @@
                                     <ul class="sidebar-nav">
                                         <a id="menu-close" href="#" class="btn btn-default btn-lg pull-right toggle"><i class="glyphicon glyphicon-remove"></i></a>
                                         <br>
-                                        <?php chaos_header_new_menu()?>
+                                            <?php chaos_header_new_menu()?>
                                             <div class="sm sm-mob visible-sm visible-xs">
                                                 <i class="fa fa-facebook" aria-hidden="true"></i>
                                                 <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
