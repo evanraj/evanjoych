@@ -1,0 +1,1874 @@
+    @font-face {
+        font-family: 'Pacifico';
+        src: url('../fonts/Pacifico.ttf');
+    }
+    
+    .bg {
+        background: url(../img/bg.jpg)no-repeat center center fixed;
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 100vh;
+    }
+    
+    .sm {
+        float: right;
+        color: white;
+        margin: 10px;
+    }
+    
+    .sm .fa {
+        padding: 10px;
+        font-size: 15px;
+    }
+    
+    .menu-bar {
+        float: right;
+        color: white;
+        margin: 30px;
+        font-size: 35px;
+    }
+    
+    .menu-bar .btn .fa {
+        color: white;
+    }
+    
+    .event {
+        height: 40%;
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        text-align: center;
+    }
+    
+    .event h1 {
+        color: #ffb514;
+        letter-spacing: 4px;
+        font-weight: bold;
+    }
+    
+    .event span {
+        font-size: 22px;
+        color: #ffb514;
+        letter-spacing: 2px;
+    }
+    
+    .event p {
+        color: white;
+        font-size: 16px;
+        letter-spacing: 1.4px;
+        margin-top: 20px;
+        text-align: center;
+    }
+    
+    .event hr {
+        width: 900px;
+        border-top: 1px solid;
+    }
+    
+    .logo-section {
+        height: 10%;
+    }
+    
+    .logo-section .row {
+        height: 100%;
+    }
+    
+    .logo-section .logo img {
+        height: 100%;
+    }
+    
+    .logo-section .logo-res,
+    .logo-section .logo {
+        height: inherit;
+    }
+    
+    .slide .item img {
+        margin: 0 auto;
+    }
+    /*
+.date-list{
+    border-left: 1px solid;
+    padding-left: 30px;
+}
+*/
+    
+    .month:nth-child(2) {
+        border-left: 1px solid;
+    }
+    
+    .month:nth-child(3) {
+        border-left: 1px solid;
+        border-right: 1px solid;
+    }
+    
+    .month:nth-child(4) {
+        border-right: 1px solid;
+    }
+    
+    .dates h2 {
+        color: white;
+        font-size: 22px;
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+    
+    .slide img {
+        margin: 0 auto;
+    }
+    
+    .logo img {
+        margin: 10px 0 0 40px;
+    }
+    
+    #sidebar-wrapper {
+        margin-right: -250px;
+        right: 0;
+        width: 250px;
+        background: rgb(0, 0, 0);
+        position: fixed;
+        height: 100%;
+        overflow-y: auto;
+        z-index: 1000;
+        transition: all 0.5s ease-in 0s;
+        -webkit-transition: all 0.5s ease-in 0s;
+        -moz-transition: all 0.5s ease-in 0s;
+        -ms-transition: all 0.5s ease-in 0s;
+        -o-transition: all 0.5s ease-in 0s;
+    }
+    
+    .sidebar-nav {
+        position: absolute;
+        top: 0;
+        width: 250px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .sidebar-nav li {
+        line-height: 50px;
+        text-indent: 20px;
+    }
+    
+    .sidebar-nav li a {
+        color: #999999;
+        display: block;
+        text-decoration: none;
+        font-size: 18px;
+    }
+    
+    .sidebar-nav li a:hover {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.2);
+        text-decoration: none;
+    }
+    
+    .sidebar-nav li a:active,
+    .sidebar-nav li a:focus {
+        text-decoration: none;
+    }
+    
+    .sidebar-nav > .sidebar-brand {
+        height: 55px;
+        line-height: 55px;
+        font-size: 18px;
+    }
+    
+    .sidebar-nav > .sidebar-brand a {
+        color: #999999;
+    }
+    
+    .sidebar-nav > .sidebar-brand a:hover {
+        color: #fff;
+        background: none;
+    }
+    
+    #menu-toggle {
+        /*    top: 0;*/
+        right: 0;
+        position: fixed;
+        z-index: 1;
+    }
+    
+    #sidebar-wrapper.active {
+        right: 250px;
+        width: 250px;
+        transition: all 0.5s ease-out 0s;
+        -webkit-transition: all 0.5s ease-out 0s;
+        -moz-transition: all 0.5s ease-out 0s;
+        -ms-transition: all 0.5s ease-out 0s;
+        -o-transition: all 0.5s ease-out 0s;
+    }
+    
+    .toggle {
+        margin: 5px 5px 0 0;
+    }
+    
+    .btn-primary {
+        color: #fff;
+        background: none;
+        border: none;
+        font-size: 30px;
+    }
+    
+    @media only screen and (max-width: 767px) {
+        .event h1 {
+            letter-spacing: 1px;
+            font-size: 30px;
+        }
+        .event span {
+            font-size: 16px;
+            letter-spacing: 0px;
+        }
+    }
+    
+    @media only screen and (max-width: 991px) {
+        .bg .logo img {
+            margin: 0 auto;
+            width: 200px;
+            margin-bottom: 20px;
+        }
+        .event p {
+            font-size: 14px;
+        }
+        .menu-bar {
+            margin: 0;
+        }
+    }
+    
+    @media only screen and (min-width: 768px) {
+        .bg .slide img {
+            height: 500px;
+        }
+        .bg {
+            height: 100vh;
+            overflow: hidden;
+        }
+        .menu-bar .navbar-nav>li {
+            float: none;
+        }
+        .menu-bar .navbar-nav {
+            float: left;
+            margin: 0;
+            width: 100%;
+        }
+        .fac-bg {
+            background: black;
+        }
+    }
+    
+    .sm-mob {
+        float: left;
+    }
+    
+    .foot-bg .menu-bar,
+    .ps-bg .menu-bar,
+    .home-lz .menu-bar {
+        float: none;
+    }
+    
+    @media screen and ( max-height: 820px) {
+        .event h1 {
+            font-size: 18px;
+        }
+        .event span {
+            font-size: 14px;
+        }
+        .event h2 {
+            font-size: 18px;
+            margin-top: 0px;
+        }
+        .event p {
+            font-size: 14px;
+        }
+    }
+    /*
+
+.test {
+    width: 250px;
+    height: 100%;
+    background: white;
+    position: fixed;
+    z-index: 999;
+}
+
+.test ul {
+    list-style: none;
+}
+.test ul li{
+    margin: 10px;
+}*/
+    /*ps-start*/
+    
+    .ps-bg {
+        background-color: black;
+        color: white;
+    }
+    
+    .ps-bg h2 {
+        color: #ffb514;
+        font-size: 25px;
+        font-weight: bold;
+    }
+    
+    .joystick {
+        margin-top: 24px;
+        color: white;
+    }
+    
+    .joy-text span {
+        color: #ffb514;
+        font-weight: bold;
+    }
+    
+    .joy-title h2 {
+        letter-spacing: 4px;
+        line-height: 50px;
+        position: absolute;
+        line-height: 66px;
+        font-size: 40px;
+        top: 86px;
+        left: -128px;
+        margin: 0;
+        transform: rotate(-90deg);
+        color: white;
+    }
+    
+    .joy-text {
+        position: relative;
+    }
+    
+    .navbar-default {
+        background: none;
+        border: none;
+        margin-top: 20px;
+    }
+    
+    .navbar-default .navbar-nav>li>a {
+        color: white;
+        font-weight: bold;
+    }
+    
+    .navbar-default .navbar-nav>li>a:focus,
+    .navbar-default .navbar-nav>li>a:hover {
+        color: #ffb514;
+    }
+    
+    .facility .col-lg-3 {
+        padding: 0;
+    }
+    
+    .facility .col-lg-6 {
+        padding-right: 0;
+    }
+    
+    .right-side {
+        background: #191919;
+        text-align: left;
+        color: white;
+        height: 380px;
+    }
+    
+    .right-side ul li {
+        padding: 16px;
+        font-size: 14px;
+        list-style: none;
+        border-bottom: 1px solid black;
+        padding-left: 20px;
+    }
+    
+    .right-side ul {
+        padding-left: 1px;
+    }
+    
+    .right-side ul li span {
+        color: #ffb514;
+        font-size: 11px;
+    }
+    
+    .slide-two .bx-wrapper .bx-viewport {
+        box-shadow: none;
+        border: none;
+        background: none;
+        left: 2px;
+    }
+    
+    .contact {
+        text-align: center;
+    }
+    
+    .contact .form-control {
+        border: 1px solid #ffb514;
+        border-radius: 0;
+        background: none;
+    }
+    
+    .contact .form-control::-webkit-input-placeholder {
+        /* Chrome */
+        color: white;
+    }
+    
+    .contact .btn {
+        border: 1px solid #ffb514;
+        border-radius: 0;
+        background: none;
+        color: white;
+        text-align: left;
+        margin-left: 15px;
+        width: 17%;
+    }
+    
+    @media only screen and (min-width: 1200px) {
+        .contact .form-control {
+            margin-left: 18px;
+        }
+    }
+    
+    .ps-logo {
+        margin-top: 10px;
+    }
+    
+    .facility,
+    .membership,
+    .slide-two {
+        margin-top: 70px;
+        text-align: center;
+    }
+    
+    .wal-text {
+        position: absolute;
+        bottom: 0;
+        text-align: left;
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 10px;
+    }
+    /*
+    .wall-mount {
+        position: relative;
+    }
+*/
+    
+    .wall-mount img {
+        width: 100%;
+    }
+    
+    .facility h2,
+    .membership h2,
+    .contact h2 {
+        margin-bottom: 30px;
+    }
+    
+    .right-side ul li:last-child {
+        border-bottom: none;
+    }
+    
+    .memb-text button {
+        border: 1px solid #ffb514;
+        border-radius: 0;
+        background: none;
+        padding: 10px 18px;
+        margin: 25px 0;
+        letter-spacing: 2px;
+    }
+    
+    .memb-text button a {
+        color: #ffb514;
+    }
+    
+    .bx-wrapper .bx-pager.bx-default-pager a {
+        display: none;
+    }
+    
+    .testing {
+        background-image: url(../img/bg-2.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    
+    .contact p {
+        margin-bottom: 30px;
+    }
+    
+    .adres {
+        margin-top: 40px;
+    }
+    
+    .adres span {
+        margin-left: 20px;
+    }
+    
+    .adres .fa {
+        font-size: 18px;
+    }
+    
+    .sm-ps .fa {
+        margin: 0 10px;
+        font-size: 16px;
+    }
+    
+    footer {
+        margin-top: 50px;
+    }
+    
+    footer p {
+        text-align: center;
+    }
+    
+    footer a:hover {
+        color: white;
+    }
+    
+    @media only screen and (max-width: 1200px) {
+        .joy-title h2 {
+            line-height: 50px;
+            position: absolute;
+            line-height: 54px;
+            font-size: 30px;
+            top: 133px;
+            left: -102px;
+            margin: 0;
+            transform: rotate(-90deg);
+            color: white;
+        }
+        .right-side {
+            height: 318px;
+        }
+        .right-side ul li {
+            padding: 19px;
+        }
+        .right-side ul li:nth-child(4) {
+            border-bottom: none;
+        }
+        .adres-icon {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .contact .btn {
+            margin-left: 0;
+            width: 20%;
+        }
+        .wall-mount img {
+            min-height: 318px;
+        }
+    }
+    
+    .joy-title h2 {
+        font-weight: 100;
+    }
+    
+    .ps-logo img {
+        margin: 0 auto;
+    }
+    
+    .joy-sm {
+        transform: none;
+        text-align: center;
+    }
+    
+    @media only screen and (max-width: 768px) {
+        .facility,
+        .membership,
+        .slide-two {
+            margin-top: 18px !important;
+            text-align: center;
+        }
+        .facility .col-lg-3 {
+            padding: 15px;
+            padding-right: 0;
+            padding-top: 0;
+        }
+        .rigt-side-bg .col-lg-3 {
+            padding-right: 15px;
+            padding-left: 0;
+        }
+        .facility .col-lg-6 {
+            padding-right: 15px;
+        }
+        .joystick p {
+            margin-top: 15px;
+        }
+        p {
+            text-align: justify;
+        }
+        .contact .btn {
+            width: 25%;
+            text-align: center;
+        }
+        .ps-bg h2 {
+            font-size: 20px;
+        }
+        .facility img {
+            width: 100%;
+        }
+        .right-side ul li {
+            height: 118px;
+        }
+        .right-side {
+            height: auto;
+        }
+    }
+    
+    @media only screen and (max-width: 992px) {
+        .facility .col-lg-3 {
+            padding: 15px;
+            padding-right: 0;
+            padding-top: 0;
+        }
+        .rigt-side-bg .col-lg-3 {
+            padding-right: 15px;
+            padding-left: 0;
+        }
+        .facility .col-lg-6 {
+            padding-right: 15px;
+        }
+        .facility img {
+            width: 100%;
+        }
+        .right-side ul li {
+            height: 118px;
+        }
+        .right-side {
+            height: auto;
+        }
+    }
+    
+    @media only screen and (max-width: 767px) {
+        .facility .col-lg-3 {
+            padding: 15px;
+        }
+        .rigt-side-bg .col-lg-3 {
+            padding: 15px;
+        }
+        .facility img {
+            width: auto;
+        }
+        .right-side ul li {
+            height: 80px;
+        }
+    }
+    
+    .facility img {
+        margin: 0 auto;
+    }
+    
+    .joystick p {
+        text-align: justify;
+    }
+    
+    .ps-bg header {
+        position: relative;
+    }
+    
+    .ps-bg header {
+        position: absolute;
+        z-index: 9999;
+        width: 100%;
+    }
+    /*ps-end*/
+    /*football-start*/
+    
+    .foot-bg {
+        position: relative;
+        background: #ffb514;
+    }
+    
+    .foot-head {
+        position: absolute;
+        z-index: 9999;
+        width: 100%;
+    }
+    
+    .foot-banner .container-fluid {
+        padding: 0;
+    }
+    
+    .fifa-about {
+        background-image: url(../img/foot-2.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        color: white;
+        /*    background-attachment: fixed;*/
+        height: 1000px;
+        width: 100%;
+        -webkit-clip-path: polygon(0 5%, 100% 0, 100% 94%, 0 100%);
+    }
+    
+    .fifa-text {
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 20px;
+        text-align: justify;
+        color: #ffb514;
+    }
+    
+    .fifa-about .container,
+    .fifa-about .row,
+    .fifa-about .col-lg-6 {
+        height: inherit;
+    }
+    
+    .fifa-about .col-lg-6 {
+        height: inherit;
+        align-items: center;
+        display: flex;
+    }
+    
+    .fifa-portfolio {
+        background-image: url(../img/foot-2-page.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 1000px;
+        position: relative;
+        background-attachment: fixed;
+    }
+    
+    .fifa-portfolio .col-lg-3 {
+        margin-top: 100px;
+    }
+    
+    .fifa-portfolio h2 {
+        text-align: center;
+        margin-top: 50px;
+        color: #ffb514;
+        font-weight: bold;
+    }
+    
+    .fifa-portfolio h3 {
+        font-size: 23px;
+        color: #ffb514;
+        text-align: center;
+    }
+    
+    .port-2,
+    .port-4 {
+        position: absolute;
+        top: 50px;
+    }
+    
+    .membership-fifa {
+        background-image: url(../img/foot-1.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 600px;
+        text-align: center;
+        position: relative;
+        background-attachment: fixed;
+        -webkit-clip-path: polygon(0 9%, 100% 0, 100% 91%, 0 100%);
+    }
+    
+    .memb-fifa {
+        /*        position: absolute;*/
+        /*        top: 217px;*/
+        color: #ffb514;
+        margin-top: 258px;
+    }
+    
+    .memb-fifa a {
+        color: #ffb514;
+        text-decoration: none;
+    }
+    
+    .foot-bg h2 {
+        font-weight: bold;
+        margin-top: 70px;
+        color: #ffb514;
+    }
+    
+    .memb-fifa button {
+        border: 1px solid #ffb514;
+        border-radius: 0;
+        background: none;
+        padding: 10px 18px;
+        margin: 25px 0;
+        letter-spacing: 2px;
+    }
+    
+    .fifa-point {
+        background-color: black;
+        color: #ffb514;
+    }
+    
+    .fifa-point h2 {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    
+    .fifa-foot {
+        background-image: url(../img/fifa-footer.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 600px;
+        background-attachment: fixed;
+        color: white;
+        -webkit-clip-path: polygon(0 9%, 100% 0, 100% 93%, 0 100%);
+    }
+    
+    .foot-bg footer {
+        background: black;
+        color: white;
+        padding: 10px;
+    }
+    
+    .goals span {
+        font-size: 22px;
+        text-align: center;
+        font-weight: bold;
+    }
+    
+    .goals {
+        margin-top: 20px;
+        text-align: center;
+    }
+    
+    @media only screen and (max-width: 767px) {
+        .fifa-foot,
+        .fifa-portfolio,
+        .fifa-about {
+            height: auto !important;
+        }
+        .port-2,
+        .port-4 {
+            position: relative;
+            top: 0;
+        }
+        .ps-logo img {
+            width: 160px;
+        }
+        .adres {
+            margin-bottom: 20px;
+        }
+        .fifa-portfolio .col-lg-3 {
+            margin-top: 30px;
+        }
+        .box {
+            margin-bottom: 20px;
+        }
+    }
+    
+    .fifa-bg2 img,
+    .point-bg img {
+        margin: 0 auto;
+    }
+    
+    .foot-bg footer {
+        margin-top: 0;
+    }
+    
+    .point-img img {
+        border: 12px solid;
+        border-bottom: 60px solid;
+    }
+    /*football-end*/
+    /*lazer-start*/
+    
+    .lazer-bg {}
+    
+    .lazer-title h2 {
+        letter-spacing: 4px;
+        line-height: 50px;
+        line-height: 66px;
+        font-size: 40px;
+        margin: 0;
+        color: white;
+    }
+    
+    .lz-banner img {
+        width: 100%;
+    }
+    
+    .facility-lazer {
+        background-image: url(../img/laz-fac.JPG);
+        text-align: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    
+    .facility-lazer p {
+        text-align: justify;
+    }
+    
+    .facility-one,
+    .facility-two,
+    .facility-three,
+    .facility-four {
+        margin-bottom: 20px;
+    }
+    
+    footer p a {
+        color: white;
+    }
+    /*lazer-end*/
+    
+    .carousel-indicators {
+        display: none;
+    }
+    
+    .hiddenn {
+        opacity: 0;
+    }
+    
+    .visiblee {
+        opacity: 1;
+    }
+    
+    .fifa-bg1,
+    .fifa-bg2,
+    .fifa-bg3 {
+        position: relative;
+        /* outline: 1px solid #fff; */
+        overflow: hidden;
+    }
+    
+    .lazer-about {
+        background-image: url(../img/banner_1.jpg);
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+    
+    .lazer-about .joy-text {
+        margin-top: 70px;
+        text-align: justify;
+    }
+    
+    .contact-lz {
+        background-image: url(../img/contact-laz.jpg);
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+    
+    .winner h2 {
+        text-align: center;
+        margin-bottom: 65px;
+    }
+    
+    .content-two,
+    .content-three,
+    .content-four {
+        display: none;
+    }
+    
+    .winner h3 {
+        letter-spacing: 4px;
+        line-height: 66px;
+        font-size: 40px;
+        color: #ffb514;
+        font-weight: bold;
+    }
+    
+    .winner button {
+        border: 1px solid #ffb514;
+        border-radius: 0;
+        background: #ffb514;
+        padding: 10px 18px;
+        margin: 25px 0;
+        letter-spacing: 2px;
+    }
+    
+    .winner button a,
+    .article button a {
+        color: white;
+    }
+    
+    .winner p {
+        margin-top: 32px;
+        color: #ffb514;
+    }
+    
+    .winner {
+        background-image: url(../img/contact-lz.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    
+    .lazer-title h2 {
+        color: #ffb514;
+        font-weight: 100;
+    }
+    
+    .lazer-title span {
+        font-weight: 900;
+        letter-spacing: 23px;
+    }
+    
+    .fac-bg,
+    .lazer-memb,
+    .winner-bg,
+    .contact-bg {
+        margin: 50px 0;
+    }
+    
+    @media only screen and (min-width: 1200px) {
+        .lazer-about {
+            height: 550px !important;
+        }
+    }
+    
+    @media only screen and (max-width: 1200px) {
+        .sm-lz,
+        .foot-sm,
+        .sm-ps {
+            margin: 20px;
+        }
+    }
+    
+    @media only screen and (max-width: 992px) {
+        .lazer-about .joy-text {
+            margin-top: 20px;
+        }
+        .winner-bg {
+            text-align: center;
+        }
+    }
+    
+    @media only screen and (max-width: 768px) {
+        .winner h3 {
+            float: none !important;
+            text-align: center;
+        }
+        .winner img {
+            margin: 0 auto;
+        }
+        .fac-bg,
+        .lazer-memb,
+        .winner-bg,
+        .contact-bg {
+            margin: 20px 0 !important;
+        }
+        .content-one img,
+        .content-two img,
+        .content-three img,
+        .content-four img {
+            margin-bottom: 20px;
+        }
+        .facilty img {
+            width: 100%;
+        }
+    }
+    
+    @media only screen and (max-width: 330px) {
+        .box .overbox {
+            padding: 50px 20px !important;
+        }
+        .corp .overbox {
+            padding: 10px !important;
+        }
+    }
+    
+    .point-bg {
+        margin: 30px 0;
+        margin-bottom: 50px;
+    }
+    
+    .point-bg p {
+        text-align: justify;
+    }
+    
+    button a:hover {
+        text-decoration: none !important;
+    }
+    
+    .face-content {
+        display: none;
+    }
+    
+    .active {
+        display: block;
+    }
+    
+    .facility-con {
+        margin-bottom: 20px;
+        cursor: pointer;
+    }
+    /*load*/
+    
+    .btn-primary:hover {
+        background: none !important;
+        border: none !important;
+    }
+    
+    .btn-primary.active,
+    .btn-primary:active,
+    .open>.dropdown-toggle.btn-primary {
+        background: none;
+        border: none;
+    }
+    
+    .ps-bg #carousel-example-generic .item {
+        margin-top: 70px;
+    }
+    
+    @media only screen and (max-width: 767px) {
+        .navbar-default .navbar-collapse,
+        .navbar-default .navbar-form {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        .navbar-toggle {
+            margin-top: 3px !important;
+        }
+        .navbar-default .navbar-toggle:focus,
+        .navbar-default .navbar-toggle:hover {
+            background: none !important;
+        }
+        .carousel-control.left,
+        .carousel-control.right {
+            display: none;
+        }
+        .fifa-about,
+        .membership-fifa,
+        .fifa-foot {
+            -webkit-clip-path: polygon(0 3%, 100% 0, 100% 97%, 0 100%);
+        }
+        .navbar-header {
+            margin-bottom: 10px;
+        }
+    }
+    
+    .foot-banner .item img {
+        width: 100%;
+        height: 100%;
+    }
+    
+    .bg {
+        position: relative;
+    }
+    
+    .menu1-cir {
+        transform: rotate(250deg) translate(250px) rotate(-45deg);
+    }
+    
+    .menu2-cir {
+        transform: rotate(238deg) translate(250px) rotate(-45deg);
+    }
+    
+    .menu3-cir {
+        transform: rotate(224deg) translate(250px) rotate(-45deg);
+    }
+    
+    .menu4-cir {
+        transform: rotate(211deg) translate(250px) rotate(-45deg);
+    }
+    
+    .menu5-cir {
+        transform: rotate(198deg) translate(250px) rotate(-45deg);
+    }
+    
+    .menu6-cir {
+        transform: rotate(184deg) translate(250px) rotate(-45deg);
+    }
+    
+    .circle-container {
+        position: absolute;
+        left: 30px;
+        top: 15%;
+    }
+    
+    .quarter-circle-bottom-right {
+        width: 250px;
+        height: 250px;
+        border-radius: 398px 0 0 0;
+        -moz-border-radius: 398px 0 0 0;
+        -webkit-border-radius: 398px 0 0 0;
+        border-left: 2px solid rgb(154, 154, 154);
+        border-top: 2px solid rgb(154, 154, 154);
+        transform: rotate(32deg) translate(0px) rotate(-45deg);
+    }
+    
+    .quarter-circle-bottom-right .active {
+        background: rgba(255, 181, 20, 0.69);
+    }
+    
+    .moving-circle {
+        display: block;
+        overflow: hidden;
+        position: absolute;
+        top: 97%;
+        left: 96%;
+        width: 20px;
+        height: 20px;
+        margin: 0;
+        background: rgba(255, 253, 253, 0.38);
+        border-radius: 10px;
+    }
+    
+    .circle-in {
+        width: 12px;
+        height: 12px;
+        background: #000;
+        margin: 0 auto;
+        border-radius: 10px;
+        border: 1px solid #9a9a9a;
+        position: absolute;
+        top: 4px;
+        left: 4px;
+    }
+    
+    .circle-menu {
+        position: absolute;
+        color: #9a9a9a;
+        font-weight: bold;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    
+    .circle-menu.active {
+        color: #ffb514;
+    }
+    
+    .circle-menu:hover {
+        color: #ffb514;
+    }
+    
+    .circle-menu a {
+        color: #9a9a9a;
+        text-decoration: none;
+    }
+    
+    .menu1 {
+        top: 0px;
+        left: 170px;
+    }
+    
+    .menu2 {
+        top: 35px;
+        left: 130px;
+    }
+    
+    .menu3 {
+        top: 80px;
+        left: 90px;
+    }
+    
+    .menu4 {
+        top: 130px;
+        left: 65px;
+    }
+    
+    .menu5 {
+        top: 190px;
+        left: 50px;
+    }
+    
+    .menu6 {
+        left: 55px;
+    }
+    
+    .navbar-default .navbar-nav>.active>a,
+    .navbar-default .navbar-nav>.active>a:focus,
+    .navbar-default .navbar-nav>.active>a:hover {
+        color: #fff;
+        background-color: none !important;
+        background: none !important;
+        letter-spacing: 1px;
+        font-size: 15px;
+        text-transform: uppercase;
+    }
+    
+    .navbar-default .navbar-nav>li>a {
+        color: #fff;
+        background-color: none;
+        letter-spacing: 1px;
+        font-size: 15px;
+        text-transform: uppercase;
+    }
+    /*team-page*/
+    
+    @media only screen and (max-width: 760px),
+    (min-device-width: 768px) and (max-device-width: 1024px) {
+        /* Force table to not be like tables anymore */
+        table,
+        thead,
+        tbody,
+        th,
+        td,
+        tr {
+            display: block;
+        }
+        /* Hide table headers (but not display: none;, for accessibility) */
+        thead tr {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+        tr {
+            border: 1px solid #ccc;
+        }
+        td {
+            /* Behave  like a "row" */
+            border: none;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            padding-left: 50%;
+        }
+        td:before {
+            /* Now like a table header */
+            position: absolute;
+            /* Top/left values mimic padding */
+            top: 6px;
+            left: 6px;
+            width: 45%;
+            padding-right: 10px;
+            white-space: nowrap;
+        }
+        /*
+	Label the data
+	*/
+        /*
+        td:nth-of-type(1):before {
+            content: "#";
+        }
+        td:nth-of-type(2):before {
+            content: "TEAM";
+        }
+        td:nth-of-type(3):before {
+            content: "GP";
+        }
+        td:nth-of-type(4):before {
+            content: "W";
+        }
+        td:nth-of-type(5):before {
+            content: "D";
+        }
+        td:nth-of-type(6):before {
+            content: "L";
+        }
+        td:nth-of-type(7):before {
+            content: "GF";
+        }
+        td:nth-of-type(8):before {
+            content: "GA";
+        }
+        td:nth-of-type(9):before {
+            content: "GD";
+        }
+        td:nth-of-type(10):before {
+            content: "PTS";
+        }
+*/
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        position: relative;
+    }
+    /* Zebra striping */
+    
+    tr:nth-of-type(odd) {
+        background: none;
+    }
+    
+    th {
+        background: #ffb514;
+        color: white;
+        font-weight: bold;
+    }
+    
+    td {
+        padding: 15px;
+        /*    border: 1px solid #1E1E1E;*/
+        color: white;
+        text-align: center;
+    }
+    
+    th {
+        border-top: none;
+        color: white;
+        text-align: center;
+        /*    border: 1px solid black;*/
+        padding: 9px;
+    }
+    
+    .team-bg {
+        background: url(../img/score-board.jpg)no-repeat center center fixed;
+        background-size: cover;
+    }
+    
+    .squad {
+        background: url(../img/squads-bg.jpg)no-repeat center center fixed;
+        background-size: cover;
+    }
+    
+    .yellow-bg {
+        position: absolute;
+        height: 45px;
+        width: 100%;
+        background: #ffb514;
+    }
+    
+    .table-bg {
+        position: relative;
+    }
+    
+    table tr:first-child {
+        height: 45px;
+    }
+    /*table-over*/
+    
+    .youtube-pg .sugg {
+        overflow-y: scroll;
+        max-height: 350px;
+        overflow-x: hidden;
+    }
+    
+    .membership-score {
+        text-align: center;
+        background: black;
+        color: #ffb514;
+        padding: 40px 0;
+    }
+    
+    .membership-score button {
+        border: 1px solid #ffb514;
+        border-radius: 0;
+        background: none;
+        padding: 10px 50px;
+        margin: 25px 0;
+        letter-spacing: 2px;
+    }
+    
+    .membership-score button .fa {
+        font-size: 28px;
+        color: #ffb514;
+    }
+    
+    .membership-score p {
+        margin-bottom: 60px;
+    }
+    
+    .gal-one,
+    .gal-two {
+        margin-bottom: 20px;
+    }
+    
+    .youtube-pg {
+        padding: 40px 0;
+        background: black;
+        color: white;
+    }
+    
+    .sug-text {
+        height: 118px;
+    }
+    
+    .sug-text a {
+        color: #ffb514;
+    }
+    
+    .sug-1 {
+        text-align: center;
+    }
+    
+    .sugg::-webkit-scrollbar {
+        width: 7px;
+    }
+    
+    .sugg::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        background-color: #CCCCCC;
+    }
+    
+    .sugg::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background-color: red;
+        background-image: -webkit-linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.5) 50%, transparent, transparent)
+    }
+    
+    .squad h2,
+    .article h2,
+    .contact h2 {
+        text-align: center;
+        color: #ffb514;
+        margin-bottom: 40px;
+    }
+    
+    .squad {
+        padding: 40px 0;
+        color: white;
+    }
+    
+    .squad-list {
+        list-style-type: decimal;
+        border-left: 3px solid;
+        padding-left: 0;
+    }
+    
+    .squad-list li {
+        padding: 10px 10px 18px 60px;
+        border-bottom: 1px solid #1E1E1E;
+    }
+    
+    .team-members {
+        list-style-type: decimal;
+    }
+    
+    .team-members li {
+        padding: 13px 13px 13px 40px;
+    }
+    
+    .squad-list li:first-child {
+        background: #ffb514;
+    }
+    
+    .squad-list li:hover {
+        background: #ffb514;
+    }
+    
+    .team-members li span {
+        margin-left: 50px;
+        color: #ffb514;
+    }
+    
+    .captain {
+        text-align: center;
+    }
+    
+    .captain h4 {
+        color: #ffb514;
+        margin-top: 20px;
+    }
+    
+    .sb-bg {
+        background: black;
+    }
+    
+    .sb-bg h2 {
+        color: #ffb514;
+        font-size: 25px;
+        font-weight: bold;
+    }
+    
+    .article h3 {
+        font-size: 26px;
+    }
+    
+    .article h3 span {
+        color: #ffb514;
+    }
+    
+    .team-members h3 {
+        color: #ffb514;
+        font-size: 20px;
+    }
+    
+    .article {
+        color: white;
+    }
+    
+    .article p {
+        text-align: justify;
+    }
+    
+    .article button {
+        border: 1px solid #ffb514;
+        border-radius: 0;
+        background: none;
+        padding: 7px 14px;
+        /* margin: 25px 0; */
+        letter-spacing: 2px;
+    }
+    
+    .sb-bg .contact,
+    .article {
+        color: white;
+        padding: 40px 0;
+    }
+    
+    footer {
+        color: white;
+    }
+    
+    .contact .sm-ps .fa:hover {
+        color: #ffb514;
+    }
+    
+    .test-ar1 {
+        margin-top: 40px;
+    }
+    
+    .sb-bg .nav>li>a {
+        padding: 10px 13px;
+    }
+    
+    @media only screen and (min-width:992px) and (max-width: 1200px) {
+        .youtube-pg .active-vedio {
+            width: 500px;
+        }
+        .sug-text {
+            height: auto !important;
+            text-align: center;
+        }
+    }
+    
+    @media (max-width: 992px) {
+        .active-vedio {
+            text-align: center;
+        }
+        .youtube-pg .sugg {
+            height: 120px;
+            margin-top: 20px;
+        }
+        .squad-list {
+            padding-left: 24px !important;
+        }
+        .article-mainjp img {
+            height: 328px;
+        }
+    }
+    
+    @media (max-width: 767px) {
+        .membership-score img {
+            margin: 0 auto;
+            margin-bottom: 20px;
+        }
+        .captain img {
+            margin: 0 auto;
+        }
+        .article img {
+            margin: 0 auto;
+        }
+        .test-ar1,
+        .test-ar1 p {
+            text-align: center;
+        }
+        .article h3 {
+            text-align: center;
+        }
+        .active-vedio {
+            position: relative;
+            padding-bottom: 56.25%;
+            /* 16:9 */
+            padding-top: 25px;
+            height: 0;
+        }
+        .active-vedio iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .youtube-pg {
+            padding: 0;
+        }
+        .sug-1 {
+            position: relative;
+            padding-bottom: 56.25%;
+            /* 16:9 */
+            padding-top: 25px;
+            height: 0;
+        }
+        .sug-1 iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        th {
+            background: none;
+        }
+        table tr:first-child {
+            height: auto;
+        }
+        td:first-child {
+            background: #ffb514;
+        }
+    }
+    /*accordion*/
+    
+    .js-responsive-table {
+        margin-bottom: 1em;
+        font: normal 1em/1.4 sans-serif;
+        color: #666;
+    }
+    
+    .js-responsive-table th,
+    .js-responsive-table td {
+        padding: 20px 10px;
+        color: #6e6e6e;
+    }
+    
+    .js-responsive-table tr {
+        border-bottom: 1px solid #ddd;
+    }
+    
+    .js-responsive-table th {
+        background: #eee;
+    }
+    
+    .js-responsive-table th,
+    .js-responsive-table tr:first-child td {
+        font-weight: bold;
+    }
+    
+    .js-responsive-table .icon-accordion {
+        display: none;
+    }
+    
+    .js-responsive-table td h3 {
+        margin: 0;
+        padding: 0 0 5px 0;
+        display: none;
+        font-weight: bold;
+        font-size: 18px;
+    }
+    
+    @media (max-width: 768px) {
+        .js-responsive-table table,
+        .js-responsive-table tbody,
+        .js-responsive-table table tr,
+        .js-responsive-table table td,
+        .js-responsive-table table th {
+            display: block;
+            width: 100%;
+        }
+        .js-responsive-table table tr {
+            max-height: 60px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+        .js-responsive-table .icon-accordion {
+            display: block;
+            text-align: center;
+            width: 16px;
+            height: 16px;
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            font-style: normal;
+            font-size: 1.6em;
+        }
+        .js-responsive-table td h3 {
+            display: block;
+        }
+    }
+    
+    .ps-facilty img {
+        height: 253px;
+        width: 100%;
+    }
+    
+    .facilty .col-md-6 {
+        padding: 0;
+    }
+    
+    .facilty .col-md-3,
+    .facilty .col-md-12 {
+        padding: 0;
+    }
+    
+    .facilty h2 {
+        text-align: center;
+        margin-bottom: 18px;
+    }
+    
+    .facilty {
+        padding: 60px 0 30px 0;
+    }
+    /*face-hover*/
+    
+    .box {
+        cursor: pointer;
+        height: 252px;
+        position: relative;
+        overflow: hidden;
+        width: auto;
+    }
+    
+    .box img {
+        position: absolute;
+        left: 0;
+        -webkit-transition: all 300ms ease-out;
+        -moz-transition: all 300ms ease-out;
+        -o-transition: all 300ms ease-out;
+        -ms-transition: all 300ms ease-out;
+        transition: all 300ms ease-out;
+    }
+    
+    .box .overbox {
+        background-color: rgba(0, 0, 0, 0.7);
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: #fff;
+        z-index: 100;
+        -webkit-transition: all 300ms ease-out;
+        -moz-transition: all 300ms ease-out;
+        -o-transition: all 300ms ease-out;
+        -ms-transition: all 300ms ease-out;
+        transition: all 300ms ease-out;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        padding: 100px 20px;
+        font-size: 18px;
+        text-align: justify;
+    }
+    
+    .box:hover .overbox {
+        opacity: 1;
+    }
+    
+    .box .overtext {
+        -webkit-transition: all 300ms ease-out;
+        -moz-transition: all 300ms ease-out;
+        -o-transition: all 300ms ease-out;
+        -ms-transition: all 300ms ease-out;
+        transition: all 300ms ease-out;
+        transform: translateY(40px);
+        -webkit-transform: translateY(40px);
+    }
+    
+    .box .title {
+        font-size: 2.5em;
+        text-transform: uppercase;
+        opacity: 0;
+        transition-delay: 0.1s;
+        transition-duration: 0.2s;
+    }
+    
+    .box:hover .title,
+    .box:focus .title {
+        opacity: 1;
+        transform: translateY(0px);
+        -webkit-transform: translateY(0px);
+    }
+    
+    .box .tagline {
+        font-size: 0.8em;
+        opacity: 0;
+        transition-delay: 0.2s;
+        transition-duration: 0.2s;
+    }
+    
+    .box:hover .tagline,
+    .box:focus .tagline {
+        opacity: 1;
+        transform: translateX(0px);
+        -webkit-transform: translateX(0px);
+    }
+    
+    .corp .overbox {
+        padding: 10px;
+    }
+    
+    .outdoor .overbox {
+        padding: 60px 20px;
+    }
+    
+    .facility-con img {
+        width: 200px;
+    }
+    
+    .contact p {
+        text-align: center;
+    }
+    
+    .fifa-bg2 h2+h4 {
+        margin-bottom: 50px;
+    }
+    
+/*
+    .foot-head .navbar-default .navbar-nav>li>a {
+        color: #ffb514 !important;
+    }*/

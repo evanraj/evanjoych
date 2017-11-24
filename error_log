@@ -1,0 +1,4 @@
+[18-May-2017 08:54:25 Asia/Kolkata] PHP Warning:  array_unshift() expects parameter 1 to be array, null given in /home/wifieud6/public_html/chaosentertainment.in/wp-includes/class-wp-xmlrpc-server.php on line 596
+[31-May-2017 10:00:03 Asia/Kolkata] PHP Warning:  array_unshift() expects parameter 1 to be array, null given in /home/wifieud6/public_html/chaosentertainment.in/wp-includes/class-wp-xmlrpc-server.php on line 596
+[14-Jun-2017 00:05:53 UTC] PHP Warning:  array_unshift() expects parameter 1 to be array, null given in /home/wifieud6/public_html/chaosentertainment.in/wp-includes/class-wp-xmlrpc-server.php on line 596
+[25-Jun-2017 02:45:40 UTC] PHP Warning:  array_unshift() expects parameter 1 to be array, null given in /home/wifieud6/public_html/chaosentertainment.in/wp-includes/class-wp-xmlrpc-server.php on line 596

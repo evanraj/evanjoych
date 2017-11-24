@@ -1,0 +1,50 @@
+<?PHP 
+/*SELECT *, DATEDIFF( DATE(tot.next_pay_date), CURDATE() ) as days_remain, 
+
+(CASE 
+ WHEN DATEDIFF( DATE(tot.next_pay_date), CURDATE() ) >= tot.ut_alert_days
+ THEN 0
+ WHEN DATEDIFF( DATE(tot.next_pay_date), CURDATE() ) < 0 
+ THEN 0
+ ELSE 1
+END ) as under_alert
+
+from ( SELECT 
+*,
+
+( CASE 
+ WHEN p.was_postponded = '1'
+ THEN u.ut_postponed_days
+ WHEN u.ut_periods = 'w'
+ THEN DATE(u.ut_utillity_date + INTERVAL (u.ut_duration) WEEK )
+ ELSE DATE(u.ut_utillity_date + INTERVAL (u.ut_duration) MONTH )
+ END ) as next_pay_date
+                                                                              
+                                                                              
+ 
+ 
+ 
+from wp_chaos_utility as u 
+
+JOIN 
+
+( SELECT 
+
+( CASE
+ WHEN (DATEDIFF( ut_postponed_days, ut_utillity_date  ) ) IS NULL
+THEN 0
+WHEN (DATEDIFF( ut_postponed_days, ut_utillity_date  ) ) <  0
+THEN 0
+ELSE 1
+END ) as was_postponded, cu1.id as cu1_id 
+
+FROM wp_chaos_utility as cu1 ) as p 
+
+ON u.id = p.cu1_id WHERE u.active = 1 ) as tot WHERE (CASE 
+ WHEN DATEDIFF( DATE(tot.next_pay_date), CURDATE() ) >= tot.ut_alert_days
+ THEN 0
+ WHEN DATEDIFF( DATE(tot.next_pay_date), CURDATE() ) < 0 
+ THEN 0
+ ELSE 1
+END ) > 0*/
+?>
