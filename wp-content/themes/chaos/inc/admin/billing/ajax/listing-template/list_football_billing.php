@@ -17,10 +17,16 @@
     <?php
     global $wpdb;
     $table = $wpdb->prefix. 'chaos_football_billing';
+    $member_table = $wpdb->prefix. 'chaos_members';
+    $history_table = $wpdb->prefix. 'chaos_credits_points';
 
     if($_GET['action']=='delete'){
         $id = $_GET['id'];
+        $query = "SELECT  member_id,ft_credit_points from $table where id = $id";
+       
+
         $data_delete=$wpdb->update( $table ,array( 'active' =>'0' ),array( 'id' => $id ));
+
     }
 
    if(isset($_POST['action']) && $_POST['action'] == 'football_listing') {

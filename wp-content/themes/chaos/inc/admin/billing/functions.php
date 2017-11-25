@@ -218,7 +218,7 @@ function ft_member_insert() {
 
   $wpdb->update( $football , $football_bill_no ,array( 'id' => $id ));
   $data['member_no']  ='INV'.$id;
-  $data['user_id']         = $id; 
+  $data['id']         = $id; 
   echo json_encode($data);
   die();
 
@@ -280,7 +280,7 @@ function gaming_member_insert() {
   
 
     $gaming_data_update =  array(
-        'member_id'                 => $_POST['member_id'],
+        'member_id'                     => $_POST['member_id'],
         'gaming_member_name'            => $_POST['name'],
         'gaming_member_phone_number'    => $_POST['phone'],
         'gaming_membership_no'          => $_POST['membership_no'],
@@ -291,7 +291,7 @@ function gaming_member_insert() {
 
     $wpdb->update( $gaming , $gaming_data_update ,array( 'id' => $id ));
     $data['member_no']  ='INV'.$id;
-    $data['user_id']         = $id; 
+    $data['id']         = $id; 
     echo json_encode($data);
     die();
 }
@@ -358,7 +358,7 @@ function lazertag_member_insert() {
 
     $wpdb->update( $lazertag , $lazertag_data_update ,array( 'id' => $id ));
     $data['member_no']  ='INV'.$id;
-    $data['user_id']         = $id; 
+    $data['id']         = $id; 
     echo json_encode($data);
     die();
 }
@@ -871,10 +871,11 @@ function balancePoints($member_id = 0) {
 
 }
 
-function redeemPoints($member_id = 0,$redeem_points = 0) {
+function redeemPoints($member_id = 0,$point = 0) {
   global $wpdb;
   $member_table       =   $wpdb->prefix.'chaos_members';
   $member_update      =   $wpdb->query("UPDATE {$member_table} SET `redeem_points` = (`redeem_points` + $point) WHERE `user_id` = $member_id");
+
   balancePoints($member_id);
 
 }
@@ -884,10 +885,13 @@ function addPointsInCreditPointsTable($member_id = 0,$earn_points = 0,$key_value
   global $wpdb;
   $date = date('Y-m-d');
   $credit_table             =  $wpdb->prefix.'chaos_credits_points';
-  $credit_query             = "SELECT * from {$credit_table} where key_value = $key_value and key_id = $key_id";
+  $credit_query             = "SELECT * from {$credit_table} where key_value = '$key_value' and key_id = $key_id";
+
     if($wpdb->get_row($credit_query)) {
 
-        $wpdb->update($credit_table,array('credit_points' =>$earn_points ),array('id'=>$member_id));
+        $wpdb->update($credit_table,array('credit_points' =>$earn_points ),array('key_value' => "$key_value",'key_id' => $key_id));
+        
+
     }
     else {
       $credit_data = array(

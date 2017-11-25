@@ -20,6 +20,7 @@
                             <th scope="col" id="wplc_name_colum" class="manage-column column-id">User Email</th>
                             <th scope="col" id="wplc_name_colum" class="manage-column column-id">User Mobile</th>
                             <th scope="col" id="wplc_name_colum" class="manage-column column-id">Roles </th>
+                            <th scope="col" id="wplc_name_colum" class="manage-column column-id">Redeem</th>
                             <th scope="col" id="wplc_name_colum" class="manage-column column-id">Action </th>
                         </tr>
                     </thead>
@@ -45,6 +46,8 @@
                                         echo $admin_user_list['editable_roles'][$l_role]['name'];
 
                                     ?></td>
+                                    <td><a href="<?php echo menu_page_url( 'add_redeem_points', 0 )."&user_id=${user_id}"; ?>">Redeem</a></td>
+
                                     <td class=""><a href="<?php echo menu_page_url( 'add_admin', 0 )."&user_id=${user_id}"; ?>">Update</a></td>
                                 </tr>
                     <?php

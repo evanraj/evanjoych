@@ -13,6 +13,8 @@ add_menu_page(
     );
     add_submenu_page('add_membership', 'Add Membership', 'Add Membership', 'manage_options', 'add_membership', 'add_membership' );
     add_submenu_page('add_membership', 'List Membership', 'List Membership', 'manage_options', 'list_membership', 'list_membership' );
+
+   
 }
 
 
@@ -23,8 +25,6 @@ function add_membership() {
 function list_membership() {
     require 'membership/list-template/list-chaos-membership.php';
 }
-
-
 
 
 ?>  

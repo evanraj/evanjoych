@@ -331,7 +331,7 @@ jQuery(document).ready(function () {
 
                   return {
                       results: jQuery.map(data.items, function(obj) {
-                          return { id: obj.id, name:obj.user_login, phone:obj.phone, membership_no:obj.membership_no};
+                          return { id: obj.user_id, name:obj.user_login, phone:obj.phone, membership_no:obj.membership_no};
                       })
                   };
               },
@@ -354,6 +354,7 @@ jQuery(document).ready(function () {
 
     jQuery.ajax({
       method: "POST",
+      dataType: 'json',
       url: frontendajax.ajaxurl,
       data: {
         action                           : 'gaming_member_insert',
@@ -366,7 +367,7 @@ jQuery(document).ready(function () {
       },
       success: function (data) {
 
-      var bill = jQuery('#gaming_billing_no').val(data.member_no);
+      var bill = jQuery('.gaming_billing_no').val(data.member_no);
       jQuery('.billing_id').val(data.id);
       jQuery('.gaming_member_discount').val(10);
       jQuery('.gaming_member_discount_per').text('10%');
@@ -393,6 +394,7 @@ jQuery(document).ready(function () {
         gaming_calculation(); 
         jQuery.ajax({
           method: "POST",
+          dataType: 'json',
           url: frontendajax.ajaxurl,
           data: {
             action                           : 'gaming_member_insert',
@@ -404,7 +406,7 @@ jQuery(document).ready(function () {
           },
           success: function (data) {
 
-            var bill =jQuery('#gaming_billing_no').val(data);
+            var bill =jQuery('.gaming_billing_no').val(data.member_no);
             jQuery('.billing_id').val(data.id);
             var bill =jQuery('.gaming_billing_no_div').text(data);
             
@@ -682,7 +684,7 @@ jQuery(document).ready(function () {
 
             return {
                 results: jQuery.map(data.items, function(obj) {
-                    return { id: obj.id, name:obj.user_login, phone:obj.phone, membership_no:obj.membership_no};
+                    return { id: obj.user_id, name:obj.user_login, phone:obj.phone, membership_no:obj.membership_no};
                 })
             };
         },
@@ -705,6 +707,7 @@ jQuery(document).ready(function () {
 
     jQuery.ajax({
       method: "POST",
+      dataType: 'json',
       url: frontendajax.ajaxurl,
       data: {
         action                           : 'lazertag_member_insert',
@@ -717,7 +720,7 @@ jQuery(document).ready(function () {
       },
       success: function (data) {
 
-        var bill = jQuery('#lazertag_billing_no').val(data.member_no);
+        var bill = jQuery('.lazertag_billing_no').val(data.member_no);
         jQuery('.billing_id').val(data.id);
         jQuery('.discount_lazertag').val(10);
         jQuery('.discount_per_lazertag').text('10%');
@@ -743,6 +746,7 @@ jQuery(document).ready(function () {
     lazertag_calculation(); 
     jQuery.ajax({
       method: "POST",
+      dataType: 'json',
       url: frontendajax.ajaxurl,
       data: {
         action                           : 'lazertag_member_insert',
@@ -754,7 +758,7 @@ jQuery(document).ready(function () {
       },
       success: function (data) {
 
-        var bill =jQuery('#lazertag_billing_no').val(data.member_no);
+        var bill =jQuery('.lazertag_billing_no').val(data.member_no);
         jQuery('.billing_id').val(data.id);
         var bill =jQuery('.lazertag_billing_no_div').text(data.member_no);
         

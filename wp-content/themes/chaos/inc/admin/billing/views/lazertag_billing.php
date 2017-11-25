@@ -38,8 +38,8 @@ if(isset($_POST['action']) AND $_POST['action'] == 'lazertag_billing_submit'  ) 
 			);
 
 			$wpdb->insert($credit_table,$credit_data);
-			$add_points = updatePoints($_POST['member_id'],$credit);
-			$credit_point_table = addPointsInCreditPointsTable($_POST['member_id'],$credit,'lazertag_bill',$_POST['billing_id']);
+			$add_points = updatePoints($_POST['lazertag_member_id'],$credit);
+			$credit_point_table = addPointsInCreditPointsTable($_POST['lazertag_member_id'],$credit,'lazertag_bill',$_POST['billing_id']);
 		}
 		else {
 			$credit = 0;
@@ -113,9 +113,9 @@ if(isset($_POST['action']) AND $_POST['action'] == 'lazertag_billing_submit'  ) 
 
 			$wpdb->update($credit_table,$credit_data,array('bill_id' => $bill_no,'game_name' => 'lazertag'));
 			$new_credits 	= $credit - $old_credit_points;
-			$add_points 	= updatePoints($_POST['member_id'],$new_credits);
+			$add_points 	= updatePoints($_POST['lazertag_member_id'],$new_credits);
 
-			$credit_point_table = addPointsInCreditPointsTable($_POST['member_id'],$credit,'lazertag_bill',$_POST['billing_id']);
+			$credit_point_table = addPointsInCreditPointsTable($_POST['lazertag_member_id'],$credit,'lazertag_bill',$_POST['billing_id']);
 		}
 		else {
 			$credit = 0;

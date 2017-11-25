@@ -44,8 +44,8 @@ if(isset($_POST['action']) AND $_POST['action'] == 'gaming_billing_submit'  ) {
 
 			$wpdb->insert($credit_table,$credit_data);
 
-			$add_points = updatePoints($_POST['member_id'],$credit);
-			$credit_point_table = addPointsInCreditPointsTable($_POST['member_id'],$credit,'gaming_bill',$_POST['billing_id']);
+			$add_points = updatePoints($_POST['gaming_member_id'],$credit);
+			$credit_point_table = addPointsInCreditPointsTable($_POST['gaming_member_id'],$credit,'gaming_bill',$_POST['billing_id']);
 			
 		}
 		else {
@@ -79,7 +79,7 @@ if(isset($_POST['action']) AND $_POST['action'] == 'gaming_billing_submit'  ) {
 		$select_id      = $wpdb->get_row( $select_id_query, OBJECT);
 		
 		$id = $select_id->id;
-		echo $id;
+		
 		foreach ($_POST['group_team'] as $group_val ) {
 		 		$gaming_relation_data 					= array(
 		 				'gaming_id' 					=> $id,
@@ -139,9 +139,9 @@ if(isset($_POST['action']) AND $_POST['action'] == 'gaming_billing_submit'  ) {
 			$wpdb->update($credit_table,$credit_data,array('bill_id' => $bill_no,'game_name' => 'gaming'));
 
 			$new_credits 	= $credit - $old_credit_points;
-			$add_points 	= updatePoints($_POST['member_id'],$new_credits);
+			$add_points 	= updatePoints($_POST['gaming_member_id'],$new_credits);
 
-			$credit_point_table = addPointsInCreditPointsTable($_POST['member_id'],$credit,'gaming_bill',$_POST['billing_id']);
+			$credit_point_table = addPointsInCreditPointsTable($_POST['gaming_member_id'],$credit,'gaming_bill',$_POST['billing_id']);
 		}
 
 		else {

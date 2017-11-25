@@ -21,7 +21,30 @@ add_menu_page(
     );
     add_submenu_page('add_admin', 'New Member', 'New  Member', 'manage_options', 'add_admin', 'add_admin' );
     add_submenu_page('add_admin', 'Member List', 'Member List', 'manage_options', 'list_admin_users', 'list_admin_users' );
+ 
 
+ add_menu_page(
+        __( 'Credit/Debit Notes', 'chaos'),
+        'Credit/Debit Notes',
+        'manage_options',
+        'add_credit_debit',
+        'add_credit_debit',
+        'dashicons-universal-access',
+        9
+    );
+    add_submenu_page('add_credit_debit', 'Add Credit/Debit Notes', 'Add Credit/Debit Notes', 'manage_options', 'add_credit_debit', 'add_credit_debit' );
+
+    add_menu_page(
+        __( 'Redeem Points', 'chaos'),
+        'Redeem Points',
+        'manage_options',
+        'add_redeem_points',
+        'add_redeem_points',
+        'dashicons-universal-access',
+        9
+    );
+    add_submenu_page('add_redeem_points', 'Add Credit/Debit Notes', 'Add Credit/Debit Notes', 'manage_options', 'add_redeem_points', 'add_redeem_points' );
+  
 
 }
 
@@ -33,6 +56,15 @@ function add_admin() {
 }
 function list_admin_users() {
     require get_template_directory() .'/inc/admin/users/listing/user-list.php';
+}
+
+
+function add_credit_debit(){
+	require get_template_directory() .'/inc/admin/users/credit-debit-notes.php';	
+}
+
+function add_redeem_points(){
+	require get_template_directory() .'/inc/admin/users/redeem.php';	
 }
 
 
@@ -170,5 +202,12 @@ $member_result = $wpdb->get_row($query);
 return $member_result;
 
 }
+
+
+function getRedeemPoint(){
+	
+}
+
+
 
 ?>

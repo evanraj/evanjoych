@@ -34,7 +34,7 @@ if(isset($_POST['action']) AND $_POST['action'] == 'search_credit') {
 
 <?php
     global $wpdb;
-    $table_name = $wpdb->prefix. 'chaos_credits';
+    $table_name = $wpdb->prefix. 'chaos_credits_points';
 ?>
 <div class="list-credits">
     <?php 
@@ -54,7 +54,7 @@ if(isset($_POST['action']) AND $_POST['action'] == 'search_credit') {
             <tr style="background: rgb(229, 229, 229);color: #fff;">
                 <th class="manage-column column-id"><span>S No</span></th>
                 <th scope="col" id="wplc_name_colum" class="manage-column column-id"><span>Game Name</span></th>
-                <th scope="col" id="wplc_name_colum" class="manage-column column-id"><span>Amount</span></th>
+               
                 <th scope="col" id="wplc_name_colum" class="manage-column column-id"><span>Credit Points</span></th>
             </tr>
         </thead>
@@ -68,8 +68,8 @@ if(isset($_POST['action']) AND $_POST['action'] == 'search_credit') {
         <tr>
             <td class=""><?php echo $start_count; ?>
             </td>            
-            <td> <?php echo $c_value->game_name; ?></td>
-            <td> <?php echo $c_value->amount; ?></td>
+            <td> <?php echo $c_value->key_value; ?></td>
+           
             <td> <?php echo $c_value->credit_points; ?></td>
         </tr>
         <?php 
