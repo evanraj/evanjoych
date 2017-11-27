@@ -30,8 +30,34 @@ jQuery(document).ready(function () {
         return false;
     });
 
+    jQuery('.redeem_point').live('change keyup',function(){
+
+        var redeem = parseFloat(jQuery('.redeem_point').val());
+        var balance = parseFloat(jQuery('.balance_point').val());
+
+        if(redeem > balance ){
+            alert('Enter Available points!!!');
+            jQuery('.redeem_point').val('');
+        }
+
+
+    });
+
+
 });
 
 function managePopupContent( data ) {
     window.location = data.redirect;
+}
+
+
+function keyPressed(e)
+{
+     var key;      
+     if(window.event)
+          key = window.event.keyCode; //IE
+     else
+          key = e.which; //firefox      
+
+     return (key != 13);
 }

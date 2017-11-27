@@ -46,7 +46,7 @@
                                         echo $admin_user_list['editable_roles'][$l_role]['name'];
 
                                     ?></td>
-                                    <td><a href="<?php echo menu_page_url( 'add_redeem_points', 0 )."&user_id=${user_id}"; ?>">Redeem</a></td>
+                                    <td><a href="<?php echo menu_page_url( 'add_redeem_points', 0 )."&user_id=${user_id}&action=member_data"; ?>">Redeem</a></td>
 
                                     <td class=""><a href="<?php echo menu_page_url( 'add_admin', 0 )."&user_id=${user_id}"; ?>">Update</a></td>
                                 </tr>

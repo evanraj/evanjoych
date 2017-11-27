@@ -194,18 +194,22 @@ add_action( 'wp_ajax_nopriv_update_admin_user', 'update_admin_user' );
        
 }   
 
-function getMemberDetails($member_id = 0){
-global $wpdb;
-$member_table = $wpdb->prefix.'chaos_members';
-$query = "SELECT * FROM ${member_table} WHERE user_id = '$member_id'";
-$member_result = $wpdb->get_row($query);
-return $member_result;
+function getMemberDetails($member_id = 0) {
+	global $wpdb;
+	$member_table = $wpdb->prefix.'chaos_members';
+	$query = "SELECT * FROM ${member_table} WHERE user_id = '$member_id'";
+	$member_result = $wpdb->get_row($query);
+	return $member_result;
 
 }
 
 
-function getRedeemPoint(){
-	
+function getRedeemPoint($member_id = 0) {
+	global $wpdb;
+	$member_table = $wpdb->prefix.'chaos_members';
+	$query = "SELECT (case when  member_table.balance_points >= 1000 then 1 else 0 end ) as is_eligible,member_table.* FROM (SELECT `earned_points`,`redeem_points`,`balance_points`,first_name,user_id FROM {$member_table} WHERE `user_id`= $member_id) as member_table";
+	$member_result = $wpdb->get_row($query);
+	return $member_result;
 }
 
 
