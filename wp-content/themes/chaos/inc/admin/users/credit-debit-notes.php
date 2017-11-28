@@ -97,7 +97,7 @@ label{
 									<select name="user_id" id="user_id" style="width: 190px;height: 30px;">
 									<?php 
 										foreach ($authors as $user) { 
-											echo '<option value="'.$user->id.'">'.$user->id.'('.$user->user_login.')</option>';
+											echo '<option value="'.$user->id.'">'.$user->id.' - '.$user->user_login.'</option>';
 
 										}
 									?>

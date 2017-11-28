@@ -881,6 +881,20 @@ function redeemPoints($member_id = 0,$point = 0) {
 }
 
 
+function deletebill($member_id = 0,$point = 0,$key_value = '',$key_id = 0) {
+  global $wpdb;
+  $member_table       =   $wpdb->prefix.'chaos_members';
+  $member_update      =   $wpdb->query("UPDATE {$member_table} SET `earned_points` = (`earned_points` - $point) WHERE `user_id` = $member_id");
+  $credit_table       =   $wpdb->prefix.'chaos_credits_points';
+  $wpdb->update($credit_table,array('active' =>0 ),array('key_value' => "$key_value",'key_id' => $key_id ));
+
+
+
+  balancePoints($member_id);
+
+}
+
+
 function addPointsInCreditPointsTable($member_id = 0,$earn_points = 0,$key_value = '',$key_id = 0) {
   global $wpdb;
   $date = date('Y-m-d');

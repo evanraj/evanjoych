@@ -92,7 +92,7 @@ label{
 									</label>
 								</div>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-								<input type="text" name="redeem_point" value="0" required  class="redeem_point" <?php if($memberData->is_eligible == '0'){ echo 'readonly'; } ?>/>	
+									<input type="text" name="redeem_point" value="0" required  class="redeem_point" <?php if($memberData->is_eligible == '0'){ echo 'readonly'; } ?>/>	
 								</div>
 							</div>
 							<div class="form-group user_form">
@@ -110,7 +110,7 @@ label{
 						<div class="form-group">
 							<div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-3">
 	                          	
-	                          	<input type="submit" class="player_add" id="submit" value="Submit">
+	                          <?php if($memberData->is_eligible == '1'){ ?><input type="submit" class="player_add" id="submit" value="Submit"> <?php }else { echo'<span style="color:red;font-size:14px;font-weight:bold;">You are not eligible to redeem your points.You need 1000 points to get eligiblity</span>'; } ?>
 	                          	<input type="hidden" name="action" class="action" value="redeem_data">
 
 	                        </div>
@@ -146,7 +146,7 @@ label{
 									<select name="user_id" id="user_id" style="width: 190px;height: 30px;">
 									<?php 
 										foreach ($authors as $user) { 
-											echo '<option value="'.$user->id.'">'.$user->id.'('.$user->user_login.')</option>';
+											echo '<option value="'.$user->id.'">'.$user->id.' - '.$user->user_login.'</option>';
 
 										}
 									?>

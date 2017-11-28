@@ -44,6 +44,8 @@
 				'order' => 'DESC'
 			);
 			$data['result'] = get_users($args);
+
+
 			$data['editable_roles'] = $editable_roles;
 			return $data;
 		}
