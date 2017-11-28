@@ -529,7 +529,7 @@ if(isset($_POST['action']) AND $_POST['action'] == 'lazertag_billing_submit'  ) 
 			<?php } else { ?>
 
 			<input type="hidden" name="action" id="" value="lazertag_billing_submit"></br>
-			<input type="submit" name="submit" id="submit" class="player_add" class="submit" value="Submit">
+			<input type="submit" name="submit" id="submit" style="display:none;" class="player_add lazertag_submit"  value="Submit">
 			<?php } ?>
 
 		</form>

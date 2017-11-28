@@ -18,6 +18,7 @@ jQuery(document).ready(function () {
     jQuery('.new_user_a').on('click', function(){
         jQuery('.select2-container, .new_user_a').css('display', 'none');
         jQuery('.new_user, .old_user_a').css('display', 'inline-block');
+        jQuery('.football_submit').css('display','block');
 
         jQuery('.discount_per').text(0);
         jQuery('.discount').val(0);
@@ -42,18 +43,20 @@ jQuery(document).ready(function () {
 
             }
         });
+
       })
 
   //<---- End new user --->
 
 //<---- Start New user --->
     jQuery('.old_user_a').on('click', function(){
-    jQuery('.select2-container, .new_user_a').css('display', 'inline-block');
-    jQuery('.new_user, .old_user_a').css('display', 'none');
+      jQuery('.select2-container, .new_user_a').css('display', 'inline-block');
+      jQuery('.new_user, .old_user_a').css('display', 'none');
 
-    jQuery('.discount_per').text('10%');
-    jQuery('.discount').val(10);
-    calculation(); 
+      jQuery('.discount_per').text('10%');
+      jQuery('.discount').val(10);
+      calculation(); 
+      jQuery('.football_submit').css('display','block');
  
   })
     //<---- End Old user --->
@@ -388,6 +391,7 @@ jQuery(document).ready(function () {
     jQuery('.new_user_a_gaming').on('click', function(){
         jQuery('.select2-container, .new_user_a_gaming').css('display', 'none');
         jQuery('.gaming_new_user, .old_user_a_gaming').css('display', 'inline-block');
+        jQuery('.gaming_submit').css('display','block');
 
         jQuery('.gaming_member_discount_per').text(0);
         jQuery('.gaming_member_discount').val(0);
@@ -426,6 +430,7 @@ jQuery(document).ready(function () {
     jQuery('.gaming_member_discount_per').text('10%');
     jQuery('.gaming_member_discount').val(10);
     gaming_calculation(); 
+    jQuery('.gaming_submit').css('display','block');
  
   });
   //<---- End Old user --->
@@ -740,6 +745,7 @@ jQuery(document).ready(function () {
   jQuery('.new_user_a_lazertag').on('click', function(){
     jQuery('.select2-container, .new_user_a_lazertag').css('display', 'none');
     jQuery('.lazertag_new_user, .old_user_a_lazertag').css('display', 'inline-block');
+    jQuery('.lazertag_submit').css('display','block');
 
     jQuery('.discount_per_lazertag').text(0);
     jQuery('.discount_lazertag').val(0);
@@ -778,6 +784,7 @@ jQuery(document).ready(function () {
     jQuery('.discount_per_lazertag').text('10%');
     jQuery('.discount_lazertag').val(10);
     lazertag_calculation(); 
+    jQuery('.lazertag_submit').css('display','block');
  
   });
 //<---- End Old user --->

@@ -598,7 +598,7 @@ if(isset($_POST['action']) AND $_POST['action'] == 'gaming_billing_submit'  ) {
 			<?php } else { ?>
 
 			<input type="hidden" name="action" id="" value="gaming_billing_submit"></br>
-			<input type="submit" name="submit" id="submit" class="player_add" class="submit" value="Submit">
+			<input type="submit" name="submit" style="display:none;" id="submit" class="player_add gaming_submit"  value="Submit">
 			<?php } ?>
 
 		</form>
