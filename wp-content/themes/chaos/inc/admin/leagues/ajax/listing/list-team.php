@@ -1,6 +1,6 @@
 <table class="wp-list-table widefat fixed " cellspacing="0" >
     <thead>
-        <tr style="background: rgb(229, 229, 229);color: #fff;">
+        <tr style="background: #23282d;color: #fff;">
             <th class="manage-column column-id"><span>S No</span></th>
             <th scope="col" id="wplc_name_colum" class="manage-column column-id"><span>Team Id</span></th>
             <th scope="col" id="wplc_name_colum" class="manage-column column-id"><span>Team Name</span></th>

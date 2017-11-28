@@ -51,7 +51,7 @@ if(isset($_POST['action']) AND $_POST['action'] == 'search_credit') {
 
     <table class="wp-list-table widefat fixed" cellspacing="0" >
         <thead>
-            <tr style="background: rgb(229, 229, 229);color: #fff;">
+            <tr style="background: #23282d;color: #fff;">
                 <th class="manage-column column-id"><span>S No</span></th>
                 <th scope="col" id="wplc_name_colum" class="manage-column column-id"><span>Game Name</span></th>
                
@@ -80,7 +80,7 @@ if(isset($_POST['action']) AND $_POST['action'] == 'search_credit') {
     }else {
     ?>  <table class="wp-list-table widefat fixed" cellspacing="0" >
             <thead>
-                <tr style=" text-align: center; background: rgb(229, 229, 229);color: #fff;">
+                <tr style=" text-align: center; background: #23282d;color: #fff;">
                     <h1 style="text-align: center;">No Data Found</h1>
                 </tr>
             </thead>
