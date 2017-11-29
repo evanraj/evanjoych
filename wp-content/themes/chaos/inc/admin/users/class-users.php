@@ -38,7 +38,7 @@ function user_list_pagination($arg) {
     }
 
     if($totalPage > 1) {
-        $data['start_count'] = ($arg['user_per_page'] * ($page-1));
+        $data['start_count'] = ($arg['items_per_page'] * ($page-1));
         $pagination = paginate_links( array(
                 'base' => add_query_arg( $page_arg , admin_url('admin.php?page=list_admin_users')), 
                 'format' => '',
