@@ -1,48 +1,59 @@
-<?php
-    $admin_users = new AdminUsers();
+<style>
+input{
+    margin: 3px;
+    padding: 3px 8px;
+}
 
-      if(isset($_POST['action']) && $_POST['action'] == 'football_listing') {
-        $receipt_per_page                           = $_POST['receipt_per_page'];
-        $member_name                                = $_POST['member_name'];
-        $member_number                              = $_POST['member_number'];
-        $football_bill_date                         = $_POST['football_bill_date'];
-        $bill_no                                    = $_POST['bill_no'];
-        $bill_amt                                   = $_POST['bill_amt'];
+#icons{
+    font-size: 34px;
+    color: #000;
+}
+.widget-top h4{
+    margin-left: 12px;
+}
+</style><?php
+      if(isset($_POST['action']) && $_POST['action'] == 'user_listing') {
+        $user_per_page                           = $_POST['user_per_page'];
+        $user_name                                = $_POST['user_name'];
+        $user_phone                              = $_POST['user_phone'];
+     
         
     
     } 
     else {
-        $receipt_per_page                       = isset( $_GET['receipt_per_page'] ) ? abs( (int) $_GET['receipt_per_page'] ) : 5;
-        $member_name                            = isset( $_GET['member_name'] ) ? $_GET['member_name']  : '';
-        $member_number                          = isset( $_GET['member_number'] ) ? $_GET['member_number']  : '';
-        $football_bill_date                     = isset( $_GET['football_bill_date'] ) ? $_GET['football_bill_date']  : '';
-        $bill_no                                = isset( $_GET['bill_no'] ) ? $_GET['bill_no']  : '';
-        $bill_amt                               = isset( $_GET['bill_amt'] ) ? $_GET['bill_amt']  : '';
-    
+        $user_per_page                       = isset( $_GET['user_per_page'] ) ? abs( (int) $_GET['user_per_page'] ) : 5;
+        $user_name                            = isset( $_GET['user_name'] ) ? $_GET['user_name']  : '';
+        $user_phone                          = isset( $_GET['user_phone'] ) ? $_GET['user_phone']  : '';    
     }
-
 
 ?>
 
-<div class="col-md-12 col-sm-12 col-xs-12">
-    <div class="x_panel">
-        <div class="x_title">
-            <h2>Admin Users <small>Custom design</small></h2>
-            <ul class="nav navbar-right panel_toolbox">
-                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                  </li>
-                <li><a class="close-link"><i class="fa fa-close"></i></a>
-                </li>
-            </ul>
-            <div class="clearfix"></div>     
-        </div>
-        <div class="lot_filter">
-        <?php
-            include( get_template_directory().'/inc/admin/users/ajax_loading/user-list.php');
-        ?>
-        </div>
-    </div>
+<div class="widget-top">
+    <h4>Customer List</h4>
 </div>
+
+<div class="search_bar employee_filter">
+    <label>Page :</label>
+    <select name="user_per_page" id="user_per_page">
+        <option value="5" <?php echo (isset($user_per_page) && $user_per_page == '5' ) ? 'selected' : ''; ?>>5</option>
+        <option value="10" <?php echo (isset($user_per_page) && $user_per_page == '10' ) ? 'selected' : ''; ?>>10</option>
+        <option value="15" <?php echo (isset($user_per_page) && $user_per_page == '15' ) ? 'selected' : ''; ?>>15</option>
+
+        <option value="20" <?php echo (isset($user_per_page) && $user_per_page == '20' ) ? 'selected' : ''; ?>>20</option>
+        <option value="50" <?php echo (isset($user_per_page) && $user_per_page == '50' ) ? 'selected' : ''; ?>>50</option>
+        <option value="100" <?php echo (isset($user_per_page) && $user_per_page == '100' ) ? 'selected' : ''; ?>>100</option>
+    </select>
+    <input type="text" name="user_name" id="user_name" autocomplete="off" placeholder="Member Name" size="40" value="<?php echo $user_name; ?>">
+    <input type="text" name="user_phone" id="user_phone" autocomplete="off" placeholder="Member Number" size="40" value="<?php echo $user_phone; ?>">
+    <span class="dashicons dashicons-search search_icons" id="icons" ></span>
+
+
+<div class="user_listing widget-content table-simple">
+    <?php 
+        include(get_template_directory() . '/inc/admin/users/ajax_loading/user-list.php');
+    ?>
+    <div class="clear"></div>
+</div>
+
+
+

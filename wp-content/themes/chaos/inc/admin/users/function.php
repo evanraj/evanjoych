@@ -247,5 +247,14 @@ when (key_value = 'foot_ball' or key_value = 'credit_notes' or key_value = 'laze
 
 }
 
+//Football Billing List
 
+function user_listing(){
+  include( get_template_directory().'/inc/admin/users/ajax_loading/user-list.php' );
+  die();
+}
+
+add_action( 'wp_ajax_user_listing','user_listing' );
+add_action( 'wp_ajax_nopriv_user_listing','user_listing' );
 ?>
+
