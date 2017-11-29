@@ -44,6 +44,17 @@ add_menu_page(
         9
     );
     add_submenu_page('add_redeem_points', 'Add Credit/Debit Notes', 'Add Credit/Debit Notes', 'manage_options', 'add_redeem_points', 'add_redeem_points' );
+
+     add_menu_page(
+        __( 'Point History', 'chaos'),
+        'Point History',
+        'manage_options',
+        'view_history',
+        'view_history',
+        'dashicons-pressthis',
+        9
+    );
+    add_submenu_page('view_history', 'Add Credit/Debit Notes', 'Add Credit/Debit Notes', 'manage_options', 'view_history', 'view_history' );
   
 
 }
@@ -67,6 +78,9 @@ function add_redeem_points(){
 	require get_template_directory() .'/inc/admin/users/redeem.php';	
 }
 
+function view_history(){
+	require get_template_directory() .'/inc/admin/users/history.php';
+}
 
 
 function create_admin_user() {
@@ -194,20 +208,53 @@ add_action( 'wp_ajax_nopriv_update_admin_user', 'update_admin_user' );
        
 }   
 
-function getMemberDetails($member_id = 0){
-global $wpdb;
-$member_table = $wpdb->prefix.'chaos_members';
-$query = "SELECT * FROM ${member_table} WHERE user_id = '$member_id'";
-$member_result = $wpdb->get_row($query);
-return $member_result;
+function getMemberDetails($member_id = 0) {
+	global $wpdb;
+	$member_table = $wpdb->prefix.'chaos_members';
+	$query = "SELECT * FROM ${member_table} WHERE user_id = '$member_id'";
+	$member_result = $wpdb->get_row($query);
+	return $member_result;
 
 }
 
 
-function getRedeemPoint(){
-	
+function getRedeemPoint($member_id = 0) {
+	global $wpdb;
+	$member_table = $wpdb->prefix.'chaos_members';
+	$query = "SELECT (case when  member_table.balance_points >= 1000 then 1 else 0 end ) as is_eligible,member_table.* FROM (SELECT `earned_points`,`redeem_points`,`balance_points`,first_name,user_id FROM {$member_table} WHERE `user_id`= $member_id) as member_table";
+	$member_result = $wpdb->get_row($query);
+	return $member_result;
 }
 
+function getPointHistory($member_id = 0){
+	global $wpdb;
+	$history_table = $wpdb->prefix.'chaos_credits_points';
+	$query = "SELECT `credit_points`,`date`,
+(case when key_value = 'debit_notes' or key_value = 'credit_notes'  then 'By Point Adjust' 
+when key_value = 'foot_ball'  then 'By Foot Ball Billing'
+when key_value = 'lazertag_bill'  then 'By Lazertag Billing'
+when key_value = 'gaming_bill' then 'By Gaming Billing'
+when key_value = 'redeem_table' then 'By Redeem'
+ else '' end
+) as key_value,
+(case when key_value = 'debit_notes'  or key_value = 'redeem_table'  then '-' 
+when (key_value = 'foot_ball' or key_value = 'credit_notes' or key_value = 'lazertag_bill' or key_value = 'gaming_bill')  then '+'
+ else '' end
+) as sign,
+(case when key_value = 'debit_notes' or key_value = 'redeem_table' then 'Redeem' else 'Earned' end) as type FROM {$history_table} WHERE `member_id` ={$member_id} and `active`=1 order by  `date` desc limit 20";
+	$history_result = $wpdb->get_results($query);
+	return $history_result;
 
+}
 
+//Football Billing List
+
+function user_listing(){
+  include( get_template_directory().'/inc/admin/users/ajax_loading/user-list.php' );
+  die();
+}
+
+add_action( 'wp_ajax_user_listing','user_listing' );
+add_action( 'wp_ajax_nopriv_user_listing','user_listing' );
 ?>
+

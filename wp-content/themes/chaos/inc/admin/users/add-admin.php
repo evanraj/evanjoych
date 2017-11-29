@@ -93,7 +93,7 @@ label{
 									</label>
 								</div>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="mobile" autocomplete="off" id="mobile" required  maxlength="10"  value="<?php echo get_user_meta($user->data->ID, 'mobile', true ); ?>" class="form-control col-md-7 col-xs-12">
+									<input type="text" name="mobile" autocomplete="off" id="mobile" onkeypress="return isNumberKey(event)" required  maxlength="10"  value="<?php echo get_user_meta($user->data->ID, 'mobile', true ); ?>" class="form-control col-md-7 col-xs-12">
 								</div>
 							</div>
 
@@ -103,7 +103,7 @@ label{
 									</label>
 								</div>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="email" autocomplete="off" id="email" required value="<?php echo ($user) ? $user->data->user_email : '';  ?>" class="form-control col-md-7 col-xs-12">
+									<input type="email" name="email" autocomplete="off" id="email" required value="<?php echo ($user) ? $user->data->user_email : '';  ?>" class="form-control col-md-7 col-xs-12">
 								</div>
 							</div>
 
@@ -117,7 +117,7 @@ label{
 									<select name="role" data-placeholder="Choose a Role..." class=""   class="form-control col-md-7 col-xs-12" style="width: 190px;">
 										<?php
 										$selected = '';
-										echo '<option value="">No Role</option>';
+										
 										foreach ($editable_roles as $key => $role_value) {
 											if($user && $current_role === $key) {
 												$selected = 'selected';
@@ -159,3 +159,15 @@ label{
 	</div>
 
 </div>
+
+<script type="text/javascript">
+
+function isNumberKey(evt)
+{
+  var charCode = (evt.which) ? evt.which : evt.keyCode;
+  if ((charCode < 48 || charCode > 57))
+     return false;
+
+  return true;
+}
+</script>

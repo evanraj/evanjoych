@@ -21,6 +21,12 @@
 
     if($_GET['action']=='delete'){
         $id = $_GET['id'];
+        
+        $query                      = "SELECT  member_id,lazertag_credit_points from $table where id = $id";
+        $get_data                   = $wpdb->get_row($query);
+        $lazertag_credit_points     = $get_data->lazertag_credit_points;
+        $member_id                  = $get_data->member_id;
+        $delete                     = deletebill($member_id,$lazertag_credit_points,'lazertag_bill',$_GET['id']);
         $data_delete=$wpdb->update( $table ,array( 'active' =>'0' ),array( 'id' => $id ));
     }
 

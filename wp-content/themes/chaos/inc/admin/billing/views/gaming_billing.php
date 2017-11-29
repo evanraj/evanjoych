@@ -13,7 +13,6 @@ $select_allocate = allocate_system_bill();
 $gaming_billing 			= $wpdb->prefix. 'chaos_gaming_billing';
 $gaming_billing_relation 	= $wpdb->prefix. 'chaos_gaming_billing_relation';
 $allocate_table 			= $wpdb->prefix. 'chaos_system_allocate';
-$credit_table  				= $wpdb->prefix. 'chaos_credits';
 
 if(isset($_POST['action']) AND $_POST['action'] == 'gaming_billing_submit'  ) {
 
@@ -33,16 +32,6 @@ if(isset($_POST['action']) AND $_POST['action'] == 'gaming_billing_submit'  ) {
 
 			$amount =  	$_POST['gaming_sub_tot'];
 			$credit = 	$amount/25;
-
-			$credit_data 	= array (
-			'member_id'  	=> $_POST['gaming_member_id'],
-			'bill_id' 		=> $_POST['gaming_billing_no'],
-			'game_name' 	=> 'gaming',
-			'amount' 		=> $amount,
-			'credit_points' => $credit,
-			);
-
-			$wpdb->insert($credit_table,$credit_data);
 
 			$add_points = updatePoints($_POST['gaming_member_id'],$credit);
 			$credit_point_table = addPointsInCreditPointsTable($_POST['gaming_member_id'],$credit,'gaming_bill',$_POST['billing_id']);
@@ -609,7 +598,7 @@ if(isset($_POST['action']) AND $_POST['action'] == 'gaming_billing_submit'  ) {
 			<?php } else { ?>
 
 			<input type="hidden" name="action" id="" value="gaming_billing_submit"></br>
-			<input type="submit" name="submit" id="submit" class="player_add" class="submit" value="Submit">
+			<input type="submit" name="submit" style="display:none;" id="submit" class="player_add gaming_submit"  value="Submit">
 			<?php } ?>
 
 		</form>

@@ -30,8 +30,74 @@ jQuery(document).ready(function () {
         return false;
     });
 
+    jQuery('.redeem_point').live('change keyup',function(){
+
+        var redeem = parseFloat(jQuery('.redeem_point').val());
+        var balance = parseFloat(jQuery('.balance_point').val());
+
+        if(redeem > balance ){
+            alert('Enter Available points!!!');
+            jQuery('.redeem_point').val('');
+        }
+
+
+    });
+
+
+      jQuery('#user_per_page,#user_name,#user_phone').on('change', function() {
+  
+         jQuery.ajax({
+            method: "POST",
+            url: frontendajax.ajaxurl,
+            data: {
+              action                                     : 'user_listing',
+              user_per_page                              : jQuery('#user_per_page').val(),
+              user_name                                  : jQuery('#user_name').val(),
+              user_phone                                 : jQuery('#user_phone').val(),
+            },
+            success: function (data) {
+              jQuery('.user_listing').html(data);
+            }
+          });
+
+  });
+
+//F icon Search bar
+  jQuery('.user_search_icons').on('click', function() {
+
+      jQuery.ajax({
+            method: "POST",
+            url: frontendajax.ajaxurl,
+            data: {
+              action                                     : 'user_listing',
+              user_per_page                              : jQuery('#user_per_page').val(),
+              user_name                                  : jQuery('#user_name').val(),
+              user_phone                                 : jQuery('#user_phone').val(),
+
+            },
+            success: function (data) {
+              jQuery('.user_listing').html(data);
+            }
+          });
+
+  });
+
+
 });
 
 function managePopupContent( data ) {
     window.location = data.redirect;
 }
+
+
+function keyPressed(e)
+{
+     var key;      
+     if(window.event)
+          key = window.event.keyCode; //IE
+     else
+          key = e.which; //firefox      
+
+     return (key != 13);
+}
+

@@ -5,7 +5,6 @@ $time = date('H:i');
 
 global $wpdb;
 $lazertag_billing 			= $wpdb->prefix. 'chaos_lazertag_billing';
-$credit_table  				= $wpdb->prefix. 'chaos_credits';
 
 
 $price_per_hour = getLazertagPrice('slot', $date, $time);
@@ -28,16 +27,6 @@ if(isset($_POST['action']) AND $_POST['action'] == 'lazertag_billing_submit'  ) 
 
 			$amount =  	$_POST['lazertag_total_value'];
 			$credit = 	$amount/25;
-
-			$credit_data 	= array (
-			'member_id'  	=> $_POST['lazertag_member_id'],
-			'bill_id' 		=> $_POST['lazertag_billing_no'],
-			'game_name' 	=> 'lazertag',
-			'amount' 		=> $amount,
-			'credit_points' => $credit,
-			);
-
-			$wpdb->insert($credit_table,$credit_data);
 			$add_points = updatePoints($_POST['lazertag_member_id'],$credit);
 			$credit_point_table = addPointsInCreditPointsTable($_POST['lazertag_member_id'],$credit,'lazertag_bill',$_POST['billing_id']);
 		}
@@ -540,7 +529,7 @@ if(isset($_POST['action']) AND $_POST['action'] == 'lazertag_billing_submit'  ) 
 			<?php } else { ?>
 
 			<input type="hidden" name="action" id="" value="lazertag_billing_submit"></br>
-			<input type="submit" name="submit" id="submit" class="player_add" class="submit" value="Submit">
+			<input type="submit" name="submit" id="submit" style="display:none;" class="player_add lazertag_submit"  value="Submit">
 			<?php } ?>
 
 		</form>

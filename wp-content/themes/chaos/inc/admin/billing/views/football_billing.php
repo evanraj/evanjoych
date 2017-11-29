@@ -5,9 +5,6 @@ $date = date('Y-m-d');
 $time = date('H:i');
 global $wpdb;
 $billing_table 			= $wpdb->prefix. 'chaos_football_billing';
-$credit_table  			= $wpdb->prefix. 'chaos_credits';
-$member_table  			= $wpdb->prefix. 'chaos_members';
-$credit_points_table  	= $wpdb->prefix. 'chaos_credits_points';
 
 $price_per_hour = getFootballPrice($date, $time);
 
@@ -30,16 +27,6 @@ if(isset($_POST['action']) AND $_POST['action'] == 'football_billing_submit'  ) 
 
 			$amount =  	$_POST['total_value'];
 			$credit = 	$_POST['total_value']/25;
-
-			$credit_data 	= array (
-			'member_id'  	=> $_POST['member_id'],
-			'bill_id' 		=> $_POST['billing_no'],
-			'game_name' 	=> 'football',
-			'amount' 		=> $amount,
-			'credit_points' => $credit,
-			);
-
-			$wpdb->insert($credit_table,$credit_data);
 
 			
 			$add_points = updatePoints($_POST['member_id'],$credit);
@@ -452,7 +439,7 @@ if(isset($_POST['action']) AND $_POST['action'] == 'football_billing_submit'  ) 
 			<?php } else { ?>
 
 			<input type="hidden" name="action" id="" value="football_billing_submit"></br>
-			<input type="submit" name="submit" id="submit" class="player_add" class="submit" value="Submit">
+			<input type="submit" name="submit" style="display:none;" id="submit" class="player_add football_submit" value="Submit">
 			<?php } ?>
 
 		</form>

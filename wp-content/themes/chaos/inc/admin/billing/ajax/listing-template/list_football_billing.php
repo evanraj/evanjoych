@@ -17,15 +17,18 @@
     <?php
     global $wpdb;
     $table = $wpdb->prefix. 'chaos_football_billing';
-    $member_table = $wpdb->prefix. 'chaos_members';
-    $history_table = $wpdb->prefix. 'chaos_credits_points';
+  
 
     if($_GET['action']=='delete'){
         $id = $_GET['id'];
-        $query = "SELECT  member_id,ft_credit_points from $table where id = $id";
-       
+        $query              = "SELECT  member_id,ft_credit_points from $table where id = $id";
 
-        $data_delete=$wpdb->update( $table ,array( 'active' =>'0' ),array( 'id' => $id ));
+        $get_data           = $wpdb->get_row($query);
+
+        $ft_credit_points   = $get_data->ft_credit_points;
+        $member_id          = $get_data->member_id;
+        $delete = deletebill($member_id,$ft_credit_points,'foot_ball',$_GET['id']);
+        $data_delete = $wpdb->update( $table ,array( 'active' =>'0' ),array( 'id' => $id ));
 
     }
 
