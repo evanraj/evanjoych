@@ -177,6 +177,7 @@ get_header(); ?>
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12">
                         <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
                             <p>2016 All rights reserved. Developed by <a href="http://ajnainfotech.com" target="_blank">Ajna Infotech</a></p>
                         </div>
                     </div>
