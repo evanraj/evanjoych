@@ -256,5 +256,14 @@ function user_listing(){
 
 add_action( 'wp_ajax_user_listing','user_listing' );
 add_action( 'wp_ajax_nopriv_user_listing','user_listing' );
+
+function getAllUserSelect(){
+	global $wpdb;
+	$member_table = $wpdb->prefix.'chaos_members';
+	$user_table = $wpdb->prefix.'users';
+	$query = "SELECT member.`membership_no`,user_table.user_login,member.user_id as id FROM {$member_table} as member left join {$user_table} as user_table on user_table.id=member.`user_id` WHERE active=1";
+	$member_result = $wpdb->get_results($query);
+	return $member_result;
+}
 ?>
 

@@ -44,11 +44,11 @@ input{
         <option value="100" <?php echo (isset($user_per_page) && $user_per_page == '100' ) ? 'selected' : ''; ?>>100</option>
     </select>
     <input type="text" name="user_name" id="user_name" autocomplete="off" placeholder="Member Name" size="40" value="<?php echo $user_name; ?>">
-    <input type="text" name="user_phone" id="user_phone" autocomplete="off" placeholder="Member Number" size="40" value="<?php echo $user_phone; ?>">
-    <span class="dashicons dashicons-search search_icons" id="icons" ></span>
+    <input type="text" name="user_phone" id="user_phone" autocomplete="off" placeholder="Phone" size="40" value="<?php echo $user_phone; ?>">
+    <span class="dashicons dashicons-search user_search_icons" id="icons" ></span>
 
 
-<div class="user_search_icons widget-content table-simple">
+<div class="user_listing widget-content table-simple">
     <?php 
         include(get_template_directory() . '/inc/admin/users/ajax_loading/user-list.php');
     ?>

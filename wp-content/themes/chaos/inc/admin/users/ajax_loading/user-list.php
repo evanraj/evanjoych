@@ -5,6 +5,7 @@
         <tr style="background: #23282d;color: #fff;">
             <th class="manage-column column-id"><span>S No</span></th>
             <th scope="col" id="wplc_name_colum" class="manage-column column-id"><span>Member Name</span></th>
+            <th scope="col" id="wplc_name_colum" class="manage-column column-id"><span>Phone</span></th>
             <th scope="col" id="wplc_name_colum" class="manage-column column-id"><span>Member Number</span></th>
             <th scope="col" id="wplc_name_colum" class="manage-column column-id"><span>Date</span></th>
             <th scope="col" id="wplc_name_colum" class="manage-column column-id"><span>Action</span></th>
@@ -64,6 +65,7 @@
         <td> <?php echo $per_page; ?></td>
         <td> <?php echo $d_value->first_name; ?></td>
         <td> <?php echo $d_value->phone; ?></td>
+        <td> <?php echo $d_value->membership_no; ?></td>
         <td> <?php echo $d_value->user_registered; ?></td>
         <td class="">
             <a href="<?php echo menu_page_url( 'add_redeem_points', 0 )."&user_id={$d_value->user_id}&action=member_data"; ?>">Redeem</a> /<a href="<?php echo menu_page_url( 'view_history', 0 )."&user_id={$d_value->user_id}&action=history";?>" >Point History</a>/
