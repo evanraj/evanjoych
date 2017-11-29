@@ -48,7 +48,7 @@ input{
     <span class="dashicons dashicons-search search_icons" id="icons" ></span>
 
 
-<div class="user_listing widget-content table-simple">
+<div class="user_search_icons widget-content table-simple">
     <?php 
         include(get_template_directory() . '/inc/admin/users/ajax_loading/user-list.php');
     ?>
