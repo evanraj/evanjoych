@@ -1,6 +1,10 @@
 <?php
- $authors = getAllUserSelect();
- 
+$args2 = array(
+ 'role' => 'member',
+ 'orderby' => 'id',
+ 'order' => 'ASC'
+);
+ $authors = get_users($args2);
  global $wpdb;
  $redeem_table = $wpdb->prefix.'chaos_redeem_points';
 
@@ -142,7 +146,7 @@ label{
 									<select name="user_id" id="user_id" style="width: 190px;height: 30px;">
 									<?php 
 										foreach ($authors as $user) { 
-											echo '<option value="'.$user->id.'">'.$user->membership_no.' - '.$user->user_login.'</option>';
+											echo '<option value="'.$user->id.'">'.$user->id.' - '.$user->user_login.'</option>';
 
 										}
 									?>
