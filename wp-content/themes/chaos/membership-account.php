@@ -10,7 +10,7 @@ $authors = getAllUserSelect();
 global $wpdb;
 $redeem_table = $wpdb->prefix.'chaos_redeem_points';
 global $user_ID, $user_identity; 
-$member_details = getMemberDetails($user_ID);
+
 
 
 if( isset($_POST['action']) && $_POST['action'] == 'redeem_data'  ) {
@@ -24,7 +24,7 @@ if( isset($_POST['action']) && $_POST['action'] == 'redeem_data'  ) {
  	$add_points = redeemPoints($_POST['member_id'],$_POST['redeem_point']);
 	$credit_point_table = addPointsInCreditPointsTable($_POST['member_id'],$_POST['redeem_point'],'redeem_table',$insert_id);
  }  
-
+$member_details = getMemberDetails($user_ID);
  $member_redeem_details = getRedeemPoint($user_ID);
 ?>
     <section class="ps-bg">
