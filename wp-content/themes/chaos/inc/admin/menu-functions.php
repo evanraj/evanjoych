@@ -27,15 +27,15 @@ function admin_menu_register(){
 //     add_submenu_page('add_chaos_member', 'Add Member', 'Add Member', 'manage_options', 'add_chaos_member', 'add_chaos_member');
 //     add_submenu_page('add_chaos_member', 'List Member', 'List Member', 'manage_options', 'list_chaos_member', 'list_chaos_member' );
 
-add_menu_page(
-        __( 'Credit Points', 'chaos'),
-        'Credit Points',
-        'manage_options',
-        'list_credits',
-        'list_credits',
-        'dashicons-star-half',
-        2
-    );
+// add_menu_page(
+//         __( 'Credit Points', 'chaos'),
+//         'Credit Points',
+//         'manage_options',
+//         'list_credits',
+//         'list_credits',
+//         'dashicons-star-half',
+//         2
+//     );
 
 
 

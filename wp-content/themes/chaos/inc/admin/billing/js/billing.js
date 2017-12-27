@@ -40,10 +40,10 @@ jQuery(document).ready(function () {
             var bill =jQuery('#billing_no').val(data.member_no); 
             jQuery('.billing_id').val(data.id);
             jQuery('.billing_no_div').text(data);
-
+           
             }
         });
-
+  
       })
 
   //<---- End new user --->
@@ -192,7 +192,7 @@ jQuery(document).ready(function () {
       }); 
       jQuery('.discount').val(10);
       calculation();    
-
+      jQuery('.football_submit').css('display','block');
     }); 
     //<---- End Select2---->
 
@@ -380,7 +380,7 @@ jQuery(document).ready(function () {
     }); 
     jQuery('.gaming_member_discount').val(10);
     gaming_calculation();    
-
+    jQuery('.gaming_submit').css('display','block');
   }); 
 
     //<---End Gaming select2--->
@@ -735,7 +735,7 @@ jQuery(document).ready(function () {
     }); 
     jQuery('.discount_lazertag').val(10);
     lazertag_calculation();
-
+    jQuery('.lazertag_submit').css('display','block');
   });
 
 
