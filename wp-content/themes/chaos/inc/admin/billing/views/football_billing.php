@@ -284,10 +284,9 @@ if(isset($_POST['action']) AND $_POST['action'] == 'football_billing_submit'  ) 
 				    <div class="div-table-row">
 					    <div class="div-table-head sl-no">S.No</div>
 					    <div class="div-table-head action">Hours</div>
-					    <div class="div-table-head action">No of players</div>
-					    <div class="div-table-head action">Value</div>
+					    <!-- <div class="div-table-head action">No of players</div> -->
+					    <div class="div-table-head action">Price</div>
 					    <div class="div-table-head action">Bill Amout</div>
-					   
 					</div>
 			    	<div data-repeater-item class="repeterin div-table-row">
 						<div class="div-table-col sale-rowno">
@@ -295,17 +294,16 @@ if(isset($_POST['action']) AND $_POST['action'] == 'football_billing_submit'  ) 
                             </div>
                             <div class="rowno">1</div>
                         </div>
-					     
 					    <div class="div-table-col">
                             <div class="no_of_player_in player">
                             	<input type="text" name="player" id="player" value="<?php if($_GET['action'] == 'update') { echo  $update_data ->ft_no_of_hours; } else { echo '1'; } ?>" class="no_of_player" value="1">
                             </div>
 					    </div>
-					     <div class="div-table-col">
+					     <!-- <div class="div-table-col">
                             <div class="no_of_player_in player">
-                            	<input type="text" name="no_of_members" id="no_of_members" value="<?php if($_GET['action'] == 'update') { echo  $update_data ->ft_no_of_member; } else { echo '1'; } ?>" value="1">
+                            	<input type="text" name="no_of_members" id="no_of_members" value="<?php //if($_GET['action'] == 'update') { echo  $update_data ->ft_no_of_member; } else { echo '1'; } ?>" value="1">
                             </div>
-					    </div>
+					    </div> -->
 					    <div class="div-table-col">
                             <input type="hidden" name="per_hour_price" id="per_hour_price" class="per_hour_price" value="<?php if($_GET['action'] =='update'){ echo $update_data->ft_amount_value; } else { echo $price_per_hour['price']; }?>">
                             <div class="football_in_price player">
@@ -331,8 +329,8 @@ if(isset($_POST['action']) AND $_POST['action'] == 'football_billing_submit'  ) 
 			        <div data-repeater-item class="repeterin div-table-row">
 						<div class="div-table-col sale-rowno">  </div>		                         			     
 					    <div class="div-table-col"></div>                            	    
-					    <div class="div-table-col"></div>                            	    
-					    <div class="div-table-col"> Vat/Cst( <?php echo $price_per_hour['vat']; ?> ) %</div> 
+					                               	    
+					    <div class="div-table-col"> GST( <?php echo $price_per_hour['vat']; ?> ) %</div> 
 					    <div class="div-table-col">
 					    	<input type="hidden" name="vat" id="vat" class="vat" value="<?php if($_GET['action'] == 'update'){
 					    		echo $update_data ->ft_vat;
@@ -361,7 +359,7 @@ if(isset($_POST['action']) AND $_POST['action'] == 'football_billing_submit'  ) 
 			        <div data-repeater-item class="repeterin div-table-row">
 						<div class="div-table-col sale-rowno">  </div>		                         			     
 					    <div class="div-table-col"></div>                            	    
-					    <div class="div-table-col"></div>                            	    
+					                               	    
 					    <div class="div-table-col"> Member Discount(<span id="discount_per" class="discount_per"></span>)</div>  
 					    <div class="div-table-col">
 					    	<input type="hidden" name="discount" id="discount" class="discount" value="<?php if($_GET['action'] == 'update'){
@@ -391,7 +389,7 @@ if(isset($_POST['action']) AND $_POST['action'] == 'football_billing_submit'  ) 
 			        <div data-repeater-item class="repeterin div-table-row">
 						<div class="div-table-col sale-rowno">  </div>		                         			     
 					    <div class="div-table-col"></div>                            	    
-					    <div class="div-table-col"></div>                            	    
+					    
 					    <div class="div-table-col">
 					     	Discount
 					     	<input type="text" name="discount_percentage" id="discount_percentage" class="discount_percentage" size="5" value="<?php if(($_GET['action'])=='update'){ echo floatval($update_data->ft_discount); } else { echo '0'; }?>"/>  %                                              
@@ -413,7 +411,7 @@ if(isset($_POST['action']) AND $_POST['action'] == 'football_billing_submit'  ) 
 			        <div data-repeater-item class="repeterin div-table-row">
 						<div class="div-table-col sale-rowno">  </div>	                         				     
 					    <div class="div-table-col"> </div>                           					    
-					    <div class="div-table-col"> </div>                           					    
+					                              					    
 					    <div class="div-table-col">Total </div>                           
 					    <div class="div-table-col">
 					    	<input type="hidden" name="final_bill" id="final_bill" class="final_bill" value="<?php echo $update_data ->ft_football_bill; ?>">

@@ -1,27 +1,25 @@
 <?php
- $authors = getAllUserSelect();
- global $wpdb;
- $redeem_table = $wpdb->prefix.'chaos_redeem_points';
-
+$authors = getAllUserSelect();
+global $wpdb;
+$redeem_table = $wpdb->prefix.'chaos_redeem_points';
 $memberData = false;
-
-
-if ( isset($_GET['action']) && $_GET['action'] == 'member_data') {
-	$memberData = getRedeemPoint($_GET['user_id']);
-
-}
 
 if( isset($_POST['action']) && $_POST['action'] == 'redeem_data' ) {
  	$redeem_data = array(
  		'member_id' => $_POST['member_id'],
  		'redeemed_point' =>$_POST['redeem_point'],
- 		'balance_point'=>$_POST['balance_point'],
+ 		'balance_point'=>$_POST['balance_point'], 
+ 		'description'=>$_POST['description'], 
  		);
  	$wpdb->insert($redeem_table,$redeem_data);
  	$insert_id = $wpdb->insert_id;
  	$add_points = redeemPoints($_POST['member_id'],$_POST['redeem_point']);
 	$credit_point_table = addPointsInCreditPointsTable($_POST['member_id'],$_POST['redeem_point'],'redeem_table',$insert_id);
  }
+
+if ( isset($_GET['action']) && $_GET['action'] == 'member_data') {
+	$memberData = getRedeemPoint($_GET['user_id']);
+}
  ?>
 
 
@@ -69,17 +67,17 @@ label{
 				</div>
 				<div class="x_content">
 					<form class="form-horizontal form-label-left " action="" method="POST" id="" onKeyPress="return keyPressed(event)">
-						<div class="user_form_up">
-
+						<div class="user_form_up">							
+							<input type="hidden" name="member_id" value="<?php echo $memberData->user_id; ?>"/>
 							<div class="form-group user_form">
 								<div>
-									<label class="" for="first-name">Earned Points 
+									<label class="" for="first-name">Balance Point <span class="required"></span>
 									</label>
 								</div>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="hidden" name="member_id" value="<?php echo $memberData->user_id; ?>"/>
-								<?php echo $memberData->earned_points; ?>	
-								</div>
+									<input type="hidden" name="balance_point" value="<?php echo $memberData->balance_points; ?>" class="balance_point" />
+								<?php echo $memberData->balance_points; ?>	
+								</div>								
 							</div>
 							<div class="form-group user_form">
 								<div>
@@ -92,22 +90,18 @@ label{
 							</div>
 							<div class="form-group user_form">
 								<div>
-									<label class="" for="first-name">Balance Point <span class="required"></span>
+									<label class="" for="first-name">Description</span>
 									</label>
 								</div>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="hidden" name="balance_point" value="<?php echo $memberData->balance_points; ?>" class="balance_point" />
-								<?php echo $memberData->balance_points; ?>	
+									<input type="text" name="description" class="description"  />	
 								</div>
-								
-							</div>
+							</div>							
 						</div>
 						<div class="form-group">
-							<div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-3">
-	                          	
+							<div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-3">	                          	
 	                          <?php if($memberData->is_eligible == '1'){ ?><input type="submit" class="player_add" id="submit" value="Submit"> <?php }else { echo'<span style="color:red;font-size:14px;font-weight:bold;">You are not eligible to redeem your points.You need 1000 points to get eligiblity</span>'; } ?>
 	                          	<input type="hidden" name="action" class="action" value="redeem_data">
-
 	                        </div>
 						</div>
 
@@ -120,7 +114,6 @@ label{
 </div>
 <?php } else {  ?>
 <div class="container">
-
 	<div class="row">
 		<div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">
 			<div class="x_panel">
@@ -131,40 +124,31 @@ label{
 				<div class="x_content">
 					<form class="form-horizontal form-label-left admin_submit" action="" method="GET" id="" onKeyPress="return keyPressed(event)" >
 						<div class="user_form_up">
-
 							<div class="form-group user_form">
 								<div>
-									<label class="" for="first-name">Member Id <span class="required">*</span>
+									<label class="" for="first-name">Member Id / Name <span class="required">*</span>
 									</label>
 								</div>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<select name="user_id" id="user_id" style="width: 190px;height: 30px;">
-									<?php 
-										foreach ($authors as $user) { 
-											echo '<option value="'.$user->id.'">'.$user->membership_no.' - '.$user->user_login.'</option>';
-
-										}
-									?>
-									</select>
+									<!-- <span class="billing" style="padding: 1px;"><label>Member Name:</label></span> -->
+									<!-- <input type="hidden" name="member_id" id="member_id" class="member_id" value=""> -->
+									<span class="billing_in">
+										<select style="width: 300px;"  class="search_billing" name="user_id" id="search_billing"></select>
+									</span>									
 								</div>
 							</div>
-
 						<div class="form-group">
-							<div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-3">
-	                          	
+							<div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-3">	                          	
 	                          	<input type="submit" class="player_add" id="submit" value="Submit"/>
 	                          	<input type="hidden" name="action" class="action" value="member_data"/>
 	                          	<input type="hidden" name="page" class="page" value="add_redeem_points"/>
-
 	                        </div>
 						</div>
-
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
-
 </div>
 
 <?php }  ?>

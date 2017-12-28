@@ -85,18 +85,21 @@ label{
 
 							<div class="form-group user_form">
 								<div>
-									<label class="" for="first-name">Member Id <span class="required">*</span>
+									<label class="" for="first-name">Member Id / Name<span class="required">*</span>
 									</label>
 								</div>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<select name="user_id" id="user_id" style="width: 190px;height: 30px;">
+								<span class="billing_in">
+										<select style="width: 300px;"  class="search_billing" name="user_id" id="search_billing"></select>
+								</span>
+									<!--<select name="user_id" id="user_id" style="width: 190px;height: 30px;">
 									<?php 
-										foreach ($authors as $user) { 
-											echo '<option value="'.$user->id.'">'.$user->membership_no.' - '.$user->user_login.'</option>';
+										// foreach ($authors as $user) { 
+										// 	echo '<option value="'.$user->id.'">'.$user->membership_no.' - '.$user->user_login.'</option>';
 
-										}
+										// }
 									?>
-									</select>
+									</select> -->
 								</div>
 							</div>
 							<div class="form-group user_form">

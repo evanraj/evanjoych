@@ -66,7 +66,7 @@ label
 					<div><input type="text" name="gaming_head_weekend" id="gaming_head_weekend" value="<?php echo displaySettings('gaming_head_weekend'); ?>" /></div>
 				</div>
 				<div class="football_pricing_in">
-					<div class="label_top"><label>Vat/Cst</label></div>
+					<div class="label_top"><label>GST</label></div>
 					<div><input type="text" name="gaming_vat_cst" id="gaming_vat_cst" value="<?php echo displaySettings('gaming_vat_cst'); ?>" />  % </div>
 				</div>
 			</div>

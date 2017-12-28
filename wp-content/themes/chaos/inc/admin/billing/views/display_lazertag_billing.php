@@ -103,7 +103,7 @@ if(isset($_GET['action']) AND $_GET['action'] == 'display_lazertag' ) {
 					    <div class="div-table-head sl-no">S.No</div>
 					    <div class="div-table-head action">No of member/Team</div>
 					    <div class="div-table-head action">Hours/Game</div>
-					    <div class="div-table-head action">Value</div>
+					    <div class="div-table-head action">Price</div>
 					    <div class="div-table-head action">Bill Amout</div>
 					   
 					</div>
@@ -139,7 +139,7 @@ if(isset($_GET['action']) AND $_GET['action'] == 'display_lazertag' ) {
 						<div class="div-table-col sale-rowno">  </div>		                         			     
 					    <div class="div-table-col"></div>                            	    
 					    <div class="div-table-col"></div>                            	    
-					    <div class="div-table-col">Vat/Cst</div>  
+					    <div class="div-table-col">GST</div>  
 					    <div class="div-table-col">
 					    	<?php echo $update_data ->lazertag_vat_value; ?>                    
 					    </div>  

@@ -282,7 +282,7 @@
 								<td></td>
 								<td></td>
 								<td>
-									<label>Vat/Cst &nbsp;(Rs)</label>
+									<label>GST &nbsp;(Rs)</label>
 								</td>
 								<td><?php  echo $mylink->gaming_vat_val; ?></td>
 							</tr>

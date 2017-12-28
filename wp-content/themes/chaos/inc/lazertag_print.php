@@ -263,7 +263,7 @@
 								<td></td>
 								<td></td>
 								<td>
-									<label>Vat/Cst &nbsp;(Rs)</label>
+									<label>GST &nbsp;(Rs)</label>
 								</td>
 								<td><?php  echo $mylink->lazertag_vat_value;?></td>
 							</tr>

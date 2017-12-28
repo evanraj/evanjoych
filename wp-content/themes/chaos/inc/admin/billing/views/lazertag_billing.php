@@ -355,7 +355,7 @@ if(isset($_POST['action']) AND $_POST['action'] == 'lazertag_billing_submit'  ) 
 					    <div class="div-table-head sl-no">S.No</div>
 					    <div class="div-table-head action">No of member/Team</div>
 					    <div class="div-table-head action">Hours/Game</div>
-					    <div class="div-table-head action">Value</div>
+					    <div class="div-table-head action">Price</div>
 					    <div class="div-table-head action">Bill Amout</div>
 					   
 					</div>
@@ -426,7 +426,7 @@ if(isset($_POST['action']) AND $_POST['action'] == 'lazertag_billing_submit'  ) 
 						<div class="div-table-col sale-rowno">  </div>		                         			     
 					    <div class="div-table-col"></div>                            	    
 					    <div class="div-table-col"></div>                            	    
-					    <div class="div-table-col"> Vat/Cst(<?php echo $price_per_hour['vat']; ?>) %</div>  
+					    <div class="div-table-col"> GST(<?php echo $price_per_hour['vat']; ?>) %</div>  
 					    <div class="div-table-col">
 					    	<input type="hidden" name="lazertag_vat" id="lazertag_vat" class="lazertag_vat" value="<?php if($update_data){
 					    		echo floatval($update_data->lazertag_vat);

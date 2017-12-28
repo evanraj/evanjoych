@@ -106,7 +106,7 @@ label
 					<div><input type="text" name="football_hour_weekend" id="football_hour_weekend" value="<?php echo displaySettings('football_hour_weekend'); ?>" /></div>
 				</div>
 				<div class="football_pricing_in">
-					<div class="label_top"><label>Vat/Cst</label></div>
+					<div class="label_top"><label>GST</label></div>
 					<div><input type="text" name="football_vat_cst" id="football_vat_cst" value="<?php echo displaySettings('football_vat_cst'); ?>" /> % </div>
 				</div>
 			</div>
@@ -131,7 +131,7 @@ label
 					    <div class="div-table-head sl-no">S.No</div>   
 					    <div class="div-table-head ">Start Time</div>
 					    <div class="div-table-head ">End Time</div>
-					    <div class="div-table-head ">Value</div>
+					    <div class="div-table-head ">Price</div>
 					    
 					   
 					</div>

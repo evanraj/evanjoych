@@ -240,8 +240,8 @@
 						<tr>
 							<th class="first-col">S.No</th>
 							<th>Hours</th>
-							<th>Players</th>
-							<th>Value</th>
+							
+							<th>Price</th>
 							<th>Bill Amount</th>
 						</tr>
 					</thead>
@@ -250,7 +250,7 @@
 						<?php 
 					        echo "<tr><td class='div-table-col'>1</td>";
                             echo "<td class='div-table-col'>".$mylink->ft_no_of_hours."</td>";
-                            echo "<td class='div-table-col'>".$mylink->ft_no_of_member."</td>";
+                            
                             echo "<td class='div-table-col'>".$mylink->ft_amount_value."</td>";
                             echo "<td class='div-table-col'>".$mylink->ft_total."</td></tr>";
 
@@ -258,16 +258,16 @@
                         <tr>
 							<td></td>
 							<td></td>
-							<td></td>
+							
 							<td>
-								<label>Vat/Cst &nbsp;(Rs)</label>
+								<label>GST &nbsp;(Rs)</label>
 							</td>
 							<td><?php  echo $mylink->ft_vat_value;?></td>
 						</tr>
 						<tr>
 							<td></td>
 							<td></td>
-							<td></td>
+							
 							<td>
 								<label>Member Discount &nbsp;(Rs)</label>
 							</td>
@@ -276,7 +276,7 @@
 						<tr>
 							<td></td>
 							<td></td>
-							<td></td>
+							
 							<td>
 								<label>Discount &nbsp;(Rs)</label>
 							</td>
@@ -285,7 +285,7 @@
 						<tr>
 							<td></td>
 							<td></td>
-							<td></td>
+							
 							<td>
 								<label>Total &nbsp;(Rs)</label>
 							</td>

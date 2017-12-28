@@ -95,8 +95,8 @@ if(isset($_GET['action']) AND $_GET['action'] == 'display_football'  ) {
 				    <div class="div-table-row">
 					    <div class="div-table-head sl-no">S.No</div>
 					    <div class="div-table-head action">Hours</div>
-					    <div class="div-table-head action">Players</div>
-					    <div class="div-table-head action">Value</div>
+					    <!-- <div class="div-table-head action">Players</div> -->
+					    <div class="div-table-head action">Price</div>
 					    <div class="div-table-head action">Bill Amout</div>
 					   
 					</div>
@@ -112,11 +112,11 @@ if(isset($_GET['action']) AND $_GET['action'] == 'display_football'  ) {
                             	<?php echo  $update_data ->ft_no_of_hours; ?>
                             </div>
 					    </div>
-					    <div class="div-table-col">
+					    <!-- <div class="div-table-col">
                             <div class="no_of_player player">
-                            	<?php echo  $update_data ->ft_no_of_member; ?>
+                            	<?php //echo  $update_data ->ft_no_of_member; ?>
                             </div>
-					    </div>
+					    </div> -->
 					    <div class="div-table-col">
 					    <?php echo $update_data ->ft_amount_value; ?>
 					    </div>
@@ -131,8 +131,8 @@ if(isset($_GET['action']) AND $_GET['action'] == 'display_football'  ) {
 			         <div data-repeater-item class="repeterin div-table-row">
 						<div class="div-table-col sale-rowno">  </div>		                         			     
 					    <div class="div-table-col"></div>                            	    
-					    <div class="div-table-col"></div>                            	    
-					    <div class="div-table-col">Vat/Cst(<?php echo round($update_data ->ft_vat,1); ?>) %</div>  
+					                              	    
+					    <div class="div-table-col">GST(<?php echo round($update_data ->ft_vat,1); ?>) %</div>  
 					    <div class="div-table-col">
                            	<div class="discount" id="discount">
 	                           	<?php 
@@ -149,7 +149,7 @@ if(isset($_GET['action']) AND $_GET['action'] == 'display_football'  ) {
 			        <div data-repeater-item class="repeterin div-table-row">
 						<div class="div-table-col sale-rowno">  </div>		                         			     
 					    <div class="div-table-col"></div>                            	    
-					    <div class="div-table-col"></div>                            	    
+					                               	    
 					    <div class="div-table-col">Member Discount</div>  
 					    <div class="div-table-col">
                            	<div class="discount" id="discount">
@@ -167,7 +167,7 @@ if(isset($_GET['action']) AND $_GET['action'] == 'display_football'  ) {
 			        <div data-repeater-item class="repeterin div-table-row">
 						<div class="div-table-col sale-rowno">  </div>		                         			     
 					    <div class="div-table-col"></div>                            	    
-					    <div class="div-table-col"></div>                            	    
+					                              	    
 					    <div class="div-table-col"> Discount</div>  
 					    <div class="div-table-col">
                            	<div class="discount" id="discount">
@@ -185,8 +185,7 @@ if(isset($_GET['action']) AND $_GET['action'] == 'display_football'  ) {
 			        </div>
 			        <div data-repeater-item class="repeterin div-table-row">
 						<div class="div-table-col sale-rowno">  </div>	                         				     
-					    <div class="div-table-col"> </div>                           					    
-					    <div class="div-table-col"> </div>                           					    
+					    <div class="div-table-col"> </div>                           					    					                               					    
 					    <div class="div-table-col">Total </div>                           
 					    <div class="div-table-col">
 					    	<input type="hidden" name="final_bill" id="final_bill" class="final_bill" value="<?php $update_data ->ft_football_bill; ?>">

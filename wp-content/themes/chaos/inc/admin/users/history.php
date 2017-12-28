@@ -108,40 +108,28 @@ label{
 				<div class="x_content">
 					<form class="form-horizontal form-label-left admin_submit" action="" method="GET" id="" onKeyPress="return keyPressed(event)" >
 						<div class="user_form_up">
-
 							<div class="form-group user_form">
 								<div>
-									<label class="" for="first-name">Member Id <span class="required">*</span>
+									<label class="" for="first-name">Member Id / Name<span class="required">*</span>
 									</label>
 								</div>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<select name="user_id" id="user_id" style="width: 190px;height: 30px;">
-									<?php 
-										foreach ($authors as $user) { 
-											echo '<option value="'.$user->id.'">'.$user->membership_no.' - '.$user->user_login.'</option>';
-
-										}
-									?>
-									</select>
+									<span class="billing_in">
+										<select style="width: 300px;"  class="search_billing" name="user_id" id="search_billing"></select>
+									</span>									
 								</div>
 							</div>
-
 						<div class="form-group">
 							<div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-3">
-	                          	
 	                          	<input type="submit" class="player_add" id="submit" value="Submit"/>
 	                          	<input type="hidden" name="action" class="action" value="history"/>
 	                          	<input type="hidden" name="page" class="page" value="view_history"/>
-
 	                        </div>
 						</div>
-
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
-
 </div>
-
 <?php }  ?>

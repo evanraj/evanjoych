@@ -342,7 +342,7 @@ if(isset($_POST['action']) AND $_POST['action'] == 'gaming_billing_submit'  ) {
 					    <div class="div-table-head action">No of member</div>
 					    <div class="div-table-head action">Actual Played Hours</div>
 					    <div class="div-table-head action">Hours</div>
-					    <div class="div-table-head action">Value</div>
+					    <div class="div-table-head action">Price</div>
 					    <div class="div-table-head action">Bill Amout</div>
 					   
 					</div>
@@ -498,7 +498,7 @@ if(isset($_POST['action']) AND $_POST['action'] == 'gaming_billing_submit'  ) {
 			        </div>
 			         <div class="div-table-row">            	    
 					    <div class="div-table-col" style="width: 1253px;"></div>  
-					    <div class="div-table-col" style="width: 219px;">Vat/Cst(<?php echo $price_per_hour['vat']; ?>) %</div>  
+					    <div class="div-table-col" style="width: 219px;">GST(<?php echo $price_per_hour['vat']; ?>) %</div>  
 					    <div class="div-table-col" style="width: 218px;">
 					    	<input type="hidden" name="gaming_vat" id="gaming_vat" class="gaming_vat" value="<?php if($update_data){ echo $update_data->gaming_vat; } else { echo $price_per_hour['vat']; } ?>">
 					    	<input type="hidden" name="gaming_vat_value" id="gaming_vat_value" class="gaming_vat_value" value="<?php if($update_data){ echo $update_data->gaming_vat_val; }  else { echo '0'; }?>">
