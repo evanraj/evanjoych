@@ -13,7 +13,7 @@
     if($_GET['action'] == 'lazertag_print') {
     $bill_no        			= isset( $_GET['bill_no'] ) ? $_GET['bill_no']  : '';
 	}
-	$mylink          		= $wpdb->get_row( "SELECT * FROM $lazertag_billing  where lazertag_bill_no='$bill_no' AND active = 1 and was_bulid = 1" );
+	$mylink          		= $wpdb->get_row( "SELECT * FROM $lazertag_billing  where id='$bill_no' AND active = 1 and was_bulid = 1" );
 
 
 	$number = $mylink->lazertag_bill;
@@ -202,7 +202,7 @@
 				  		<div class="logo">
 				  			<center><img style="width:60%;" src="<?php echo get_template_directory_uri().'/inc/img/chaos_logo.png'; ?>"></center>
 				  		</div>
-				  		<div class="address">Old no:57 New no:38, Balaraman Road, Adyar,Chennai-600020</div>
+				  		<div class="address">CHAOS ENTERTAINMENT <BR/> Old no:57 New no:38, Balaraman Road, Adyar,Chennai-600020</div>
 			  		</div>
 		  		</div>
 		  		<div class="top_menu_right" style="height: 167px;border-bottom: 1px solid rgba(0, 0, 0, 0.29);">
@@ -213,12 +213,16 @@
 			  		</div>
 			  		<div class="logo_border_right_down" style="margin-left: 5px;">
 				  		<div class="top_menu_right_in" style="margin-top:5px;">
-				  			<div class="tin">TIN No</div>
-				  			<div>: 33600863401</div>
+				  			<div class="tin">GSTIN No</div>
+				  			<div>: 33AAMFC0405F1Z2</div>
 				  		</div>
 				  		<div class="top_menu_right_area" style="margin-top:5px;">
-				  			<div class="tin">Area Code</div>
-				  			<div>: 044 </div>
+				  			<div class="tin">PAN No</div>
+				  			<div>: AAMFC0405F </div>
+				  		</div>
+				  		<div class="top_menu_right_area" style="margin-top:5px;">
+				  			<div class="tin">SAC</div>
+				  			<div>: 999652 </div>
 				  		</div>
 			  		</div>
 		  		</div>
@@ -233,6 +237,24 @@
 						<li><div class="content">Date </div><div>: <?php echo $mylink->lazertag_date;?></div> </li>
 						<li><div class="content">Member Name  </div><div>: <?php echo $mylink->lazertag_member_name;?></div></li>
 						<li><div class="content">Phone Number  </div><div>: <?php echo $mylink->lazertag_member_phone_number;?></div></li>
+						<?php if($mylink->lazertag_member_email != ''){ ?><li><div class="content">Email</div><div>: <?php echo $mylink->lazertag_member_email;?></div></li> <?php } ?>
+						<?php if($mylink->lazertag_member_address != ''){ ?> <li><div class="content">Address</div><div>: <?php echo $mylink->lazertag_member_address;?></div></li> <?php } ?>
+						<?php if($mylink->lazertag_member_gst != ''){ ?> <li><div class="content">Gst Number</div><div>: <?php echo $mylink->lazertag_member_gst;?></div></li> <?php } ?>
+						<?php if($mylink->lazertag_member_pan != ''){ ?> <li><div class="content">Pan</div><div>: <?php echo $mylink->lazertag_member_pan;?></div></li> <?php } ?>
+						<li><div class="content">Playing Area  </div><div>: <?php
+						if($mylink->area1 == 'console'){
+							echo 'Console Gaming(PS4),';
+						} 
+						if ($mylink->area2 == 'vr') {
+							echo 'VR Gaming,';
+						} 
+						if ($mylink->area3 == 'motion') {
+							echo 'Retro & Motion Sensor Game';
+						} 
+						else{
+							echo '';
+						}
+						?></div></li>
 					</ul>
 				</div>	
 				<div style="clear:both;"></div>
@@ -244,7 +266,7 @@
 								<th class="first-col">S.No</th>
 								<th>Members</th>
 								<th>Hours</th>
-								<th>Value</th>
+								<th>Per Game/Member</th>
 								<th>Bill Amount</th>
 							</tr>
 						</thead>
@@ -258,33 +280,39 @@
 	                            echo "<td class='div-table-col'>".$mylink->lazertag_total."</td></tr>";
 
 	                        ?>
-	                        <tr>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td>
-									<label>GST &nbsp;(Rs)</label>
-								</td>
-								<td><?php  echo $mylink->lazertag_vat_value;?></td>
-							</tr>
+	                        <?php if($mylink ->lazertag_member_discount_value != '0.00'){ ?>
 							<tr>
 								<td></td>
 								<td></td>
 								<td></td>
 								<td>
-									<label>Member Discount &nbsp;(Rs)</label>
+									<label>Member Discount &nbsp;(<?php echo $mylink->lazertag_member_discount.' %'; ?>)</label>
 								</td>
 								<td><?php  echo $mylink->lazertag_member_discount_value;?></td>
 							</tr>
+							<?php } ?>
+							<?php if($mylink ->lazertag_discount_value != '0.00'){ ?>
 							<tr>
 								<td></td>
 								<td></td>
 								<td></td>
 								<td>
-									<label>Discount &nbsp;(Rs)</label>
+									<label>Discount &nbsp;(<?php echo $mylink->lazertag_discount.' %'; ?>)</label>
 								</td>
 								<td><?php  echo $mylink->lazertag_discount_value;?></td>
 							</tr>
+							<?php } ?>
+							<?php if($mylink ->lazertag_gst_value != '0.00'){ ?>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td>
+									<label>GST (<?php echo $mylink ->lazertag_gst.' %'; ?>)</label>
+								</td>
+								<td><?php  echo $mylink->lazertag_gst_value;?></td>
+							</tr>
+							<?php } ?>
 							<tr>
 								<td></td>
 								<td></td>

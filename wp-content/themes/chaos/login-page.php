@@ -177,7 +177,7 @@
                                         <?php global $userdata; //echo get_avatar($userdata->ID, 60); ?>
                                         <?php 
                                           $member_details = getMemberDetails(2);
-                                          var_dump($member_details);
+                                          // var_dump($member_details);
                                         ?>
                                     </div>
                                     <div class="userinfo">

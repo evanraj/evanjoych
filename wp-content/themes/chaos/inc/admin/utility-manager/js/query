@@ -1,5 +1,7 @@
 <?PHP 
-/*SELECT *, DATEDIFF( DATE(tot.next_pay_date), CURDATE() ) as days_remain, 
+global $wpdb;
+$chaos_utility = $wpdb->prefix. 'chaos_utility';
+$query = " SELECT *, DATEDIFF( DATE(tot.next_pay_date), CURDATE() ) as days_remain, 
 
 (CASE 
  WHEN DATEDIFF( DATE(tot.next_pay_date), CURDATE() ) >= tot.ut_alert_days
@@ -24,7 +26,7 @@ from ( SELECT
  
  
  
-from wp_chaos_utility as u 
+from ${chaos_utility} as u 
 
 JOIN 
 
@@ -38,7 +40,7 @@ THEN 0
 ELSE 1
 END ) as was_postponded, cu1.id as cu1_id 
 
-FROM wp_chaos_utility as cu1 ) as p 
+FROM ${chaos_utility} as cu1 ) as p 
 
 ON u.id = p.cu1_id WHERE u.active = 1 ) as tot WHERE (CASE 
  WHEN DATEDIFF( DATE(tot.next_pay_date), CURDATE() ) >= tot.ut_alert_days
@@ -46,5 +48,21 @@ ON u.id = p.cu1_id WHERE u.active = 1 ) as tot WHERE (CASE
  WHEN DATEDIFF( DATE(tot.next_pay_date), CURDATE() ) < 0 
  THEN 0
  ELSE 1
-END ) > 0*/
+END ) > 0 ";
+$UtilityRemainder = $wpdb->get_results($query);
+foreach ($UtilityRemainder as $ur) {
+	if($ur->under_alert == 1){
+		$email 			= $ur->ut_emailid;
+		$name 			= $ur->ut_name;
+		$person_name 	= $ur->ut_person_name;
+		$amount 		= $ur->ut_amount;
+		$utility_type 	= $ur->ut_utility_type;
+		$status 		= $ur->ut_utility_status;
+		$status_date 	= $ur->ut_postponed_days;
+		$payment_method = $ur->ut_payment_method;
+		$next_pay_date 	= $ur->next_pay_date;
+		$days_remain 	= $ur->days_remain;
+
+	}
+}
 ?>

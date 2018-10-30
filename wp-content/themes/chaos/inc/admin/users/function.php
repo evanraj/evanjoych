@@ -9,52 +9,52 @@ add_action('admin_menu', 'admin_menu_register_user');
 
 function admin_menu_register_user(){
 
-
+global $src_capabilities;
 add_menu_page(
         __( 'Member', 'chaos'),
         'Member',
-        'manage_options',
+        $src_capabilities['admin_user']['permission']['add_admin'],
         'add_admin',
         'add_admin',
         'dashicons-businessman',
         9
     );
-    add_submenu_page('add_admin', 'New Member', 'New  Member', 'manage_options', 'add_admin', 'add_admin' );
-    add_submenu_page('add_admin', 'Member List', 'Member List', 'manage_options', 'list_admin_users', 'list_admin_users' );
+    add_submenu_page('add_admin', 'New Member', 'New  Member', $src_capabilities['admin_user']['permission']['add_admin'], 'add_admin', 'add_admin' );
+    add_submenu_page('add_admin', 'Member List', 'Member List', $src_capabilities['admin_user']['permission']['add_admin'], 'list_admin_users', 'list_admin_users' );
  
 
  add_menu_page(
         __( 'Credit/Debit Notes', 'chaos'),
         'Credit/Debit Notes',
-        'manage_options',
+        $src_capabilities['add_cd']['permission']['add_credit_debit'],
         'add_credit_debit',
         'add_credit_debit',
         'dashicons-universal-access',
         9
     );
-    add_submenu_page('add_credit_debit', 'Add Credit/Debit Notes', 'Add Credit/Debit Notes', 'manage_options', 'add_credit_debit', 'add_credit_debit' );
+    add_submenu_page('add_credit_debit', 'Add Credit/Debit Notes', 'Add Credit/Debit Notes', $src_capabilities['add_cd']['permission']['add_credit_debit'], 'add_credit_debit', 'add_credit_debit' );
 
     add_menu_page(
         __( 'Redeem Points', 'chaos'),
         'Redeem Points',
-        'manage_options',
+        $src_capabilities['add_redeem']['permission']['add_redeem_points'],
         'add_redeem_points',
         'add_redeem_points',
         'dashicons-universal-access',
         9
     );
-    add_submenu_page('add_redeem_points', 'Add Credit/Debit Notes', 'Add Credit/Debit Notes', 'manage_options', 'add_redeem_points', 'add_redeem_points' );
+    add_submenu_page('add_redeem_points', 'Add Credit/Debit Notes', 'Add Credit/Debit Notes', $src_capabilities['add_redeem']['permission']['add_redeem_points'], 'add_redeem_points', 'add_redeem_points' );
 
      add_menu_page(
         __( 'Point History', 'chaos'),
         'Point History',
-        'manage_options',
+        $src_capabilities['history']['permission']['view_history'],
         'view_history',
         'view_history',
         'dashicons-pressthis',
         9
     );
-    add_submenu_page('view_history', 'Add Credit/Debit Notes', 'Add Credit/Debit Notes', 'manage_options', 'view_history', 'view_history' );
+    add_submenu_page('view_history', 'Add Credit/Debit Notes', 'Add Credit/Debit Notes', $src_capabilities['history']['permission']['view_history'], 'view_history', 'view_history' );
   
 
 }
@@ -113,6 +113,7 @@ function create_admin_user() {
 	        'first_name' 	=> 	$params['first_name'],
 	        'membership_no' =>	$member_id,
 	        'phone'  		=> 	$params['mobile'],
+	        'email'  	    => 	$params['email'],
 	        );
 	    $wpdb->insert($member_table,$member_data);
 	    $id = $wpdb->insert_id;
@@ -153,11 +154,11 @@ function update_admin_user() {
 
 	if( $user ) {
 
-		$user_name = $params['user_name'];
-		$password = $params['password'];
-		$mobile = $params['mobile'];
-		$email = $params['email'];
-		$user_role = $params['role'];
+		$user_name 		= $params['user_name'];
+		$password 		= $params['password'];
+		$mobile 		= $params['mobile'];
+		$email 			= $params['email'];
+		$user_role 		= $params['role'];
 
 		$u = new WP_User( $user_id );
 		$u->remove_role( $current_role );
@@ -171,12 +172,9 @@ function update_admin_user() {
 	        );
 	    $wpdb->update($member_table,$member_data,array('user_id'=> $user_id ));
 
-
-
-
-		$data['success'] = 1;
-		$data['msg'] 	= 'User Detail Updated!';
-		$data['redirect'] = network_admin_url( 'admin.php?page=list_admin_users');
+		$data['success'] 	= 1;
+		$data['msg'] 		= 'User Detail Updated!';
+		$data['redirect'] 	= network_admin_url( 'admin.php?page=list_admin_users');
 	}
 
 
@@ -211,7 +209,7 @@ add_action( 'wp_ajax_nopriv_update_admin_user', 'update_admin_user' );
 function getMemberDetails($member_id = 0) {
 	global $wpdb;
 	$member_table = $wpdb->prefix.'chaos_members';
-	$query = "SELECT * FROM ${member_table} WHERE user_id = '$member_id'";
+	$query = "SELECT * FROM ${member_table} WHERE id = '$member_id'";
 	$member_result = $wpdb->get_row($query);
 	return $member_result;
 
@@ -221,7 +219,7 @@ function getMemberDetails($member_id = 0) {
 function getRedeemPoint($member_id = 0) {
 	global $wpdb;
 	$member_table = $wpdb->prefix.'chaos_members';
-	$query = "SELECT (case when  member_table.balance_points >= 1000 then 1 else 0 end ) as is_eligible,member_table.* FROM (SELECT `earned_points`,`redeem_points`,`balance_points`,first_name,user_id FROM {$member_table} WHERE `user_id`= $member_id) as member_table";
+	$query = "SELECT (case when  member_table.balance_points >= 1000 then 1 else 0 end ) as is_eligible,member_table.* FROM (SELECT id,`earned_points`,`redeem_points`,`balance_points`,first_name,user_id FROM {$member_table} WHERE `id`= $member_id) as member_table";
 	$member_result = $wpdb->get_row($query);
 	return $member_result;
 }
@@ -242,6 +240,8 @@ when (key_value = 'foot_ball' or key_value = 'credit_notes' or key_value = 'laze
  else '' end
 ) as sign,
 (case when key_value = 'debit_notes' or key_value = 'redeem_table' then 'Redeem' else 'Earned' end) as type FROM {$history_table} WHERE `member_id` ={$member_id} and `active`=1 order by  `date` desc limit 20";
+
+
 	$history_result = $wpdb->get_results($query);
 	return $history_result;
 

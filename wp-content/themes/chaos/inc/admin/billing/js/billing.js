@@ -2,70 +2,215 @@
 //<------ Start Football Billing jQuery Functions---->
 
 jQuery(document).ready(function () {
-
-
 //<--- Start Date Picker---->
-  jQuery('#billing_date,.football_bill_date,#gaming_billing_date,.gaming_bill_date,.lazertag_bill_date').datepicker({
+    jQuery('.football_bill_date,#football_bill_date_to,#gaming_billing_date,.gaming_bill_date,.gaming_bill_date_to,.lazertag_bill_date,.lazertag_bill_date_to,.gaming_date,.billing_date').datepicker({
         dateFormat: 'yy-mm-dd'
     });
 
 //<--- End Date Picker---->
-  
-
-  //<---- Start new user --->
- 
-
-    jQuery('.new_user_a').on('click', function(){
-        jQuery('.select2-container, .new_user_a').css('display', 'none');
-        jQuery('.new_user, .old_user_a').css('display', 'inline-block');
-        jQuery('.football_submit').css('display','block');
-
-        jQuery('.discount_per').text(0);
-        jQuery('.discount').val(0);
-        calculation(); 
-        jQuery.ajax({
-            method: "POST",
-            dataType: 'json',
-            url: frontendajax.ajaxurl,
-            data: {
-                action                           : 'ft_member_insert',
-                member_id                        : '',
-                name                             : '',
-                phone                            : '',
-                membership_no                    : '',
-                billing_date                     : '',
-            },
-            success: function (data) {
-
-            var bill =jQuery('#billing_no').val(data.member_no); 
-            jQuery('.billing_id').val(data.id);
-            jQuery('.billing_no_div').text(data);
-           
-            }
-        });
-  
-      })
-
-  //<---- End new user --->
-
 //<---- Start New user --->
     jQuery('.old_user_a').on('click', function(){
-      jQuery('.select2-container, .new_user_a').css('display', 'inline-block');
-      jQuery('.new_user, .old_user_a').css('display', 'none');
-
-      jQuery('.discount_per').text('10%');
-      jQuery('.discount').val(10);
-      calculation(); 
-      jQuery('.football_submit').css('display','block');
+        jQuery('.select2-container, .new_user_a').css('display', 'none');
+        jQuery('.new_user, .old_user_a').css('display', 'inline-block');
+        Football_billing(); 
+        jQuery('.football_submit').css('display','block');
  
-  })
-    //<---- End Old user --->
+    });
+//<---- End Old user --->
+//<-------- search customer using name and mobile------>   
+    jQuery( "#new_search_billing" ).autocomplete ({
 
- //<---- Start Search bar --->
+        source: function( request, response ) {
+            jQuery.ajax({
+              url       : frontendajax.ajaxurl,
+              type      : 'POST',
+              dataType  : "json",
+              data      : {
+                action      : 'searchMember',
+                search_key  : request.term
+              },
+                success: function( data ) {
+                    response(jQuery.map( data.result, function( item ) {
+                        return {
+                            id: item.id,
+                            value: item.first_name,
+                            name : item.first_name,
+                            phone : item.phone,
+                            membership_no : item.membership_no,
+                            email_id : item.email,
+                           
+                        }
+                    }));
+                }
+
+            });
+        },
+        minLength: 1,
+        select: function( event, ui ) {
+          jQuery('#new_search_billing').val(ui.item.value);
+          jQuery('#phone_number').val(ui.item.phone);
+          jQuery('#old_member_name').val(ui.item.name);
+          jQuery('#member_id').val(ui.item.id);
+          jQuery('#member_no').val(ui.item.membership_no);
+          jQuery('.member_email').val(ui.item.email_id);
+          var date          = jQuery('#billing_date').val(); 
+          Football_billing();    
+          jQuery('.football_submit').css('display','block');
+        }
+    });
 
 
-  jQuery('#receipt_per_page,#member_name,#member_number, #football_bill_date,#bill_no,#bill_amt').on('change', function() {
-    console.log(jQuery('#member_name').val());
+//Call Calculation function when enter Hours
+
+    jQuery('.no_of_player,.discount_percentage').on('click change',function() {
+        Football_billing();
+    });
+//<--- End Call Function --->
+
+
+//<---- Start Print Function ---->
+
+    jQuery('#football_print').on('click', function() {
+        var bill_id=jQuery('#bill_id').val();
+        var phone=jQuery('#ft_phone').val();
+      
+       var datapass =  printajax.internalprint+'/football-print/?bill_id='+bill_id+'&action=football_print';
+      // billing_list_single
+        var thePopup = window.open( datapass, "Customer Listing","scrollbars=yes,menubar=0,location=0,top=50,left=300,height=500,width=750" );
+        thePopup.print(); 
+    });
+
+     jQuery('#football_report_print').on('click', function() {
+        var date_from = jQuery('#football_bill_date').val();
+        var date_to   = jQuery('#football_bill_date_to').val();
+      
+        var datapass =  printajax.internalprint+'/football-report/?date_from='+date_from+'&date_to='+ date_to +'&action=football_report';
+      // billing_list_single
+        var thePopup = window.open( datapass, "Customer Listing","scrollbars=yes,menubar=0,location=0,top=50,left=300,height=500,width=750" );
+        thePopup.print(); 
+    });
+
+     jQuery('#lazertag_report_print').on('click', function() {
+        var date_from = jQuery('#lazertag_bill_date').val();
+        var date_to   = jQuery('#lazertag_bill_date_to').val();
+      
+        var datapass =  printajax.internalprint+'/lazertag-report/?date_from='+date_from+'&date_to='+ date_to +'&action=lazertag_report';
+      // billing_list_single
+        var thePopup = window.open( datapass, "Customer Listing","scrollbars=yes,menubar=0,location=0,top=50,left=300,height=500,width=750" );
+        thePopup.print(); 
+    });
+    jQuery('#gaming_report_print').on('click', function() {
+        var date_from = jQuery('#gaming_bill_date').val();
+        var date_to   = jQuery('#gaming_bill_date_to').val();
+      
+        var datapass =  printajax.internalprint+'/gaming-report/?date_from='+date_from+'&date_to='+ date_to +'&action=gaming_report';
+      // billing_list_single
+        var thePopup = window.open( datapass, "Customer Listing","scrollbars=yes,menubar=0,location=0,top=50,left=300,height=500,width=750" );
+        thePopup.print(); 
+    });
+
+    // jQuery('#football_sms').on('click', function() {
+    //     var bill_id = jQuery('#bill_id').val();
+    //     var phone   = jQuery('#ft_phone').val();
+    //     var date   = jQuery('#date').val();
+    //     var time   = jQuery('#time').val();
+    //     var phone   = jQuery('#phone').val();
+    //     var phone   = jQuery('#ft_phone').val();
+    //     if(phone !=''){
+    //       sendSms(phone,bill_id,name,time,date,'football','book');
+    //     }
+    //      else {
+    //       alert('Phone number Dose not Exists!!!');
+    //      }
+    // });
+
+    jQuery(document).on('change click','#football_sms_list',function() {
+
+        var bill_id = jQuery(this).attr('data-id');
+        var phone   = jQuery(this).attr('data-phone');
+        var name   = jQuery(this).attr('data-name');
+        var time   = jQuery(this).attr('data-time');
+        var date   = jQuery(this).attr('data-date');
+        if(phone !=''){
+            sendSms(phone,bill_id,name,time,date,'football','book');
+        }
+         else {
+            alert('Phone number Dose not Exists!!!');
+         }
+    });
+    // jQuery('#lazertag_sms').on('click', function() {
+    //     var bill_id = jQuery('#lazertag_bill_id').val();
+    //     var phone   = jQuery('#lazertag_phone').val();
+    //     if(phone !=''){
+    //       sendSms(phone,bill_id);
+    //     }
+    //      else {
+    //       alert('Phone number Dose not Exists!!!');
+    //      }
+    // });
+      jQuery(document).on('change click','#football_sms_list_cancel',function() {
+        
+        var bill_id = jQuery(this).attr('data-id');
+        var phone   = jQuery(this).attr('data-phone');
+        var name   = jQuery(this).attr('data-name');
+        var time   = jQuery(this).attr('data-time');
+        var date   = jQuery(this).attr('data-date');
+        if(phone !=''){
+          if(confirm("Are you sure you want to Cancel this slot?"));
+            {
+              sendSms(phone,bill_id,name,time,date,'football','cancel');
+            }
+        }
+         else {
+            alert('Phone number Dose not Exists!!!');
+         } 
+        
+    });
+
+      jQuery(document).on('change click','#lazertag_sms_list_cancel',function() {
+        
+        var bill_id = jQuery(this).attr('data-id');
+        var phone   = jQuery(this).attr('data-phone');
+        var name   = jQuery(this).attr('data-name');
+        var time   = jQuery(this).attr('data-time');
+        var date   = jQuery(this).attr('data-date');
+        if(phone !=''){
+          if(confirm("Are you sure you want to Cancel this slot?"));
+            {
+              sendSms(phone,bill_id,name,time,date,'lazertag','cancel');
+            }
+        }
+         else {
+            alert('Phone number Dose not Exists!!!');
+         } 
+        
+    });
+
+    
+    jQuery(document).on('change click','#lazertag_sms_list',function() {
+
+        var bill_id = jQuery(this).attr('data-id');
+        var phone   = jQuery(this).attr('data-phone');
+        var name   = jQuery(this).attr('data-name');
+        var time   = jQuery(this).attr('data-time');
+        var date   = jQuery(this).attr('data-date');
+        if(phone !=''){
+          sendSms(phone,bill_id,name,time,date,'lazertag','book');
+        }
+         else {
+          alert('Phone number Dose not Exists!!!');
+         }
+    });
+
+//<---- End Print Function ---->
+
+});
+  
+//<---- Start Search bar --->
+
+
+  jQuery('#receipt_per_page,#member_name,#member_number, #football_bill_date,#football_bill_date_to,#bill_no,#bill_amt').live('change', function() {
+    console.log(jQuery('#member_name').val()); 
          jQuery.ajax({
             method: "POST",
             url: frontendajax.ajaxurl,
@@ -75,6 +220,7 @@ jQuery(document).ready(function () {
               member_name                                   : jQuery('#member_name').val(),
               member_number                                 : jQuery('#member_number').val(),
               football_bill_date                            : jQuery('#football_bill_date').val(),
+              football_bill_date_to                            : jQuery('#football_bill_date_to').val(),
               bill_no                                       : jQuery('#bill_no').val(),
               bill_amt                                      : jQuery('#bill_amt').val(),
 
@@ -87,7 +233,7 @@ jQuery(document).ready(function () {
   });
 
 //F icon Search bar
-  jQuery('.search_icons').on('click', function() {
+  jQuery('.search_icons').live('click', function() {
 
       jQuery.ajax({
             method: "POST",
@@ -98,6 +244,7 @@ jQuery(document).ready(function () {
               member_name                                   : jQuery('#member_name').val(),
               member_number                                 : jQuery('#member_number').val(),
               football_bill_date                            : jQuery('#football_bill_date').val(),
+                football_bill_date_to                            : jQuery('#football_bill_date_to').val(),
               bill_no                                       : jQuery('#bill_no').val(),
               bill_amt                                      : jQuery('#bill_amt').val(),
 
@@ -121,325 +268,52 @@ jQuery(document).ready(function () {
   });
    //<--- End Delete Billling --->
 
-
-//Select 2 
-    jQuery(".search_billing").select2({
-            multiple: false,
-            minimumInputLength: 1,
-            allowClear: true,
-            placeholder: "Search Member",
-
-            ajax: {
-                type: 'POST',
-                url: frontendajax.ajaxurl,
-                delay: 250,
-                dataType: 'json',
-                data: function(params) {
-                    return {
-                        action: 'searchMember', // search term
-                        page: 1,
-                        search_key: params.term,
-
-                    };
-                },
-                processResults: function(data) {
-                    var results = [];
-
-                    return {
-                        results: jQuery.map(data.items, function(obj) {
-                          
-                            return { id: obj.user_id,name:obj.user_login, phone:obj.phone, membership_no:obj.membership_no};
-                        })
-                    };
-                },
-                cache: true,
-            },
-            initSelection: function (element, callback) {
-                callback({ id: '-', name: 'Search Member' });
-            },
-            templateResult: formatCustomerNamea,
-            templateSelection: formatCustomerNamea
-    }).on('select2:select', function (e) {
-      var phone         = jQuery('#phone_number').val(e.params.data.phone);
-      var name          = jQuery('#old_member_name').val(e.params.data.name);
-      var id            = jQuery('#member_id').val(e.params.data.id);
-      var membership_no = jQuery('#member_no').val(e.params.data.membership_no);
-      var date          = jQuery('#billing_date').val(); 
-   
-      
-
-      jQuery.ajax({
-        method: "POST",
-        dataType: 'json',
-        url: frontendajax.ajaxurl,
-        data: {
-          action                           : 'ft_member_insert',
-          member_id                        : e.params.data.id,
-          name                             : e.params.data.name,
-          phone                            : e.params.data.phone,
-          membership_no                    : e.params.data.membership_no,
-          billing_date                     : date,
-
-        },
-        success: function (data) {
-        var bill = jQuery('#billing_no').val(data.member_no);
-        jQuery('.billing_id').val(data.id);
-        jQuery('.discount').val(10);
-        jQuery('.discount_per').text('10%');
-                
-        }
-
-      }); 
-      jQuery('.discount').val(10);
-      calculation();    
-      jQuery('.football_submit').css('display','block');
-    }); 
-    //<---- End Select2---->
-
-//Call Calculation function when enter Hours
-
-    jQuery('.no_of_player,.discount_percentage').on('change',function() {
-
-    calculation();
-  });
-//<--- End Call Function --->
-
-
-//<---- Start Print Function ---->
-
-jQuery('#football_print').on('click', function() {
-      var bill_no=jQuery('#bill_no').text();
-      var datapass =  printajax.internalprint+'/football-print/?bill_no='+bill_no+'&action=football_print';
-
-      // billing_list_single
-      var thePopup = window.open( datapass, "Customer Listing","scrollbars=yes,menubar=0,location=0,top=50,left=300,height=500,width=750" );
-        thePopup.print(); 
-    });
-
-// jQuery.ajax({
-//             method: "POST",
-//             url: frontendajax.ajaxurl,
-//             data: {
-//               action                           : 'footballPricing',
-//             },
-//             success: function (data) {
-//               jQuery('.football').val(data);
-//               jQuery('.football_in').text(data);
-//             }
-//           });
-
-
-//<---- End Print Function ---->
-
-});
-  
-
-
- function formatCustomerNamea (state) {
-        if (!state.id) {
-            return state.id;
-        }
-        var $state = jQuery(
-        '<span>' +
-          state.name +
-        '</span>'
-        );
-        return $state;
-    };
-
-    function formatCustomerNameb (state) {
-        if (!state.id) {
-            return state.id;
-        }
-        var $state = jQuery(
-        '<span>' +
-          state.id +
-        '</span>'
-        );
-        return $state;
-    };
-    function calculation() {
-            var no_of_player    = jQuery('.no_of_player').val();
-            var bill            = jQuery('.per_hour_price').val();    
-            var value           = bill * no_of_player;
-            jQuery('.total_value').text(value);
-            jQuery('.total_value').val(value);
-            var vat             = jQuery('.vat').val();
-            var vat_value       = (value * vat)/100;
-            var after_vat_value = parseFloat(vat_value) + parseFloat(value);
-            jQuery('.vat_value').text(vat_value);
-            jQuery('.vat_value_input').val(vat_value);
-            var disconut        = parseFloat(jQuery('.discount_percentage').val())
-            if( disconut == 0 ) {
-
-                var member_discount=parseFloat(jQuery('.discount').val());
-                var after_discount =(after_vat_value*member_discount)/100;
-                jQuery('.after_discount').val(after_discount);
-                jQuery('.discount').text(after_discount);
-                jQuery('.discount_value').val(0);
-                jQuery('.discount_value').text(0);
-                jQuery('.discount_per').text(jQuery('.discount').val() +'%');
-               
-
-            }
-            else {
-                jQuery('.after_discount').val(0);
-                jQuery('.discount_per').text(0);
-                jQuery('.discount').text(0);
-                var after_discount=(after_vat_value*disconut)/100;
-                jQuery('.discount_value').val(after_discount);
-                jQuery('.discount_value').text(after_discount);
-            }
-
-            var final= Math.ceil(after_vat_value-after_discount);
-            jQuery('.final_bill').text(final);
-            jQuery('.final_bill').val(final);
-           
-
-    }
-
-//<------ End Football Billing jQuery Functions---->
-
-
   //
   //<-- Start Gaming jQuery functions----->
   //
 
 
 jQuery(document).ready(function () {
+//<---- Start Print Function ---->
+    jQuery('#gaming_print').on('click', function() {
+        var bill_no   = jQuery('.gaming_bill_no_display').val();
+        var id        = jQuery('.gaming_id').val();
+        var datapass  =  printajax.internalprint+'/gaming-print/?bill_no='+bill_no+'&action=gaming_print';
 
-//<---Start Gaming select2--->
+          // billing_list_single
+        var thePopup = window.open( datapass, "Customer Listing","scrollbars=yes,menubar=0,location=0,top=50,left=300,height=500,width=750" );
+            thePopup.print(); 
+    });
 
-    jQuery(".search_gaming_billing").select2({
-          multiple: false,
-          minimumInputLength: 1,
-          allowClear: true,
-          placeholder: "Search Member",
+//<---- End Print Function ---->
 
-          ajax: {
-              type: 'POST',
-              url: frontendajax.ajaxurl,
-              delay: 250,
-              dataType: 'json',
-              data: function(params) {
-                  return {
-                      action: 'searchMember', // search term
-                      page: 1,
-                      search_key: params.term,
 
-                  };
-              },
-              processResults: function(data) {
-                  var results = [];
-
-                  return {
-                      results: jQuery.map(data.items, function(obj) {
-                          return { id: obj.user_id, name:obj.user_login, phone:obj.phone, membership_no:obj.membership_no};
-                      })
-                  };
-              },
-              cache: true,
-          },
-          initSelection: function (element, callback) {
-              callback({ id: '-', name: 'Search Member' });
-          },
-          templateResult: formatCustomerNamea,
-          templateSelection: formatCustomerNamea
-    }).on('select2:select', function (e) {
-
-    var phone         = jQuery('#gaming_phone_number').val(e.params.data.phone);
-    var name          = jQuery('#gaming_old_member_name').val(e.params.data.name);
-    var id            = jQuery('#gaming_member_id').val(e.params.data.id);
-    var membership_no = jQuery('#gaming_member_no').val(e.params.data.membership_no);
-    var date          = jQuery('#gaming_billing_date').val(); 
-
-    
-
-    jQuery.ajax({
-      method: "POST",
-      dataType: 'json',
-      url: frontendajax.ajaxurl,
-      data: {
-        action                           : 'gaming_member_insert',
-        member_id                        : e.params.data.id,
-        name                             : e.params.data.name,
-        phone                            : e.params.data.phone,
-        membership_no                    : e.params.data.membership_no,
-        billing_date                     : date,
-
-      },
-      success: function (data) {
-
-      var bill = jQuery('.gaming_billing_no').val(data.member_no);
-      jQuery('.billing_id').val(data.id);
-      jQuery('.gaming_member_discount').val(10);
-      jQuery('.gaming_member_discount_per').text('10%');
-              
-      }
-
-    }); 
-    jQuery('.gaming_member_discount').val(10);
-    gaming_calculation();    
-    jQuery('.gaming_submit').css('display','block');
-  }); 
-
-    //<---End Gaming select2--->
-
-     //<---- Start new user --->
- 
-
-    jQuery('.new_user_a_gaming').on('click', function(){
-        jQuery('.select2-container, .new_user_a_gaming').css('display', 'none');
-        jQuery('.gaming_new_user, .old_user_a_gaming').css('display', 'inline-block');
-        jQuery('.gaming_submit').css('display','block');
-
-        jQuery('.gaming_member_discount_per').text(0);
-        jQuery('.gaming_member_discount').val(0);
-        gaming_calculation(); 
+//<------Toggle Button ---->
+    jQuery('.togBtn').on('change', function(){
+        var on_off    = jQuery(this).prop('checked');
+        var id        = jQuery(this).attr('data-sysid');
+        var category  = jQuery(this).attr('data-catid');
         jQuery.ajax({
-          method: "POST",
-          dataType: 'json',
-          url: frontendajax.ajaxurl,
-          data: {
-            action                           : 'gaming_member_insert',
-            member_id                        : '',
-            name                             : '',
-            phone                            : '',
-            membership_no                    : '',
-            billing_date                     : '',
-          },
-          success: function (data) {
-
-            var bill =jQuery('.gaming_billing_no').val(data.member_no);
-            jQuery('.billing_id').val(data.id);
-            var bill =jQuery('.gaming_billing_no_div').text(data);
-            
-
-          }
+            method: "POST",
+            url: frontendajax.ajaxurl,
+            data: {
+                action                           : 'allocate',
+                system_id                        : id,
+                start_time                       : jQuery('.allocate_date').val(),
+                end_time                         : jQuery('.allocate_date').val(),
+                allocate                         : on_off,
+                inv_id                           : jQuery('.inv_id').val(),
+                pc_category                      : category,
+            },
+            success: function (member_no) {        
+            }
         });
-  });
-
-//<---- End new user --->
-
-//<---- Start New user --->
-  jQuery('.old_user_a_gaming').on('click', function(){
-
-    jQuery('.select2-container, .new_user_a_gaming').css('display', 'inline-block');
-    jQuery('.gaming_new_user, .old_user_a_gaming').css('display', 'none');
-
-    jQuery('.gaming_member_discount_per').text('10%');
-    jQuery('.gaming_member_discount').val(10);
-    gaming_calculation(); 
-    jQuery('.gaming_submit').css('display','block');
- 
-  });
-  //<---- End Old user --->
-
-
+    });
+//<---- End Toggle Button ----->
 //<---- Start Search bar --->
 
 
-  jQuery('#gaming_per_page,#gaming_member_name,#gaming_member_number, #gaming_bill_date,#gaming_bill_no,#gaming_bill_amt').on('change', function() {
+  jQuery('#gaming_per_page,#gaming_member_name,#gaming_member_number, #gaming_bill_date,#gaming_bill_date_to,#gaming_bill_no,#gaming_bill_amt').on('change', function() {
          jQuery.ajax({
             method: "POST",
             url: frontendajax.ajaxurl,
@@ -449,6 +323,7 @@ jQuery(document).ready(function () {
               gaming_member_name                           : jQuery('#gaming_member_name').val(),
               gaming_member_number                         : jQuery('#gaming_member_number').val(),
               gaming_bill_date                             : jQuery('#gaming_bill_date').val(),
+              gaming_bill_date_to                          : jQuery('#gaming_bill_date_to').val(),
               gaming_bill_no                               : jQuery('#gaming_bill_no').val(),
               gaming_bill_amt                              : jQuery('#gaming_bill_amt').val(),
 
@@ -472,6 +347,7 @@ jQuery(document).ready(function () {
             gaming_member_name                           : jQuery('#gaming_member_name').val(),
             gaming_member_number                         : jQuery('#gaming_member_number').val(),
             gaming_bill_date                             : jQuery('#gaming_bill_date').val(),
+            gaming_bill_date_to                          : jQuery('#gaming_bill_date_to').val(),
             gaming_bill_no                               : jQuery('#gaming_bill_no').val(),
             gaming_bill_amt                              : jQuery('#gaming_bill_amt').val(),
 
@@ -484,176 +360,13 @@ jQuery(document).ready(function () {
   });
  ////<---- End Search bar --->
 
-//<--- Start Delete Billling --->
-    jQuery('.c-delete-gaming').live( "click", function() {
-        if(confirm('Are you sure you want to delete this element?')){
-            var data=jQuery(this).attr("data-id");
-            window.location.replace('admin.php?page=view_gaming_billing&id='+data+'&action=delete');
-        }
-
-    });
-   //<--- End Delete Billling --->
-
-
-
-
-//<---- Start Print Function ---->
-
-    jQuery('#gaming_print').on('click', function() {
-      console.log(jQuery('.gaming_bill_no').val());
-        var bill_no   = jQuery('.gaming_bill_no_display').val();
-        var id        = jQuery('.gaming_id').val();
-        var datapass  =  printajax.internalprint+'/gaming-print/?bill_no='+bill_no+'&id='+id+'&action=gaming_print';
-
-          // billing_list_single
-        var thePopup = window.open( datapass, "Customer Listing","scrollbars=yes,menubar=0,location=0,top=50,left=300,height=500,width=750" );
-            thePopup.print(); 
-    });
-
-//<---- End Print Function ---->
-
-
-//<------Toggle Button ---->
-jQuery('.togBtn').on('change', function(){
-  var on_off = jQuery(this).prop('checked');
-  var id     = jQuery(this).attr('data-sysid');
-
-  jQuery.ajax({
-      method: "POST",
-      url: frontendajax.ajaxurl,
-      data: {
-        action                           : 'allocate',
-        system_id                        : id,
-        start_time                       : jQuery('.allocate_date').val(),
-        end_time                         : jQuery('.allocate_date').val(),
-        allocate                         : on_off,
-       
-
-      },
-      success: function (member_no) {
-              
-      }
-
-    });
-});
-//<---- End Toggle Button ----->
-jQuery('.pc_list').live('change',function() {
-  var selector = jQuery(this).parent().parent().parent();
-
-
-    var system_id = selector.find( ".pc_list option:selected" ).val();
-    jQuery.ajax({
-        method: "POST",
-        dataType: 'json',
-        url: frontendajax.ajaxurl,
-        data: {
-          action            : 'calculate_sys_time',
-          allocate_id       : system_id,
-          date              : jQuery( ".bill_current_time" ).val(),
-        },
-        success: function (data) {
-
-          selector.find('.actual_played_hours_val').val(data.actual_hours);
-          selector.find('.actual_played_hours').text(data.actual_hours);
-          selector.find('.hours_gaming').val(data.billed_hours).change();
-          
-        }
-    });
-
-    jQuery.ajax({
-        method: "POST",
-        dataType: 'json',
-        url: frontendajax.ajaxurl,
-        data: {
-          action            : 'getGamingPrice',
-          allocate_id       : system_id,
-        },
-        success: function (data) {
-
-          jQuery('.per_hour_price_gaming').val(data.price);
-          
-        }
-    });
-
-   
-});
-
 //Call Calculation function when enter Hours
     jQuery('.hours_gaming').live('change',function() {
-
-      gaming_row_calculation(jQuery(this).parent().parent().parent());
-
-    });
-
-    jQuery('.gaming_total_value').live('change',function() {
-      gaming_calculation();
-    });
-
-    jQuery('.gaming_discount').on('change',function(){ 
-      gaming_calculation();
+        var selector = jQuery(this).parent().parent().parent();
+        playing_hours(selector);
     });
 //<--- End Call Function --->
-
 });
-
-
-function gaming_row_calculation(selector = '') {
-  var no_hours = selector.find('.hours_gaming').val();
-  var price = jQuery('.per_hour_price_gaming').val();
-  var tot_bill = (price * no_hours);
-
-  selector.find('.gaming_total_value').val(tot_bill).change();
-  selector.find('.gaming_total_value_text').text(tot_bill);
-}
-
-function gaming_calculation() {
-  var sub_tot = parseFloat(0); 
-  jQuery('.gaming_total_value').each(function(){
-    sub_tot = sub_tot + parseFloat(jQuery(this).val());
-    console.log(sub_tot);
-  });
-
-  jQuery('.gaming_sub_tot').val(sub_tot);
-  jQuery('.gaming_sub_tot').text(sub_tot);
-  var vat       = jQuery('.gaming_vat').val();
-  var vat_value = (sub_tot*vat)/100;
-  jQuery('.gaming_vat_value').val(vat_value);
-  jQuery('.gaming_vat_txt').text(vat_value);
-  var after_vat_value = parseFloat(vat_value) + parseFloat(sub_tot);
-  var discount = jQuery('.gaming_discount').val();
-
-  if(discount == 0){
-   
-    var member_discount = jQuery('.gaming_member_discount').val();
-    var after_discount =(after_vat_value*member_discount)/100;
-    jQuery('.gaming_member_discount_text').text(after_discount);
-    jQuery('.after_member_gaming_discount').val(after_discount);
-    jQuery('.after_gaming_discount').val(0);
-    jQuery('.gaming_discount_text').text(0);
-    jQuery('.gaming_member_discount_per').text(jQuery('.gaming_member_discount').val() + '%');
-
-
-  }
-  else {
-    jQuery('.gaming_member_discount_text').text(0);
-    jQuery('.after_member_gaming_discount').val(0);
-    jQuery('.gaming_member_discount_per').text(0);
-    var after_discount =(after_vat_value*discount)/100;
-    jQuery('.after_gaming_discount').val(after_discount);
-    jQuery('.gaming_discount_text').text(after_discount);
-      
-  }
-    
-
-  var final_gaming = Math.ceil(after_vat_value - after_discount);
-  jQuery('.gaming_final_bill').val(final_gaming);
-  jQuery('.gaming_final_bill_text').text(final_gaming);
-
-}
-
-//
-//<-- End Gaming jQuery functions----->
-//
 
 
 
@@ -665,190 +378,25 @@ function gaming_calculation() {
 //<----- Select 2 for lazer Tag------>
 jQuery(document).ready(function () {
 
-  jQuery(".search_lazertag_billing").select2({
-    multiple: false,
-    minimumInputLength: 1,
-    allowClear: true,
-    placeholder: "Search Member",
-
-    ajax: {
-        type: 'POST',
-        url: frontendajax.ajaxurl,
-        delay: 250,
-        dataType: 'json',
-        data: function(params) {
-            return {
-                action: 'searchMember', // search term
-                page: 1,
-                search_key: params.term,
-
-            };
-        },
-        processResults: function(data) {
-            var results = [];
-
-            return {
-                results: jQuery.map(data.items, function(obj) {
-                    return { id: obj.user_id, name:obj.user_login, phone:obj.phone, membership_no:obj.membership_no};
-                })
-            };
-        },
-        cache: true,
-    },
-      initSelection: function (element, callback) {
-          callback({ id: '-', name: 'Search Member' });
-      },
-      templateResult: formatCustomerNamea,
-      templateSelection: formatCustomerNamea
-  }).on('select2:select', function (e) {
-
-    var phone         = jQuery('#lazertag_phone_number').val(e.params.data.phone);
-    var name          = jQuery('#lazertag_old_member_name').val(e.params.data.name);
-    var id            = jQuery('#lazertag_member_id').val(e.params.data.id);
-    var membership_no = jQuery('#lazertag_member_no').val(e.params.data.membership_no);
-    var date          = jQuery('#lazertag_billing_date').val(); 
-
-  
-
-    jQuery.ajax({
-      method: "POST",
-      dataType: 'json',
-      url: frontendajax.ajaxurl,
-      data: {
-        action                           : 'lazertag_member_insert',
-        member_id                        : e.params.data.id,
-        name                             : e.params.data.name,
-        phone                            : e.params.data.phone,
-        membership_no                    : e.params.data.membership_no,
-        billing_date                     : date,
-
-      },
-      success: function (data) {
-
-        var bill = jQuery('.lazertag_billing_no').val(data.member_no);
-        jQuery('.billing_id').val(data.id);
-        jQuery('.discount_lazertag').val(10);
-        jQuery('.discount_per_lazertag').text('10%');
-              
-      }
-
-    }); 
-    jQuery('.discount_lazertag').val(10);
-    lazertag_calculation();
-    jQuery('.lazertag_submit').css('display','block');
-  });
-
-
-    //<---- Start new user --->
- 
-
-  jQuery('.new_user_a_lazertag').on('click', function(){
-    jQuery('.select2-container, .new_user_a_lazertag').css('display', 'none');
-    jQuery('.lazertag_new_user, .old_user_a_lazertag').css('display', 'inline-block');
-    jQuery('.lazertag_submit').css('display','block');
-
-    jQuery('.discount_per_lazertag').text(0);
-    jQuery('.discount_lazertag').val(0);
-    lazertag_calculation(); 
-    jQuery.ajax({
-      method: "POST",
-      dataType: 'json',
-      url: frontendajax.ajaxurl,
-      data: {
-        action                           : 'lazertag_member_insert',
-        member_id                        : '',
-        name                             : '',
-        phone                            : '',
-        membership_no                    : '',
-        billing_date                     : '',
-      },
-      success: function (data) {
-
-        var bill =jQuery('.lazertag_billing_no').val(data.member_no);
-        jQuery('.billing_id').val(data.id);
-        var bill =jQuery('.lazertag_billing_no_div').text(data.member_no);
-        
-
-      }
-    });
-  });
-
-//<---- End new user --->
-
-//<---- Start New user --->
-  jQuery('.old_user_a_lazertag').on('click', function(){
-
-    jQuery('.select2-container, .new_user_a_lazertag').css('display', 'inline-block');
-    jQuery('.lazertag_new_user, .old_user_a_lazertag').css('display', 'none');
-
-    jQuery('.discount_per_lazertag').text('10%');
-    jQuery('.discount_lazertag').val(10);
-    lazertag_calculation(); 
-    jQuery('.lazertag_submit').css('display','block');
- 
-  });
-//<---- End Old user --->
-
-
-  
-
 //<-------- call calculation when clicking player and hour change----->
-
-  jQuery('.no_of_player_lazer_slot,.lazer_hours,.per_hour_price_lazertag,.discount_percentage_lazertag').on('change',function() {
-
-    lazertag_calculation();
-      
-  });
+    jQuery('.no_of_player_lazer_slot,.lazer_hours,.per_hour_price_lazertag,.lazertag_discount_percentage').on('change',function() {
+        lazertag_calculation(); 
+    });
 
 //<-------- End call calculation when clicking player and hour change----->
+//Lazer Tag Print
+    jQuery('#lazertag_print').on('click', function() {
+        var bill_no=jQuery('#lazertag_id').val();
+        var datapass =  printajax.internalprint+'/lazertag-print/?bill_no='+bill_no+'&action=lazertag_print';
 
-//<--- Display pricing in lazer tag form---->
-  jQuery('.gametype').on('click',function(){
-    var value = jQuery('input[name=gametype]:checked').val();
-    
-    jQuery.ajax({
-        method: "POST",
-        url: frontendajax.ajaxurl,
-        dataType: 'json',
-        data: {
-          action  : 'getLazertagPrice',
-          type : value,
-          date : jQuery('#bill_date').val(),
-          time : jQuery('#bill_time').val(),
-        
-        },
-        success: function (data) {
-            console.log(data);
-            jQuery('.per_hour_price_lazertag').val(data.price).change();
-            jQuery('.bill_for_lazertag').text(data.for);
-            jQuery('.lazetag_in_price').text(data.price).change();
-            // jQuery('.lazertag_total_value').text(data.price);
-            // jQuery('.lazertag_total_value').val(data.price);
-        }
+        // billing_list_single
+        var thePopup = window.open( datapass, "Customer Listing","scrollbars=yes,menubar=0,location=0,top=50,left=300,height=500,width=750" );
+        thePopup.print(); 
     });
-    if(value == 'hours'){
-      jQuery('.slot_div').css('display', 'none');
-      jQuery('.hours_div').css('display', 'inline-block');
-      lazertag_calculation();
-
-    }
-    else if(value == 'slot'){
-      jQuery('.slot_div').css('display', 'inline-block');
-      jQuery('.hours_div').css('display', 'none');
-      lazertag_calculation();
-    }
-
-    lazertag_calculation();
-    
-
-  });
-
-//<--- End disply pricing in lazer tag form---->
-
 //<---- Start Search bar --->
 
 
-  jQuery('#lazertag_per_page,#lazertag_member_name,#lazertag_member_number, #lazertag_bill_date,#lazertag_bill_no,#lazertag_bill_amt').on('change', function() {
+  jQuery('#lazertag_per_page,#lazertag_member_name,#lazertag_member_number, #lazertag_bill_date,#lazertag_bill_date_to,#lazertag_bill_no,#lazertag_bill_amt').on('change', function() {
      jQuery.ajax({
         method: "POST",
         url: frontendajax.ajaxurl,
@@ -858,6 +406,7 @@ jQuery(document).ready(function () {
           lazertag_member_name                           : jQuery('#lazertag_member_name').val(),
           lazertag_member_number                         : jQuery('#lazertag_member_number').val(),
           lazertag_bill_date                             : jQuery('#lazertag_bill_date').val(),
+          lazertag_bill_date_to                          : jQuery('#lazertag_bill_date_to').val(),
           lazertag_bill_no                               : jQuery('#lazertag_bill_no').val(),
           lazertag_bill_amt                              : jQuery('#lazertag_bill_amt').val(),
 
@@ -881,6 +430,7 @@ jQuery(document).ready(function () {
           lazertag_member_name                           : jQuery('#lazertag_member_name').val(),
           lazertag_member_number                         : jQuery('#lazertag_member_number').val(),
           lazertag_bill_date                             : jQuery('#lazertag_bill_date').val(),
+          lazertag_bill_date_to                          : jQuery('#lazertag_bill_date_to').val(),
           lazertag_bill_no                               : jQuery('#lazertag_bill_no').val(),
           lazertag_bill_amt                              : jQuery('#lazertag_bill_amt').val(),
 
@@ -895,71 +445,57 @@ jQuery(document).ready(function () {
 
 
 //<--- Start Delete Billling --->
-jQuery('.c-delete-lazertag').live( "click", function() {
-    if(confirm('Are you sure you want to delete this element?')){
-      var data=jQuery(this).attr("data-id");
-      window.location.replace('admin.php?page=view_lazertag_bill&id='+data+'&action=delete');
-    }
+  jQuery('.c-delete-lazertag').live( "click", function() {
+      if(confirm('Are you sure you want to delete this element?')){
+        var data=jQuery(this).attr("data-id");
+        window.location.replace('admin.php?page=view_lazertag_bill&id='+data+'&action=delete');
+      }
 
-});
-
-//Lazer Tag Print
-jQuery('#lazertag_print').on('click', function() {
-    var bill_no=jQuery('#lazertag_billing').text();
-    var datapass =  printajax.internalprint+'/lazertag-print/?bill_no='+bill_no+'&action=lazertag_print';
-
-    // billing_list_single
-    var thePopup = window.open( datapass, "Customer Listing","scrollbars=yes,menubar=0,location=0,top=50,left=300,height=500,width=750" );
-    thePopup.print(); 
-});
-
+  });
 
 
 });
 
 function lazertag_calculation() {
 
-    var checked = jQuery('input[name=gametype]:checked').val();
+    var checked = jQuery('.gametype').val();
     if(checked == 'slot'){
-        var player = parseFloat(jQuery('.no_of_player_lazer_slot').val());
+        var player = isNaN(parseFloat(jQuery('.no_of_player_lazer_slot').val())) ? 0 : parseFloat(jQuery('.no_of_player_lazer_slot').val());
     } else {
-        var player = parseFloat(jQuery('.no_of_player_lazer_hour').val());
+        var player = parseFloat(1);
     }
   
-      var hours =parseFloat(jQuery('.lazer_hours').val());
-      var price_per=parseFloat(jQuery('.per_hour_price_lazertag').val());
+      var hours = isNaN(parseFloat(jQuery('.lazer_hours').val())) ? 0 :parseFloat(jQuery('.lazer_hours').val());
+      var price_per= isNaN(parseFloat(jQuery('.per_hour_price_lazertag').val())) ? 0 : parseFloat(jQuery('.per_hour_price_lazertag').val());
       var total = player * hours * price_per; 
       jQuery('.lazertag_total_value').val(total);
       jQuery('.lazertag_total_value').text(total);
-      var vat = jQuery('.lazertag_vat').val();
-      var vat_value = (total*vat)/100;
-      jQuery('.lazertag_vat_value').val(vat_value);
-      jQuery('.lazertag_vat_value_txt').text(vat_value);
-      var after_vat_value = parseFloat(total) + parseFloat(vat_value);
-      var disconut = parseFloat(jQuery('.discount_percentage_lazertag').val());
-     if( disconut== 0 ) {
 
-      var member_discount=parseFloat(jQuery('.discount_lazertag').val());
-      var after_discount =(after_vat_value*member_discount)/100;
-      jQuery('.after_discount_lazertag').val(after_discount);
-      jQuery('.discount_lazertag').text(after_discount);
-      jQuery('.discount_value_lazertag').val(0);
-      jQuery('.discount_value_lazertag').text(0);
-      jQuery('.discount_per_lazertag').text(jQuery('.discount_lazertag').val() + '%');
 
-    }
-    else {
-      jQuery('.after_discount_lazertag').val(0);
-      jQuery('.discount_lazertag').text(0);
-      jQuery('.discount_per_lazertag').text(0);
-      var after_discount=(after_vat_value*disconut)/100;
-      jQuery('.discount_value_lazertag').val(after_discount);
-      jQuery('.discount_value_lazertag').text(after_discount);
-    }
+//Discount
+    var member_discount=isNaN(parseFloat(jQuery('.lazertag_member_discount').val())) ? 0 :parseFloat(jQuery('.lazertag_member_discount').val());
+    var disconut = isNaN(parseFloat(jQuery('.lazertag_discount_percentage').val())) ? 0 :parseFloat(jQuery('.lazertag_discount_percentage').val());
 
-    var final_lazer= Math.ceil(after_vat_value-after_discount);
+    var member_discount_val =(total*member_discount)/100;
+    var discount_val =(total*disconut)/100;
 
-    jQuery('.final_bill_lazertag').text(final_lazer);
+    jQuery('.lazertag_member_discount_val').val(member_discount_val);
+    jQuery('.lazertag_member_discount_val_div').text(member_discount_val);
+    jQuery('.lazertag_discount_value').val(discount_val);
+    jQuery('.lazertag_discount_value_div').text(discount_val);
+
+    var after_discount_total = total - (member_discount_val + discount_val);
+
+
+    //GST 
+      var gst = jQuery('.lazertag_gst').val();
+      var gst_value = (after_discount_total*gst)/100;
+      jQuery('.lazertag_gst_value').val(gst_value);
+      jQuery('.lazertag_gst_value_txt').text(gst_value);
+
+    var final_lazer= Math.ceil(after_discount_total + gst_value);
+
+    jQuery('.final_bill_lazertag_div').text(final_lazer);
     jQuery('.final_bill_lazertag').val(final_lazer);
 }
 
@@ -969,46 +505,302 @@ function lazertag_calculation() {
 
 
 //Football Pricing
-jQuery(document).ready(function () {
-  
-jQuery('.football_session_logic').on('change', function (argument) {
-    if( jQuery('.football_session_logic:checked').val() == '1' ) {
-      jQuery('.football_pricing_time').css('display', 'block');
-    } else {
-      jQuery('.football_pricing_time').css('display', 'none');
-    }
-  });
 
-jQuery('.lazertag_happayhours').on('change', function (argument) {
-    if( jQuery('.lazertag_happayhours:checked').val() == '1' ) {
-      jQuery('.lazetag_pricing_time').css('display', 'block');
-    } else {
-      jQuery('.lazetag_pricing_time').css('display', 'none');
-    }
-  });
-
-//<--- Start Delete Billling --->
-  jQuery('.c-delete-system').live( "click", function() {
-    if(confirm('Are you sure you want to delete this element?')){
-      var data=jQuery(this).attr("data-id");
-      window.location.replace('admin.php?page=add_gaming_system&id='+data+'&action=delete');
-    }
-
-  });
+//<-- Common functions----->
+jQuery(document).ready(function(){
+  //<--- Start Delete Billling --->
+    jQuery('.c-delete-system').live( "click", function() {
+        if(confirm('Are you sure you want to delete this element?')){
+            var data=jQuery(this).attr("data-id");
+            window.location.replace('admin.php?page=add_gaming_system&id='+data+'&action=delete');
+        }
+    });
    //<--- End Delete Billling --->
+    jQuery('.new_search_billing').on('change', function(e) {
+        var capital_str = jQuery(this).val();
+        var res = capital_str.split(" ");
+        var full_str = '';
+        jQuery.each(res, function(e, value){
+             if(isUpperCase(value)){
+                full_str = full_str + value + ' ';
+             } 
+             else {
+                value = value.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+                    return letter.toUpperCase();
+                });
+                full_str = full_str + value + ' ';
+             }
+        });
+        jQuery(this).val(full_str.trim());
+    });
+//<-------- search customer using name and mobile------>   
+    jQuery( ".search_inv_id" ).autocomplete ({
+        source: function( request, response ) {
+            jQuery.ajax({
+              url       : frontendajax.ajaxurl,
+              type      : 'POST',
+              dataType  : "json",
+              data      : {
+                action      : 'gamingBillingMemberSearch',
+                search_key  : request.term,
+                date        : jQuery('.gaming_date').val(),
+              },
+                success: function( data ) {
+                    response(jQuery.map( data.result, function( item ) {
+                        return {
+                            inv_id            : item.inv_id,
+                            value             : item.gaming_member_name +'( INV'+item.inv_id+')',
+                            name              : item.gaming_member_name,
+                            phone             : item.gaming_member_phone_number,
+                            membership_no     : item.membership_no,  
+                        }
+                    }));
+                }
+            });
+        },
+        minLength: 1,
+        select: function( event, ui ) {
+            console.log(ui.item.inv_id);
+            jQuery('.alrdy_alloct_inv_id').val(ui.item.inv_id);
+            jQuery('.alrdy_alloct_mem_name').val(ui.item.name);
+            jQuery('.alrdy_alloct_mem_phone').val(ui.item.phone);
+        }
+    });
 
-timePicker();
+    jQuery('.gaming_search').on('click',function(){
+        var inv_id = parseInt(jQuery('.alrdy_alloct_inv_id').val());
+        window.location.href="admin.php?page=allocate_gaming_system&pages=1&inv_id="+inv_id+"&action=update";
+    });
+});
+//<--- End Common functions ---->
+function isNumberKey(evt) {
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if ((charCode < 48 || charCode > 57))
+        return false;
+    return true;
+}
+function isNumberKeyWithDot(evt) {
+var charCode = (evt.which) ? evt.which : event.keyCode;
+if (charCode != 46 && charCode > 31
+    && (charCode < 48 || charCode > 57))
+     return false;
+
+return true;
+}
+
+function isUpperCase(str) {
+  return str === str.toUpperCase();
+}
+
+
+
+
+function Football_billing(){
+
+  var gst             = 0;
+  var gst_value       = 0;
+  var member_discount = 0;
+  var discount        = 0;
+  var bill_amount     = 0;
+  var sub_total       = 0;
+  var final_val       = 0;
+  jQuery('.no_of_player').each(function(){
+    var hours = parseFloat(jQuery(this).parent().parent().parent().find('.no_of_player').val());
+    hours = isNaN(hours) ? 0 : hours;
+    var price = parseFloat(jQuery(this).parent().parent().parent().find('.per_hour_price').val());
+    price = isNaN(price) ? 0 : price;
+    var bill_amount = hours * price;
+    jQuery(this).parent().parent().parent().find('.total_value').val(bill_amount);
+    jQuery(this).parent().parent().parent().find('.total_value_div').text(bill_amount);
+    sub_total = bill_amount + sub_total;
+  });
+
+
+
+
+//calculate discount
+  
+  discount                  =  isNaN(parseFloat(jQuery('.discount_percentage').val())) ? 0 : parseFloat(jQuery('.discount_percentage').val());
+  member_discount           =  isNaN(parseFloat(jQuery('.member_discount').val()))? 0 : parseFloat(jQuery('.member_discount').val());      
+  var member_discount_value =  (member_discount == 0 )? 0 : (sub_total*member_discount)/100;
+  var discount_value        =  (discount == 0)? 0 : (sub_total*discount)/100;
+  var subtotal_after_discount =  parseFloat(sub_total)  - (member_discount_value + discount_value);
+
+
+//get Gst
+  gst                       = isNaN(parseFloat(jQuery('.gst').val())) ? 0 :parseFloat(jQuery('.gst').val());
+  gst_value                 = (subtotal_after_discount * gst)/100;
+  jQuery('.gst_value').text(gst_value);
+  jQuery('.gst_value_input').val(gst_value);
+  
+
+
+//display discount  
+  jQuery('.member_discount_value').val(member_discount_value);
+  jQuery('.member_discount_value_div').text(member_discount_value);
+  jQuery('.discount_value').val(discount_value);
+  jQuery('.discount_value_div').text(discount_value);
+
+//Final_value
+  final_val = Math.ceil(subtotal_after_discount  + gst_value );
+  jQuery('.final_bill_div').text(final_val);
+  jQuery('.final_bill').val(final_val);
+  
+
+}
+
+function GamingCalculation(){
+    var sub_total = 0;
+
+    jQuery('.no_of_mem_gaming').each(function(){
+      var motionGame = jQuery(this).parent().parent().parent().find('.togBtn_game').attr('checked');
+      console.log(motionGame);
+      motionGame = (typeof motionGame === "undefined") ? "" : motionGame;
+      
+        var member = parseFloat(jQuery(this).parent().parent().parent().find('.no_of_mem_gaming').val());
+        member = isNaN(member) ? 0 : member;
+        var price = parseFloat(jQuery(this).parent().parent().parent().find('.gaming_total_value_cal').val());
+        price = isNaN(price) ? 0 : price;
+        var motion_hr_price = parseFloat(jQuery(this).parent().parent().parent().find('.gaming_total_value_cal_motion_hr').val());
+        motion_hr_price = isNaN(motion_hr_price) ? 0 : motion_hr_price;
+        var game = parseFloat(jQuery(this).parent().parent().parent().find('.no_of_games').val());
+        game = isNaN(game) ? 1 : game;
+        var hours = parseFloat(jQuery(this).parent().parent().parent().find('.hours_gaming').val());
+        hours = isNaN(hours) ? 0 : hours;
+         if(motionGame == 'checked'){
+            var bill_amount = member * price * game;
+           
+         }
+         else{
+          var bill_amount = member * motion_hr_price * hours;
+         } 
+
+        jQuery(this).parent().parent().parent().find('.gaming_total_value').val(bill_amount.toFixed(2));
+        jQuery(this).parent().parent().parent().find('.gaming_total_value_text').text(bill_amount.toFixed(2));
+        sub_total = bill_amount + sub_total;
+    });
+    jQuery('.gaming_sub_tot').val(sub_total.toFixed(2));
+    jQuery('.gaming_sub_tot').text(sub_total.toFixed(2));
+    discount                    =  isNaN(parseFloat(jQuery('.discount_percentage').val())) ? 0 : parseFloat(jQuery('.discount_percentage').val());
+    member_discount             =  isNaN(parseFloat(jQuery('.member_discount').val()))? 0 : parseFloat(jQuery('.member_discount').val());      
+    var member_discount_value   =  (member_discount == 0 )? 0 : (sub_total*member_discount)/100;
+    var discount_value          =  (discount == 0)? 0 : (sub_total*discount)/100;
+    var subtotal_after_discount =  parseFloat(sub_total)  - (member_discount_value + discount_value);
+
+//   console.log(member_discount);
+  //get Gst
+    gst                       = isNaN(parseFloat(jQuery('.gst').val())) ? 0 :parseFloat(jQuery('.gst').val());
+    gst_value                 = (subtotal_after_discount * gst)/100;
+    jQuery('.gst_value').text(gst_value.toFixed(2));
+    jQuery('.gst_value_input').val(gst_value.toFixed(2));
+  
+
+
+//display discount
+    jQuery('.member_discount_value').val(member_discount_value.toFixed(2));
+    jQuery('.member_discount_value_div').text(member_discount_value.toFixed(2));
+    jQuery('.discount_value').val(discount_value.toFixed(2));
+    jQuery('.discount_value_div').text(discount_value.toFixed(2));
+
+//Final_value
+    final_val = Math.ceil(subtotal_after_discount  + gst_value );
+    jQuery('.final_bill_div').text(final_val.toFixed(2));
+    jQuery('.final_bill').val(final_val.toFixed(2));
+}
+
+
+ //<---- Start Email Function ---->
+jQuery(document).ready(function(){
+    jQuery('#football_email').on('click', function() {
+        var bill_id  =  jQuery('#bill_id').val();
+        var datapass =  printajax.internalprint+'/football-mail/?bill_id='+bill_id+'&action=football_email';
+        console.log(datapass);
+      // billing_list_single
+    });
+
+});
+//<---- End Email Function ---->
+
+function playing_hours(selector){
+    jQuery.ajax({
+        method:"POST",
+        dataType : 'JSON',
+        url:frontendajax.ajaxurl,
+        data : {
+            action        : 'gamingActualPlayedHoursCalculate',
+            cat_id        : selector.find('.cat_id').val(),
+            hours         : selector.find('.hours_gaming').val(),
+
+        },
+        success : function(data){
+            selector.find('.gaming_total_value').val(data.total_price);
+                if(data.category !='4'){
+                    selector.find('.gaming_total_value_cal').val(data.total_price);
+                    selector.find('.gaming_total_value_text').text(data.total_price);
+                }
+        }
+    });
+}
+
+
+//Football Pricing 
+jQuery(document).on("change",".billing_date",function(){
+    jQuery('.all_sessions_morning').css('display','none');
+    jQuery('.all_sessions_evening').css('display','none');
+    jQuery.ajax({
+        method:"POST",
+        dataType : 'json',
+        url:frontendajax.ajaxurl,
+        data : {
+            action        : 'football_pricing_ajax',
+            date          : jQuery(this).val(),
+            hours         : '60.00',
+
+        },
+        success : function(data){
+            jQuery('.all_sessions_morning').html(data.morning.html);
+            jQuery('.all_sessions_evening').html(data.evening.html);
+            jQuery('.all_sessions_morning').css('display','block');
+            jQuery('.all_sessions_evening').css('display','block');
+            console.log(data);
+
+        }
+    });
 });
 
-//time picker
 
-  function timePicker() {
-    jQuery('.time').bootstrapMaterialDatePicker
-    ({
-        date: false,
-        shortTime: false,
-        format: 'HH:mm'
-    });
-  }
+function sendSms(phone,sale_id,name,time,date,billing_type,message_type){
+  jQuery.ajax({
+              method: "POST",
+              url: frontendajax.ajaxurl,
+              data: {
+                  action        : 'smsGateWay',
+                  phone_number  : phone,                
+                  sale_id       : sale_id,
+                  name          : name,
+                  message_type  : message_type,
+                  date          : date,
+                  time          : time,
+                  bill_from     : billing_type,
+
+              },
+              success: function (data) {
+                   alert("Notification Sent to "+ phone);  
+                    location.reload(true);
+ 
+              }
+          });
+}
+
+function makeid() {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (var i = 0; i < 50; i++)
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    return text;
+}
+
+
 
 

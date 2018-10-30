@@ -14,19 +14,19 @@
     if($_GET['action'] == 'gaming_print') {
 
     $bill_no        	= isset( $_GET['bill_no'] ) ? $_GET['bill_no']  : '';
-    $id        			= isset( $_GET['id'] ) ? $_GET['id']  : '';
+
 
 	}
-	$mylink          		= $wpdb->get_row( "SELECT * FROM $gaming_table  where gaming_bill_no='$bill_no' AND active = 1 and was_bulid = 1" );
-	$relation_mylink        = $wpdb->get_results( "SELECT * FROM $relation_gmaing_table  where gaming_id='$id' AND active = 1" );
+	$mylink          		= $wpdb->get_row( "SELECT * FROM $gaming_table  where id='$bill_no' AND active = 1 and was_bulid = 1" );
+	$relation_mylink        = $wpdb->get_results( "SELECT * FROM $relation_gmaing_table  where gaming_id='$bill_no' AND active = 1" );
 
 
-	$number = $mylink->gaming_bill;
-   	$no = round($number);
-   	$point = round($number - $no, 2) * 100;
-   	$hundred = null;
-   	$digits_1 = strlen($no);
-   	$i = 0;
+	$number 	= $mylink->gaming_bill;
+   	$no 		= round($number);
+   	$point 		= round($number - $no, 2) * 100;
+   	$hundred 	= null;
+   	$digits_1 	= strlen($no);
+   	$i 			= 0;
    	$str = array();
    	$words = array('0' => '', '1' => 'one', '2' => 'two',
     '3' => 'three', '4' => 'four', '5' => 'five', '6' => 'six',
@@ -207,7 +207,7 @@
 				  		<div class="logo">
 				  			<center><img style="width:60%;" src="<?php echo get_template_directory_uri().'/inc/img/chaos_logo.png'; ?>"></center>
 				  		</div>
-				  		<div class="address">Old no:57 New no:38, Balaraman Road, Adyar,Chennai-600020</div>
+				  		<div class="address">CHAOS ENTERTAINMENT <BR/> Old no:57 New no:38, Balaraman Road, Adyar,Chennai-600020</div>
 			  		</div>
 		  		</div>
 		  		<div class="top_menu_right" style="height: 167px;border-bottom: 1px solid rgba(0, 0, 0, 0.29);">
@@ -218,12 +218,16 @@
 			  		</div>
 			  		<div class="logo_border_right_down" style="margin-left: 5px;">
 				  		<div class="top_menu_right_in" style="margin-top:5px;">
-				  			<div class="tin">TIN No</div>
-				  			<div>: 33600863401</div>
+				  			<div class="tin">GST No</div>
+				  			<div>: 33AAMFC0405F1Z2</div>
 				  		</div>
 				  		<div class="top_menu_right_area" style="margin-top:5px;">
-				  			<div class="tin">Area Code</div>
-				  			<div>: 044 </div>
+				  			<div class="tin">PAN No</div>
+				  			<div>: AAMFC0405F </div>
+				  		</div>
+				  		<div class="top_menu_right_area" style="margin-top:5px;">
+				  			<div class="tin">SAC</div>
+				  			<div>: 999652 </div>
 				  		</div>
 			  		</div>
 		  		</div>
@@ -233,9 +237,13 @@
 					
 					<ul>
 						<li><div class="content">Invoice No</div> <div>: <?php echo $mylink->gaming_bill_no;?></li>
-						<li><div class="content">Date</div><div>: <?php echo $mylink->gaming_date;?></div> </li>
+						<li><div class="content">Date</div><div>: <?php echo $mylink->game_date;?></div> </li>
 						<li><div class="content">Member Name</div><div>: <?php echo $mylink->gaming_member_name;?></div></li>
 						<li><div class="content">Phone Number</div><div>: <?php echo $mylink->gaming_member_phone_number;?></div></li>
+						<?php if($mylink->gaming_member_email != ''){ ?><li><div class="content">Email</div><div>: <?php echo $mylink->gaming_member_email;?></div></li> <?php } ?>
+						<?php if($mylink->gaming_member_address != ''){ ?> <li><div class="content">Address</div><div>: <?php echo $mylink->gaming_member_address;?></div></li> <?php } ?>
+						<?php if($mylink->gaming_member_gst != ''){ ?> <li><div class="content">Gst Number</div><div>: <?php echo $mylink->gaming_member_gst;?></div></li> <?php } ?>
+						<?php if($mylink->gaming_member_pan != ''){ ?> <li><div class="content">Pan</div><div>: <?php echo $mylink->gaming_member_pan;?></div></li> <?php } ?>
 					</ul>
 				</div>
 				
@@ -248,6 +256,7 @@
 								<th class="first-col">S.No</th>
 								<th>Members</th>
 								<th>Hours</th>
+								<th>Games</th>
 								<th>Bill Amount</th>
 							</tr>
 						</thead>
@@ -263,6 +272,7 @@
 	                            echo "<tr><td class='div-table-col'>".$i."</td>";
 	                            echo "<td class='div-table-col'>".'1'."</td>";
 	                            echo "<td class='div-table-col'>".$r_value->gaming_hours."</td>";
+	                            echo "<td class='div-table-col'>".$r_value->no_of_games."</td>";
 	                            echo "<td class='div-table-col'>".$r_value->gaming_total."</td></tr>";
 
 					        		$i++;
@@ -273,36 +283,47 @@
 	                        <tr>
 								<td></td>
 								<td></td>
+								<td></td>
 								<td>
 									<label>Subtotal &nbsp;(Rs)</label>
 								</td>
 								<td><?php  echo $mylink->gaming_sub_total; ?></td>
 							</tr>
+							 <?php if($mylink ->gaming_member_discount != '0.00'){ ?>
 							<tr>
 								<td></td>
 								<td></td>
-								<td>
-									<label>GST &nbsp;(Rs)</label>
-								</td>
-								<td><?php  echo $mylink->gaming_vat_val; ?></td>
-							</tr>
-							<tr>
-								<td></td>
 								<td></td>
 								<td>
-									<label>Member Discount &nbsp;(Rs)</label>
+									<label>Member Discount &nbsp;(<?php echo $mylink->gaming_member_discount.' %'; ?>)</label>
 								</td>
 								<td><?php  echo $mylink->gaming_member_discount; ?></td>
 							</tr>
+								<?php } ?>
+							<?php if($mylink ->gaming_discount_value != '0.00'){ ?>
 							<tr>
+								<td></td>
 								<td></td>
 								<td></td>
 								<td>
-									<label>Discount &nbsp;(Rs)</label>
+									<label>Discount &nbsp;(<?php echo $mylink->gaming_discount.' %'; ?>)</label>
 								</td>
 								<td><?php  echo $mylink->gaming_discount_value; ?></td>
 							</tr>
+							<?php } ?>
+							<?php if($mylink ->gaming_gst_val != '0.00'){ ?>
 							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td>
+									<label>GST &nbsp;(<?php echo $mylink->gaming_gst.' %'; ?>)</label>
+								</td>
+								<td><?php  echo $mylink->gaming_gst_val; ?></td>
+							</tr>
+							<?php } ?>
+							<tr>
+								<td></td>
 								<td></td>
 								<td></td>
 								<td>

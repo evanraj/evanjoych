@@ -189,7 +189,7 @@ get_header(); ?>
                                                 <div class="tagline overtext">
                                                     <p>Hire the floor! We know that a corporate outing calls for variety and a mix of many things to do! We have a corporate package tailor made for that! You can hire the floor for an hour!</p>
                                                     <p>The corporate happiness equation:</p>
-                                                    <p> 1 Hour of (Laser Tag / Futsal + Console gaming) = Rs. 5000..</p>
+                                                    <p> 1 Hour of (Laser Tag / Futsal + Console gaming) = Rs. 6000..</p>
                                                 </div>
                                             </div>
                                         </div>

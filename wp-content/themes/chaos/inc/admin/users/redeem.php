@@ -4,7 +4,7 @@ global $wpdb;
 $redeem_table = $wpdb->prefix.'chaos_redeem_points';
 $memberData = false;
 
-if( isset($_POST['action']) && $_POST['action'] == 'redeem_data' ) {
+if( isset($_POST['action1']) && $_POST['action1'] == 'redeem_data' ) {
  	$redeem_data = array(
  		'member_id' => $_POST['member_id'],
  		'redeemed_point' =>$_POST['redeem_point'],
@@ -14,11 +14,13 @@ if( isset($_POST['action']) && $_POST['action'] == 'redeem_data' ) {
  	$wpdb->insert($redeem_table,$redeem_data);
  	$insert_id = $wpdb->insert_id;
  	$add_points = redeemPoints($_POST['member_id'],$_POST['redeem_point']);
+
 	$credit_point_table = addPointsInCreditPointsTable($_POST['member_id'],$_POST['redeem_point'],'redeem_table',$insert_id);
  }
 
 if ( isset($_GET['action']) && $_GET['action'] == 'member_data') {
-	$memberData = getRedeemPoint($_GET['user_id']);
+	$memberData = getRedeemPoint($_GET['member_id']);
+
 }
  ?>
 
@@ -68,7 +70,7 @@ label{
 				<div class="x_content">
 					<form class="form-horizontal form-label-left " action="" method="POST" id="" onKeyPress="return keyPressed(event)">
 						<div class="user_form_up">							
-							<input type="hidden" name="member_id" value="<?php echo $memberData->user_id; ?>"/>
+							<input type="hidden" name="member_id" value="<?php echo $memberData->id; ?>"/>
 							<div class="form-group user_form">
 								<div>
 									<label class="" for="first-name">Balance Point <span class="required"></span>
@@ -101,7 +103,7 @@ label{
 						<div class="form-group">
 							<div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-3">	                          	
 	                          <?php if($memberData->is_eligible == '1'){ ?><input type="submit" class="player_add" id="submit" value="Submit"> <?php }else { echo'<span style="color:red;font-size:14px;font-weight:bold;">You are not eligible to redeem your points.You need 1000 points to get eligiblity</span>'; } ?>
-	                          	<input type="hidden" name="action" class="action" value="redeem_data">
+	                          	<input type="hidden" name="action1" class="action1" value="redeem_data">
 	                        </div>
 						</div>
 
@@ -133,7 +135,8 @@ label{
 									<!-- <span class="billing" style="padding: 1px;"><label>Member Name:</label></span> -->
 									<!-- <input type="hidden" name="member_id" id="member_id" class="member_id" value=""> -->
 									<span class="billing_in">
-										<select style="width: 300px;"  class="search_billing" name="user_id" id="search_billing"></select>
+										<input type="text"  class="new_search_billing" name="user_name" id="new_search_billing"></select>
+										<input type="hidden" name="member_id" class="member_id" id="member_id">
 									</span>									
 								</div>
 							</div>

@@ -5,7 +5,7 @@ function user_list_pagination($arg) {
 
 	global $wpdb;
     $customPagHTML      = "";
-    $query              ="SELECT member_table.`user_id`,member_table.`membership_no`,member_table.`first_name`,member_table.`phone`,user_tab.user_email,user_tab.user_registered FROM `wp_chaos_members` as member_table left join wp_users as user_tab on user_tab.id=member_table.`user_id` WHERE active =1 {$arg['condition']}";
+    $query              ="SELECT member_table.`id`,member_table.`user_id`,member_table.`membership_no`,member_table.`first_name`,member_table.`phone`,user_tab.user_email,user_tab.user_registered FROM `wp_chaos_members` as member_table left join wp_users as user_tab on user_tab.id=member_table.`user_id` WHERE active =1 {$arg['condition']}";
 
     
     $total_query        = "SELECT COUNT(1) FROM (${query}) AS combined_table";

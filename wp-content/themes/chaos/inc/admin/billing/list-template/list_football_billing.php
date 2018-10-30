@@ -11,6 +11,13 @@ input{
 .widget-top h4{
     margin-left: 12px;
 }
+
+#football_sms_list,#football_report_print{
+    background-color: #0073aa;
+    color: #fff;
+    height: 40px;
+}
+
 </style><?php
       if(isset($_POST['action']) && $_POST['action'] == 'football_listing') {
         $receipt_per_page                           = $_POST['receipt_per_page'];
@@ -49,11 +56,15 @@ input{
         <option value="50" <?php echo (isset($receipt_per_page) && $receipt_per_page == '50' ) ? 'selected' : ''; ?>>50</option>
         <option value="100" <?php echo (isset($receipt_per_page) && $receipt_per_page == '100' ) ? 'selected' : ''; ?>>100</option>
     </select>
-    <input type="text" name="member_name" id="member_name" autocomplete="off" placeholder="Member Name" size="40" value="<?php echo $member_name; ?>">
-    <input type="text" name="member_number" id="member_number" autocomplete="off" placeholder="Member Number" size="40" value="<?php echo $member_number; ?>">
-    <input type="text" name="football_bill_date" id="football_bill_date"  class="football_bill_date" autocomplete="off" placeholder="Bill Paid Date" size="40" value="<?php echo $football_bill_date; ?>">
-    <input type="text" name="bill_no" id="bill_no" autocomplete="off" placeholder="Bill Number" size="40" value="<?php echo $bill_no; ?>">
-    <input type="text" name="bill_amt" id="bill_amt" autocomplete="off" placeholder="Bill Amount" size="40" value="<?php echo $bill_amt; ?>">
+    <input type="text" name="member_name" id="member_name" autocomplete="off" placeholder="Member Name" value="<?php echo $member_name; ?>">
+    <input type="text" name="member_number" id="member_number" autocomplete="off" placeholder="Member Number" value="<?php echo $member_number; ?>">
+
+    <input type="text" name="bill_no" id="bill_no" autocomplete="off" placeholder="Bill Number" value="<?php echo $bill_no; ?>">
+    <input type="text" name="bill_amt" id="bill_amt" autocomplete="off" placeholder="Bill Amount" value="<?php echo $bill_amt; ?>">
+
+    <input type="text" name="football_bill_date" id="football_bill_date"  class="football_bill_date" autocomplete="off" placeholder="Bill From"  value="<?php echo $football_bill_date; ?>">
+    <input type="text" name="football_bill_date_to" id="football_bill_date_to"  class="football_bill_date_to" autocomplete="off" placeholder="Bill To"  value="<?php echo $football_bill_date_to; ?>">
+    <input type="button" Name="football_report_print" id="football_report_print" value="Print/Send Report " /> <br/>
     <span class="dashicons dashicons-search search_icons" id="icons" ></span>
 
 

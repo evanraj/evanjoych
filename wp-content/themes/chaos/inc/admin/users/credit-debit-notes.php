@@ -10,7 +10,7 @@
    if ( isset($_POST['action']) && $_POST['action'] == 'credit_debit') 
    {
    		$notes_data 				= array(
-			'member_id' 			=> $_POST['user_id'],
+			'member_id' 			=> $_POST['member_id'],
 			'points'				=> $_POST['points'],
 			'details'				=> $_POST['note'],
 			'date'					=> $date,
@@ -19,16 +19,16 @@
 	   	if(isset($_POST['note_type'] ) && $_POST['note_type'] == 'credit') {
 	   		$wpdb->insert( $credit_table, $notes_data );
 	   		$insert_id = $wpdb->insert_id;
-	   		$add_points = updatePoints($_POST['user_id'],$_POST['points']);
-			$credit_point_table = addPointsInCreditPointsTable($_POST['user_id'],$_POST['points'],'credit_notes',$insert_id);
+	   		$add_points = updatePoints($_POST['member_id'],$_POST['points']);
+			$credit_point_table = addPointsInCreditPointsTable($_POST['member_id'],$_POST['points'],'credit_notes',$insert_id);
 
 	   	}
 	   	else {
 	   		$wpdb->insert( $debit_table, $notes_data );
 	   		$insert_id = $wpdb->insert_id;
-	   		$add_points = redeemPoints($_POST['user_id'],$_POST['points']);
+	   		$add_points = redeemPoints($_POST['member_id'],$_POST['points']);
 
-			$credit_point_table = addPointsInCreditPointsTable($_POST['user_id'],$_POST['points'],'debit_notes',$insert_id);
+			$credit_point_table = addPointsInCreditPointsTable($_POST['member_id'],$_POST['points'],'debit_notes',$insert_id);
 
 
 	   	}
@@ -90,7 +90,8 @@ label{
 								</div>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 								<span class="billing_in">
-										<select style="width: 300px;"  class="search_billing" name="user_id" id="search_billing"></select>
+										<input type="text" class="new_search_billing" name="user_id" id="new_search_billing">
+										<input type="hidden" class="member_id" name="member_id" id="member_id">
 								</span>
 									<!--<select name="user_id" id="user_id" style="width: 190px;height: 30px;">
 									<?php 

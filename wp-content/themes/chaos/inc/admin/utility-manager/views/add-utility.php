@@ -12,13 +12,17 @@
    	$duration = (isset($_POST['periods']) AND $_POST['periods'] == 'w') ? $_POST['week_duration'] : $_POST['month_duration'];
 		//To insert challan table
    		$utility_data 						= array(
+   				'ut_person_name' 					=> $_POST['name'],
    				'ut_name' 							=> $_POST['utility_name'],
+   				'ut_amount' 						=> $_POST['amount'],
    				'ut_emailid'						=> $_POST['emailid'],
    				'ut_secondery_email'				=> $_POST['secondery_emailid'],
+   				'ut_utility_type'					=> $_POST['type'],
    				'ut_periods'						=> $_POST['periods'],
    				'ut_duration'						=> $duration,
    				'ut_utillity_date'					=> $_POST['pay_date'],
    				'ut_alert_days'						=> $_POST['alert_date'],
+   				'ut_payment_method'					=> $_POST['payment_method'],
 
    			);
    		$wpdb->insert( $utility_table, $utility_data );
@@ -40,13 +44,17 @@
 
 		//Update Utility Table
    		$utility_data 						= array(
+   				'ut_person_name' 					=> $_POST['name'],
    				'ut_name' 							=> $_POST['utility_name'],
+   				'ut_amount' 						=> $_POST['amount'],
    				'ut_emailid'						=> $_POST['emailid'],
    				'ut_secondery_email'				=> $_POST['secondery_emailid'],
+   				'ut_utility_type'					=> $_POST['type'],
    				'ut_periods'						=> $_POST['periods'],
    				'ut_duration'						=> $duration,
    				'ut_utillity_date'					=> $_POST['pay_date'],
    				'ut_alert_days'						=> $_POST['alert_date'],
+   				'ut_payment_method'					=> $_POST['payment_method'],
 
    			);
    		$wpdb->update( $utility_table , $utility_data ,array( 'id' => $id ));
@@ -152,8 +160,15 @@ label{
 			<form class="form-horizontal" action="" method="POST" id="">
 				<div class="left_side">
 					<div class="left_side_in">
+						
 						<div class="utility_name">
-							<div style="width: 102px"><label>Utility Name <span class="star">*</span></label></div>
+							<div style="width: 102px"><label>Person <span class="star">*</span></label></div>
+							<div>
+								<input type="text"  name="name" id="utility_name" value="<?php echo $update_data->ut_person_name; ?>">
+							</div>
+						</div>
+						<div class="utility_name">
+							<div style="width: 102px"><label>Utility <span class="star">*</span></label></div>
 							<div>
 							<?php if($update_data) {?> 
 								<input type="text" value="<?php echo $update_data->ut_name; ?>" name="utility_name" />
@@ -174,6 +189,10 @@ label{
 							</div>
 						</div>
 						<div class="utility_name">
+							<div style="width: 100px"><label>Amount<span class="star">*</span></label> </div>
+							<div><input type="text"  name="amount" id="utility_name" value="<?php echo $update_data->ut_amount; ?>"></div>
+						</div>
+						<div class="utility_name">
 							<div style="width: 100px"><label>Email Id <span class="star">*</span></label> </div>
 							<div><input type="text"  readonly name="emailid" id="utility_name" value="<?php  $email = utility_emailid(); echo $email->utility_email_id; ?>"></div>
 						</div>
@@ -185,6 +204,16 @@ label{
 				</div>
 				<div class="right_side">
 					<div class="right_side_in">
+						<div class="utillty_member_in">
+							<div style="width: 120px"><label>Type <span class="star">*</span></label> </div>
+							<div class="alert_periods">
+								<div> 
+								<input type="radio" name="type" <?php echo ($update_data->ut_utility_type == 'remainder')? 'checked' : ''; ?> value="remainder" checked> Remainder
+  								<input type="radio" name="type" <?php echo ($update_data->ut_utility_type == 'paid')? 'checked' : ''; ?> value="paid"> Paid<br/>
+  							</div>
+								
+							</div>
+						</div>
 						<div class="utillty_member_in_radio utillty_member_in">
 							<div style="width: 120px;"><label>Periods</label> </div>
 							<?php if($_GET['action']=='update'){
@@ -278,6 +307,18 @@ label{
 							<div class="alert_periods">
 								<input type="text" name="alert_date" required id="utillty_member" value="<?php echo $update_data->ut_alert_days;	 ?>">
 								
+							</div>
+						</div>
+						<div class="utillty_member_in">
+							<div style="width: 120px"><label>Payment Methods</label> </div>
+							<div class="">
+								<div class="payment_method_div" >
+									<select name="payment_method" class="payment_method">
+									    <option <?php echo ($update_data->ut_payment_method == 'cheque') ? 'selected' : ''; ?> value="cheque">Cheque</option>
+									    <option <?php echo ($update_data->ut_payment_method == 'cash') ? 'selected' : ''; ?> value="cash">Cash</option>
+									    <option <?php echo ($update_data->ut_payment_method == 'netbanking') ? 'selected' : ''; ?> value="netbanking">Netbanking</option>
+								  	</select>
+							  	</div>
 							</div>
 						</div>
 					</div>

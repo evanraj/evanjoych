@@ -79,5 +79,28 @@ input:checked + .slider .off
 .slider.round:before {
   border-radius: 50%;
 }
+#adminmenu, #adminmenu .wp-submenu, #adminmenuback, #adminmenuwrap{
+    /*background-color: #ea860bf2 !important;*/
+   background-color: #ffb514 !important;
+}
+ #adminmenu a {
+    display: block;
+    line-height: 18px;
+    padding: 2px 5px;
+    color: #000;
+}
+/*//for football*/
+/*#3a3eb1*/
 
- 
+/* for lazertag 
+#ec3333 */
+
+#adminmenu div.wp-menu-image:before {
+  color: rgba(16, 16, 16, 0.93);
+  }
+  #adminmenu .wp-submenu a {
+    color : rgba(10, 10, 10, 0.98) !important;
+  }
+  #collapse-button{
+    color: #080808 !important;
+  }

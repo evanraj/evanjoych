@@ -11,18 +11,20 @@ add_action('admin_menu', 'admin_menu_register_utility');
 
 function admin_menu_register_utility(){
 
+global $src_capabilities;
+
     add_menu_page(
         __( 'Utility', 'chaos'),
         'Add Utility',
-        'manage_options',
+        $src_capabilities['utility']['permission']['add_utility'],
         'add_utility',
         'add_utility',
         'dashicons-calendar-alt',
         4
     );
-    add_submenu_page('add_utility', 'Add Utility', 'Add Utility', 'manage_options', 'add_utility', 'add_utility');
-    add_submenu_page('add_utility', 'View Utility', 'View Utility', 'manage_options', 'view_utility', 'view_utility' );
-    add_submenu_page('add_utility', 'Utility Setting', 'Utility Setting', 'manage_options', 'utility_setting', 'utility_setting' );
+    add_submenu_page('add_utility', 'Add Utility', 'Add Utility', $src_capabilities['utility']['permission']['add_utility'], 'add_utility', 'add_utility');
+    add_submenu_page('add_utility', 'View Utility', 'View Utility', $src_capabilities['utility']['permission']['view_utility'], 'view_utility', 'view_utility' );
+    add_submenu_page('add_utility', 'Utility Setting', 'Utility Setting', $src_capabilities['utility']['permission']['utility_setting'], 'utility_setting', 'utility_setting' );
     }
 
 
@@ -116,7 +118,7 @@ function utility_status(){
 
   	//insert
   	$utility_data=array(
-      'utility_id'		=> $id,
+      'utility_id'		    => $id,
       'ut_utility_status' => $status,
       'ut_postponed_days' => $postponed_days 
     );

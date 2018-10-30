@@ -1,0 +1,344 @@
+<?php 
+/**
+ * Template Name: Football Report
+ *
+ * This is the template that displays full width page without sidebar
+ *
+ * 
+ */
+
+  	global $wpdb; 
+    $football_table           = $wpdb->prefix.'chaos_football_billing';
+    $billing_detail_table     = $wpdb->prefix.'chaos_football_billing_details';
+    $member_table 			  = $wpdb->prefix.'chaos_members';
+
+
+	$query_details 			= "SELECT  * FROM 
+(
+  select bill.*,
+(case when member_table.membership_no is null then 0 else member_table.membership_no end) as  membership_no,
+    (case when member_table.first_name is null then '' else member_table.first_name end) as  first_name,
+    (case when member_table.phone is null then 0 else member_table.phone end) as  phone
+    from 
+(
+  select id,member_id,ft_bill_no,ft_date,ft_played_hours,ft_member_name,ft_member_phone_number,ft_total,ft_gst,ft_member_discount,ft_discount,created_by,was_bulid from {$football_table} WHERE active = 1 and was_bulid = 1
+  ) as bill 
+left join
+  (
+    select id as mem_id,membership_no,first_name,phone  from {$member_table} WHERE active = 1 
+  ) as member_table
+  on bill.member_id= member_table.mem_id
+) as football 
+left join 
+(select inv_id,sum(hours) as hours ,sum(price_per_hour) as price_per_hour,sum(price) as price from {$billing_detail_table} WHERE active = 1 GROUP by inv_id ) as  football_details
+on football.id = football_details.inv_id ";
+   	$pricing_football   	= $wpdb->get_results( $query_details, OBJECT ); 
+
+  
+?>
+<style type="text/css">
+/*	body{-webkit-print-color-adjust:exact;border:1px solid;}
+	.print_content{width:80%; margin: 0 auto;}
+	.print_header{width:100%;float:left;margin:5px 0px}
+	.header_inside{float:left}
+	.info_bar{width:100%;float:left;font-size:13px}
+	.customer_info_bar{width:50%;float:left;padding:5px 20px;font-size: 16px;}
+	.bill_info_bar{width:23%;float:right;padding:0px 15px}
+	.customer_info_bar ul,.bill_info_bar ul{width:100%;padding:0px;margin:0px}
+	.customer_info_bar ul li,.bill_info_bar ul li{list-style:none;margin-bottom:5px}
+	.customer_info_bar span,.bill_info_bar span{font-size:14px;font-weight:bold}
+	.customer_info_bar h4{margin:5px 0px}
+	.table-simple{margin-top:15px;width:100%;/*min-height:350px;*//*float:left*/}
+	/*.display{width:95%;margin:0 auto;border-collapse:collapse}
+	.table-simple table thead tr th{font-size:13px;background-color:#777e8c!important;padding:10px 0px;color:#fff;font-weight:bold;border-right:1px solid #ccc}
+	.table-simple table thead tr th,.table-simple table tbody tr td{font-size:13px;text-align:center;border-left:1px solid #ccc;border-right:1px solid #ccc}
+	.table-simple table tbody tr td{border-bottom:1px solid #ccc;padding:5px 10px}
+	.stock_ck_avail_no{width:10px;border-radius:50%;background:#d51d29;color:#fff}
+	.footer_addr{width:100%;padding:10px 0px;bottom:0;left:0;border-top:1px solid}*/
+
+/*@media print {
+  @page { margin: 0; }
+  body { margin: 1.6cm; }
+}
+	.row {
+		position: relative;
+	}
+	.row-no {
+		color: #fff;
+	    position: absolute;
+	    left: 18px;
+		top: 8px;
+	    font-size: 18px;
+	}
+	.type-original {
+		width: 20px;
+		height: 20px;
+		background-color: #7d7f84;
+		border-radius: 15px;
+	}
+	.type-duplicate {
+		width: 18px;
+		height: 18px;
+		background-color: #7d7f84;
+	}
+	.type-health {
+	    border-left: 10px solid transparent;
+	    border-right: 10px solid transparent;
+	    border-bottom: 18px solid #7d7f84;
+	}
+	.type-f {
+		position: absolute;
+		left: 0;
+		left: 10px;
+	}
+	.first-col {
+		width: 170px;
+	}
+
+	.print_content{
+		width:100%;
+	}
+	.header_inside{
+		margin-left: 100px;
+	}
+	.sub {
+		float: right;
+	}
+	.logo_border{
+		border: 1px solid rgba(0, 0, 0, 0.29);
+		height: 166px;
+	}
+	.logo_border_right{
+		font-size: 16px;
+		padding: 8px;
+		border: 1px solid rgba(0, 0, 0, 0.29);
+		height:80px;
+	}
+	.logo_border_right div {
+		margin-top: 5px;
+	}
+	.top_menu_left, .top_menu_right {
+		float: left;
+		width: 50%;
+
+	}				
+	.top_menu_right{
+		height: 100px;					
+			
+	}
+	
+	.top_menu_down{
+		margin-top: 174px;
+	}
+	.logo {
+	    display: block;
+	    -moz-box-sizing: border-box;
+	    box-sizing: border-box;
+	    width: 380px;
+	    margin-top: 10px;
+	   
+	}
+	.tin {
+		float: left;
+		width: 100px;
+	}
+	.content{
+		float: left;
+		width:120px;
+	}
+	.address{
+		text-align: center;
+		margin-top: 10px;
+	}
+	.rup{
+		padding: 20px;
+	    font-size: 16px;
+	}*/
+</style>
+<!-- 
+	<div class = "print_content">
+		<div class="print_content_in">
+			
+		
+			<div class=info_bar>
+				
+			<div style="clear:both;"></div>
+			<h3 style="margin-top:30px;margin-bottom:0px;margin-left: 25px;">Item Ordered</h3>
+			<div class=table-simple>
+				<table class=display>
+					<thead>
+						<tr>
+							<th class="first-col">S.No</th>
+							<th>Billed By</th>
+							<th>Inv Number</th>
+							<th>Member Name</th>
+							<th>Phone Number</th>
+							<th>Member Number</th>
+							<th>Played Hours</th>							
+							<th>No of Hours</th>							
+							<th>Price Per Hour</th>
+							<th>Member Discount</th>
+							<th>Discount</th>
+							<th>Gst</th>
+							<th>Bill Amount</th>
+							
+						</tr>
+					</thead>
+					<tbody>
+
+						<?php 
+						$i=1;
+						foreach($pricing_football as $played_detail){
+
+					        echo "<tr><td class='div-table-col'>$i</td>";
+					        echo "<td class='div-table-col'>".$played_detail->created_by."</td>";
+                            echo "<td class='div-table-col'>".$played_detail->ft_bill_no."</td>"; 
+                            echo "<td class='div-table-col'>".$played_detail->ft_member_name."</td>";
+                            echo "<td class='div-table-col'>".$played_detail->ft_member_phone_number."</td>";
+                            echo "<td class='div-table-col'>".$played_detail->membership_no."</td>";
+                            echo "<td class='div-table-col'>".$played_detail->ft_played_hours."</td>";
+
+                            echo "<td class='div-table-col'>".$played_detail->hours."</td>";
+                            echo "<td class='div-table-col'>".$played_detail->price_per_hour."</td>";
+                            echo "<td class='div-table-col'>".$played_detail->price."</td>";
+                            echo "<td class='div-table-col'>".$played_detail->ft_discount."</td>";
+                            echo "<td class='div-table-col'>".$played_detail->ft_gst."</td>";
+                            echo "<td class='div-table-col'>".$played_detail->ft_total."</td></tr>";
+                           
+
+                        $i++;
+                        } ?>
+					</tbody>
+				</table>
+				
+			</div>		
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+	</div> -->
+
+
+	<html>
+   <head>
+
+    <meta charset="utf-8">
+        <style>
+            @page {
+              
+              margin: 20px;
+            }
+
+            body {font-family: arial, Arial, Helvetica, sans-serif; font-size: 12px;margin-left: 20px;margin-right: 30px;border:1px solid #73879c;}
+            body {
+                    height: 297mm;/*297*/
+                    width: 210mm;
+                    padding: 20px;
+                    
+                }
+            dt { float: left; clear: left; text-align: right; font-weight: bold; margin-right: 10px; } 
+            dd {  padding: 0 0 0.5em 0; }
+             .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+                 padding: 3px; 
+                } 
+                .footer_left,.footer_right{
+                  width:50%;
+                  float: left;
+                  border:1px solid #73879c;
+                  height: 100px;
+                }
+                .title{
+                   border:1px solid #73879c;
+                }
+                .footer_last{
+                  margin-top: 60px;
+                }
+                .body_style{
+                    margin-left: 10px;
+                }
+                .print_padding{
+                  padding: 10px;
+
+                }
+        </style>   
+    </head>
+
+
+    <body>
+
+    <div class="col-xs-12 invoice-header">
+        <h2 style="">
+           Stock Report
+            <small class="pull-right">Date: <?php echo date("d/m/Y"); ?></small>
+        </h2>
+    </div>
+
+    <table cellspacing='3' cellpadding='3' WIDTH='100%' >
+        <tr>
+            <td valign='top' WIDTH='50%'><strong><?php echo  'Chaos Entertainment';  ?></strong>
+                <br/><?php echo '12345678';  ?>
+                <br/><?php echo 'Adyar'  ?>
+                <br/>Cell : <?php echo $profile ? $profile->phone_number : '';  ?>
+                <br/>GST No : <?php echo $profile ? $profile->gst_number : '';  ?>
+            </td>
+        </tr>
+    </table>
+
+    <table cellspacing='3' cellpadding='3' WIDTH='100%' class="table table-striped" style=" border-collapse: collapse;border: 1px solid black;text-align: center;">
+    <tr>
+        <th style="border: 1px solid black;" >SNO</th>
+        <th style="border: 1px solid black;" >Billed By</th>
+        <th style="border: 1px solid black;" >Inv NO</th>
+        <th style="border: 1px solid black;" >Member Name</th>
+        <th style="border: 1px solid black;" >Phone Number</th>
+        <th style="border: 1px solid black;" >Member Number</th>
+        <th style="border: 1px solid black;" >Played Hours</th>  
+        <th style="border: 1px solid black;" >No of Hours</th>
+        <th style="border: 1px solid black;" >Price Per Hour</th>
+        <th style="border: 1px solid black;" >Member Discount</th>
+        <th style="border: 1px solid black;" >Discount</th>
+        <th style="border: 1px solid black;" >Gst</th>
+        <th style="border: 1px solid black;" >Bill Amount</th>
+    </tr>
+    
+    <?php 
+    $i = 1;
+    foreach ($pricing_football as $played_detail) {
+    ?>
+        <tr>
+            <td style="border: 1px solid black;"><?php echo $i; ?></td>
+            <td style="border: 1px solid black;"><?php echo $played_detail->created_by; ?></td>
+            <td style="border: 1px solid black;"><?php echo$played_detail->ft_bill_no; ?></td>
+            <td style="border: 1px solid black;"><?php echo $played_detail->ft_member_name; ?></td>
+            <td style="border: 1px solid black;"><?php $played_detail->ft_member_phone_number; ?></td> 
+            <td style="border: 1px solid black;"><?php echo $played_detail->membership_no; ?> </td>
+            <td style="border: 1px solid black;"><?php echo $played_detail->ft_played_hours; ?> </td>
+            <td style="border: 1px solid black;"><?php echo $played_detail->hours; ?></td>
+            <td style="border: 1px solid black;"><?php echo $played_detail->price_per_hour; ?></td>
+            
+            <td style="border: 1px solid black;"><?php echo $played_detail->price; ?></td>                               
+            <td style="border: 1px solid black;"><?php echo $played_detail->ft_discount; ?></td>                               
+            <td style="border: 1px solid black;"><?php echo $played_detail->ft_gst; ?></td>                               
+            <td style="border: 1px solid black;"><?php echo $played_detail->ft_total; ?></td>                               
+        </tr>
+    <?php
+            $i++;
+            }
+        ?>  
+       <!--  <tr>
+          <td style="border: 1px solid black;"></td>
+          <td style="border: 1px solid black;"></td>
+          <td style="border: 1px solid black;"></td>
+          <td style="border: 1px solid black;"><?php echo $data['s_result']->sold_qty; ?></td>
+          <td style="border: 1px solid black;"><?php echo $data['s_result']->tot_amt;  ?> </td>
+          <td style="border: 1px solid black;"><?php ?> </td>
+          <td style="border: 1px solid black;"><?php ?></td> 
+          <td style="border: 1px solid black;"><?php  echo $data['s_result']->total_cgst; ?></td>
+          <td style="border: 1px solid black;"><?php  echo $data['s_result']->total_cgst; ?></td>
+          
+          <td style="border: 1px solid black;"><?php  echo $data['s_result']->sub_tot; ?></td>   
+        </tr> -->
+    </table>
+
+
+    </body>
+</html> 

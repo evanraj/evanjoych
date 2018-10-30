@@ -36,6 +36,7 @@
         $gaming_member_name                         = $_POST['gaming_member_name'];
         $gaming_member_number                       = $_POST['gaming_member_number'];
         $gaming_bill_date                           = $_POST['gaming_bill_date'];
+        $gaming_bill_date_to                        = $_POST['gaming_bill_date_to'];
         $gaming_bill_no                             = $_POST['gaming_bill_no'];
         $gaming_bill_amt                            = $_POST['gaming_bill_amt'];
         
@@ -46,6 +47,7 @@
         $gaming_member_name                           = isset( $_GET['gaming_member_name'] ) ? $_GET['gaming_member_name']  : '';
         $gaming_member_number                         = isset( $_GET['gaming_member_number'] ) ? $_GET['gaming_member_number']  : '';
         $gaming_bill_date                             = isset( $_GET['gaming_bill_date'] ) ? $_GET['gaming_bill_date']  : '';
+        $gaming_bill_date_to                          = isset( $_GET['gaming_bill_date_to'] ) ? $_GET['gaming_bill_date_to']  : '';
         $gaming_bill_no                               = isset( $_GET['gaming_bill_no'] ) ? $_GET['gaming_bill_no']  : '';
         $gaming_bill_amt                              = isset( $_GET['gaming_bill_amt'] ) ? $_GET['gaming_bill_amt']  : '';
     
@@ -59,14 +61,20 @@
     if($gaming_member_number != '') {
         $condition .= ' AND gaming_membership_no LIKE "'.$gaming_member_number.'%"';
     }
-    if($gaming_bill_date != '') {
-        $condition .= ' AND gaming_date LIKE "'.$gaming_bill_date.'%"';
+    if($gaming_bill_date != '' && $gaming_bill_date_to != '') {
+        $condition .= " AND game_date >= '".$gaming_bill_date."' AND game_date <= '".$gaming_bill_date_to."'";
+    } else if($gaming_bill_date != '' || $gaming_bill_date_to != '') {
+        if($this->bill_from != '') {
+            $condition .= " AND game_date >= '".$gaming_bill_date."' AND game_date <= '".$gaming_bill_date."'";
+        } else {
+            $condition .= " AND game_date >= '".$gaming_bill_date_to."' AND game_date <= '".$gaming_bill_date_to."'";
+        }
     }
     if($gaming_bill_no != '') {
         $condition .= ' AND gaming_bill_no LIKE "'.$gaming_bill_no.'%"';
     }
     if($gaming_bill_amt != '') {
-        $condition .= ' AND gaming_bill LIKE "'.$gaming_bill_amt.'%"';
+        $condition .= ' AND gaming_bill > "'.$gaming_bill_amt.'%"';
     }
     
 
@@ -93,19 +101,16 @@
         <td> <?php echo $per_page; ?></td>
         <td> <?php echo $d_value->gaming_member_name; ?></td>
         <td> <?php echo $d_value->gaming_membership_no; ?></td>
-        <td> <?php echo $d_value->gaming_date; ?></td>
+        <td> <?php echo $d_value->game_date; ?></td>
         <td> <?php echo $d_value->gaming_bill_no; ?></td>
         <td> <?php echo $d_value->gaming_bill; ?></td>
         <td class="center">
             <span>
-                <a  href="<?php echo admin_url('admin.php?page=display_gaming').'&bill_no='.$d_value->gaming_bill_no.'&id='.$d_value->id.'&action=display_gaming'; ?>"> View </a>
+                <a  href="<?php echo admin_url('admin.php?page=gaming_billing').'&bill_no='.$d_value->id.'&pagess=2'; ?>"> View </a>
             </span>
         </td>
   
         <td class="center">
-            <span>
-                <a class="action-icons c-edit employee_edit dashicons dashicons-edit" href="<?php echo admin_url('admin.php?page=gaming_billing').'&id='.$d_value->id.'&action=update'; ?>" title="Edit" data-roll="1" data-id="26"></a>
-            </span>
             <span><a class="action-icons c-delete-gaming user_delete dashicons dashicons-trash" title="delete" data-action="employees" data-roll="1" data-id="<?php  echo $d_value->id; ?>"></a>
             </span>
         </td>

@@ -68,7 +68,7 @@
         <td> <?php echo $d_value->membership_no; ?></td>
         <td> <?php echo $d_value->user_registered; ?></td>
         <td class="">
-            <a href="<?php echo menu_page_url( 'add_redeem_points', 0 )."&user_id={$d_value->user_id}&action=member_data"; ?>">Redeem</a> /<a href="<?php echo menu_page_url( 'view_history', 0 )."&user_id={$d_value->user_id}&action=history";?>" >Point History</a>/
+            <a href="<?php echo menu_page_url( 'add_redeem_points', 0 )."&member_id={$d_value->id}&action=member_data"; ?>">Redeem</a> /<a href="<?php echo menu_page_url( 'view_history', 0 )."&member_id={$d_value->id}&action=history";?>" >Point History</a>/
             <a href="<?php echo menu_page_url( 'add_admin', 0 )."&user_id={$d_value->user_id}"; ?>">Update</a>
         </td> 
     </tr>

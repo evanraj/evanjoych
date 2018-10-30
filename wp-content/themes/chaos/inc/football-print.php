@@ -9,11 +9,17 @@
 
   global $wpdb; 
     $football_table           = $wpdb->prefix.'chaos_football_billing';
+    $billing_detail_table 	  = $wpdb->prefix. 'chaos_football_billing_details';
 
     if($_GET['action'] == 'football_print') {
-    $bill_no        			= isset( $_GET['bill_no'] ) ? $_GET['bill_no']  : '';
+    $bill_id        			= isset( $_GET['bill_id'] ) ? $_GET['bill_id']  : '';
 	}
-	$mylink          		= $wpdb->get_row( "SELECT * FROM $football_table  where ft_bill_no='$bill_no' AND active = 1 and was_bulid = 1" );
+	$mylink          		= $wpdb->get_row( "SELECT * FROM $football_table  where id='$bill_id' AND active = 1 and was_bulid = 1" );
+
+	$query_details 			= "SELECT * FROM {$billing_detail_table} WHERE active = 1 and inv_id ='$bill_id'";
+   	$pricing_football   	= $wpdb->get_results( $query_details, OBJECT ); 
+
+
 
 	$number = $mylink->ft_football_bill;
    	$no = round($number);
@@ -62,7 +68,7 @@
 	.print_header{width:100%;float:left;margin:5px 0px}
 	.header_inside{float:left}
 	.info_bar{width:100%;float:left;font-size:13px}
-	.customer_info_bar{width:50%;float:left;padding:5px 20px;font-size: 16px;}
+	.customer_info_bar{width:50%;float:left;padding:5px 30px;font-size: 16px;}
 	.bill_info_bar{width:23%;float:right;padding:0px 15px}
 	.customer_info_bar ul,.bill_info_bar ul{width:100%;padding:0px;margin:0px}
 	.customer_info_bar ul li,.bill_info_bar ul li{list-style:none;margin-bottom:5px}
@@ -119,8 +125,10 @@
 		width:100%;
 	}
 	.header_inside{
+		
 		margin-left: 100px;
 	}
+	
 	.sub {
 		float: right;
 	}
@@ -198,7 +206,8 @@
 				  		<div class="logo">
 				  			<center><img style="width:60%;" src="<?php echo get_template_directory_uri().'/inc/img/chaos_logo.png'; ?>"></center>
 				  		</div>
-				  		<div class="address">Old no:57 New no:38, Balaraman Road, Adyar,Chennai-600020</div>
+
+				  		<div class="address">CHAOS ENTERTAINMENT <BR/>Old no:57 New no:38, Balaraman Road, Adyar,Chennai-600020</div>
 			  		</div>
 		  		</div>
 		  		<div class="top_menu_right" style="height: 167px;border-bottom: 1px solid rgba(0, 0, 0, 0.29);">
@@ -209,12 +218,16 @@
 			  		</div>
 			  		<div class="logo_border_right_down" style="margin-left: 5px;">
 				  		<div class="top_menu_right_in" style="margin-top:5px;">
-				  			<div class="tin">TIN No</div>
-				  			<div>: 33600863401</div>
+				  			<div class="tin">GST No</div>
+				  			<div>: 33AAMFC0405F1Z2</div>
 				  		</div>
 				  		<div class="top_menu_right_area" style="margin-top:5px;">
-				  			<div class="tin">Area Code</div>
-				  			<div>: 044 </div>
+				  			<div class="tin">PAN No</div>
+				  			<div>: AAMFC0405F </div>
+				  		</div>
+				  		<div class="top_menu_right_area" style="margin-top:5px;">
+				  			<div class="tin">SAC</div>
+				  			<div>: 999652 </div>
 				  		</div>
 			  		</div>
 		  		</div>
@@ -222,81 +235,125 @@
 			<div class="print_logo">
 			</div>
 			<div class=info_bar>
-				<div class=customer_info_bar>
-					
+				<div class=customer_info_bar>				
 					<ul>
 						<li><div class="content">Invoice No  </div> <div>: <?php echo $mylink->ft_bill_no;?></div></li>
 						<li><div class="content">Date </div><div>: <?php echo $mylink->ft_date;?></div> </li>
-						<li><div class="content">Member Name  </div><div>: <?php echo $mylink->ft_member_name;?></div></li>
-						<li><div class="content">Phone Number  </div><div>: <?php echo $mylink->ft_member_phone_number;?></div></li>
+						<li><div class="content">Member Name</div><div>: <?php echo $mylink->ft_member_name;?></div></li>
+						<li><div class="content">Phone Number</div><div>: <?php echo $mylink->ft_member_phone_number;?></div></li>
+						<?php if($mylink->ft_member_email != ''){ ?><li><div class="content">Email</div><div>: <?php echo $mylink->ft_member_email;?></div></li> <?php } ?>
+						<?php if($mylink->ft_member_address != ''){ ?> <li><div class="content">Address</div><div>: <?php echo $mylink->ft_member_address;?></div></li> <?php } ?>
+						<?php if($mylink->ft_member_gst != ''){ ?> <li><div class="content">Gst Number</div><div>: <?php echo $mylink->ft_member_gst;?></div></li> <?php } ?>
+						<?php if($mylink->ft_member_pan != ''){ ?> <li><div class="content">Pan</div><div>: <?php echo $mylink->ft_member_pan;?></div></li> <?php } ?>
 					</ul>
+					<!-- <ul>
+						<li><div class="content">Invoice No  </div> <div>: <?php //echo $mylink->ft_bill_no;?></div></li>
+						<li><div class="content">Date </div><div>: <?php //echo $mylink->ft_date;?></div> </li>
+						<li><div class="content">Client Name</div><div>: <?php //echo "M/S BA Continuum India Pvt Ltd";?></div></li>
+						<li><div class="content">Address</div><div>: <?php //echo "9th & 10th Floor,Crest Builiding ,Ascendas IT Park,Taramani High
+//Road,Taramani,Chennai-600113"; ?></div></li>
+						<li><div class="content">GST No</div><div>: <?php //echo "33AACCC2310C1ZO"; ?></div></li>
+						<li><div class="content">Pan</div><div>: <?php //echo "AACCC2310C"; ?></div></li>
+					</ul>  -->
 				</div>
-				
 			<div style="clear:both;"></div>
-			<h3 style="margin-top:30px;margin-bottom:0px;margin-left: 25px;">Item Ordered</h3>
+			<h3 style="margin-top:30px;margin-bottom:0px;margin-left: 25px;">Description</h3>
 			<div class=table-simple>
 				<table class=display>
 					<thead>
 						<tr>
 							<th class="first-col">S.No</th>
 							<th>Hours</th>
-							
-							<th>Price</th>
+							<th>Price Per Hour</th>
 							<th>Bill Amount</th>
 						</tr>
 					</thead>
 					<tbody>
 
 						<?php 
-					        echo "<tr><td class='div-table-col'>1</td>";
-                            echo "<td class='div-table-col'>".$mylink->ft_no_of_hours."</td>";
-                            
-                            echo "<td class='div-table-col'>".$mylink->ft_amount_value."</td>";
-                            echo "<td class='div-table-col'>".$mylink->ft_total."</td></tr>";
+						$i=1;
+						foreach($pricing_football as $played_detail){
 
-                        ?>
-                        <tr>
-							<td></td>
-							<td></td>
-							
-							<td>
-								<label>GST &nbsp;(Rs)</label>
-							</td>
-							<td><?php  echo $mylink->ft_vat_value;?></td>
-						</tr>
+					        echo "<tr><td class='div-table-col'>".$i."</td>";
+                            echo "<td class='div-table-col'>".$played_detail->hours."</td>";
+                            
+                            echo "<td class='div-table-col'>".$played_detail->price_per_hour."</td>";
+                            echo "<td class='div-table-col'>".$played_detail->price."</td></tr>";
+
+                        $i++;
+                        } ?>
+                        <?php if($mylink ->ft_member_discount_value != '0.00'){ ?>
 						<tr>
 							<td></td>
+							
 							<td></td>
 							
 							<td>
-								<label>Member Discount &nbsp;(Rs)</label>
+								<label>Member Discount &nbsp;(<?php echo $mylink->ft_member_discount.' %';?>)</label>
 							</td>
 							<td><?php  echo $mylink->ft_member_discount_value;?></td>
 						</tr>
+						<?php } ?>
+							<?php if($mylink ->ft_discount_value != '0.00'){ ?>
 						<tr>
 							<td></td>
+							
 							<td></td>
 							
 							<td>
-								<label>Discount &nbsp;(Rs)</label>
+								<label>Discount &nbsp;(<?php echo $mylink->ft_discount.' %'; ?>)</label>
 							</td>
 							<td><?php  echo $mylink->ft_discount_value;?></td>
 						</tr>
+						<?php } ?>
+							<?php if($mylink ->ft_gst_value != '0.00'){ ?>
 						<tr>
 							<td></td>
+							
 							<td></td>
 							
 							<td>
+								<label>GST &nbsp;(<?php echo $mylink ->ft_gst.' %'; ?>)</label>
+							</td>
+							<td><?php  echo $mylink->ft_gst_value;?></td>
+						</tr> 
+						<!-- <tr>
+							<td></td>
+							
+							<td></td>
+							
+							<td>
+								<label>SGST &nbsp;(<?php //echo "9.00".' %'; ?>)</label>
+							</td>
+							<td><?php  //echo "2520.00";?></td>
+						</tr>
+						<tr>
+							<td></td>
+							
+							<td></td>
+							
+							<td>
+								<label>CGST &nbsp;(<?php ///echo "9.00".' %'; ?>)</label>
+							</td>
+							<td><?php  //echo "2520.00";?></td>
+						</tr> -->
+						<?php } ?>
+						<tr>
+							<td></td>
+							<td></td>
+							<td>
 								<label>Total &nbsp;(Rs)</label>
 							</td>
-							<td><?php  echo $mylink->ft_football_bill;?></td>
-						</tr>
-						
+							<td><?php  echo "33040.00";?></td>
+						</tr>	
 					</tbody>
 				</table>
 				<div class="rup">
 					<label>Rupees In Words :  </label><?php echo ucfirst($result) . "Rupees Only"; ?>
 				</div>
+				<!-- <div class="rup">
+					<label>Rupees In Words :  </label><?php //echo "Thirty three thousand fourty" . "Rupees Only"; ?>
+				</div> -->
 			</div>		
 			</div>
 			<div style="clear:both;"></div>

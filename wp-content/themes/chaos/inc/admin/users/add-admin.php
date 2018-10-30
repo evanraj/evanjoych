@@ -6,7 +6,7 @@ unset($editable_roles['author']);
 unset($editable_roles['contributor']);
 unset($editable_roles['subscriber']);
 unset($editable_roles['customer']);
-unset($editable_roles['employee']);
+
 
 $user = false;
 $current_role = array();
@@ -117,14 +117,16 @@ label{
 									<select name="role" data-placeholder="Choose a Role..." class=""   class="form-control col-md-7 col-xs-12" style="width: 190px;">
 										<?php
 										$selected = '';
-										
+										global $src_capabilities;
 										foreach ($editable_roles as $key => $role_value) {
-											if($user && $current_role === $key) {
-												$selected = 'selected';
-											} else {
-												$selected = '';
+											if( current_user_can('manage_options') || current_user_can('add_roles') ) {
+												if($user && $current_role === $key) {
+													$selected = 'selected';
+												} else {
+													$selected = '';
+												}
+												echo '<option '.$selected.'  value="'.$key.'">'.$role_value['name'].'</option>';
 											}
-											echo '<option '.$selected.'  value="'.$key.'">'.$role_value['name'].'</option>';
 										}
 										?>
 									</select>

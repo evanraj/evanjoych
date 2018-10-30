@@ -5,7 +5,7 @@ $memberData = false;
 
 
 if ( isset($_GET['action']) && $_GET['action'] == 'history') {
-	$memberData = getPointHistory($_GET['user_id']);
+	$memberData = getPointHistory($_GET['member_id']);
 
 }
 
@@ -115,7 +115,8 @@ label{
 								</div>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<span class="billing_in">
-										<select style="width: 300px;"  class="search_billing" name="user_id" id="search_billing"></select>
+										<input type="text"  class="new_search_billing" name="user_name" id="new_search_billing"></select>
+										<input type="hidden" name="member_id" class="member_id" id="member_id">
 									</span>									
 								</div>
 							</div>

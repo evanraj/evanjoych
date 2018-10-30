@@ -21,13 +21,17 @@
     <thead>
         <tr style="background: #23282d;color: #fff;">
             <th class="manage-column column-id"><span>S No</span></th>
-            <th scope="col" id="wplc_name_colum" class="manage-column column-id"><span>Utility name</span></th>
+            <th scope="col" id="wplc_name_colum" class="manage-column column-id"><span>Employee Name</span></th>
+            <th scope="col" id="wplc_name_colum" class="manage-column column-id"><span>Utility Name</span></th>
+            <th scope="col" id="wplc_name_colum" class="manage-column column-id"><span>Amount</span></th>
             <th scope="col" id="wplc_name_colum" class="manage-column column-id"><span>Emailid</span></th>
+            <th scope="col" id="wplc_name_colum" class="manage-column column-id"><span>Type</span></th>
             <th scope="col" id="wplc_name_colum" class="manage-column column-id"><span>Utility Date</span></th>
             <th scope="col" id="wplc_name_colum" class="manage-column column-id"><span>Pay Date</span></th>
             <th scope="col" id="wplc_name_colum" class="manage-column column-id"><span>Days Remain</span></th>
             <th scope="col" id="wplc_name_colum" class="manage-column column-id"><span>Quick View</span></th>
             <th scope="col" id="wplc_name_colum" class="manage-column column-id"><span>Utility Status</span></th>
+          <!--   <th scope="col" id="wplc_name_colum" class="manage-column column-id"><span>Payment Methods</span></th> -->
             <th scope="col" id="wplc_name_colum" class="manage-column column-id"><span>Action</span></th>
         </tr>
     </thead>
@@ -100,8 +104,11 @@
             ?> 
         </div>        
         </td>
+        <td> <?php echo $d_value->ut_person_name; ?></td>
         <td> <?php echo $d_value->ut_name; ?></td>
+        <td> <?php echo $d_value->ut_amount; ?></td>
         <td> <?php echo $d_value->ut_emailid; ?></td>
+        <td> <?php echo $d_value->ut_utility_type; ?></td>
         <td> <?php echo $d_value->ut_utillity_date; ?></td>
         <td> <?php echo $d_value->next_pay_date; ?></td>
         <td> <?php echo $d_value->days_remain; ?>

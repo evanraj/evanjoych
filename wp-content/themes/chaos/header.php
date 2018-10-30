@@ -17,7 +17,14 @@
     <link rel="stylesheet" type="text/css" href="<?php //echo get_template_directory_uri() ?>/inc/css/style.css"> --> 
 
 </head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-82067606-10"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-
+  gtag('config', 'UA-82067606-10');
+</script>
 <body>
   

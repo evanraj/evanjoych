@@ -87,3 +87,8 @@ if ( !defined('ABSPATH') )
 
 /** Sets up WordPress vars and included files. */
 require_once(ABSPATH . 'wp-settings.php');
+
+
+//for mail
+define( 'WPMS_ON', true );
+define( 'WPMS_SMTP_PASS', 'Admin@123' );

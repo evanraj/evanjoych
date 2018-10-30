@@ -11,6 +11,12 @@ input{
 .widget-top h4{
     margin-left: 12px;
 }
+#lazertag_sms_list,#lazertag_report_print{
+    background-color: #0073aa;
+    color: #fff;
+    height: 40px;
+}
+
 </style>
 <?php
        if(isset($_POST['action']) && $_POST['action'] == 'lazertag_listing') {
@@ -18,6 +24,7 @@ input{
         $lazertag_member_name                         = $_POST['lazertag_member_name'];
         $lazertag_member_number                       = $_POST['lazertag_member_number'];
         $lazertag_bill_date                           = $_POST['lazertag_bill_date'];
+        $lazertag_bill_date_to                        = $_POST['lazertag_bill_date_to'];
         $lazertag_bill_no                             = $_POST['lazertag_bill_no'];
         $lazertag_bill_amt                            = $_POST['lazertag_bill_amt'];
         
@@ -28,6 +35,7 @@ input{
         $lazertag_member_name                           = isset( $_GET['lazertag_member_name'] ) ? $_GET['lazertag_member_name']  : '';
         $lazertag_member_number                         = isset( $_GET['lazertag_member_number'] ) ? $_GET['lazertag_member_number']  : '';
         $lazertag_bill_date                             = isset( $_GET['lazertag_bill_date'] ) ? $_GET['lazertag_bill_date']  : '';
+        $lazertag_bill_date_to                          = isset( $_GET['lazertag_bill_date_to'] ) ? $_GET['lazertag_bill_date_to']  : '';
         $lazertag_bill_no                               = isset( $_GET['lazertag_bill_no'] ) ? $_GET['lazertag_bill_no']  : '';
         $lazertag_bill_amt                              = isset( $_GET['lazertag_bill_amt'] ) ? $_GET['lazertag_bill_amt']  : '';
     
@@ -50,16 +58,15 @@ input{
         <option value="50" <?php echo (isset($lazertag_per_page) && $lazertag_per_page == '50' ) ? 'selected' : ''; ?>>50</option>
         <option value="100" <?php echo (isset($lazertag_per_page) && $lazertag_per_page == '100' ) ? 'selected' : ''; ?>>100</option>
     </select>
-    <input type="text" class="lazertag_member_name" name="lazertag_member_name" id="lazertag_member_name" autocomplete="off" placeholder="Member Name" size="40" value="<?php echo $lazertag_member_name; ?>">
+    <input type="text" class="lazertag_member_name" name="lazertag_member_name" id="lazertag_member_name" autocomplete="off" placeholder="Member Name"  value="<?php echo $lazertag_member_name; ?>">
+    <input type="text" class="lazertag_member_number" name="lazertag_member_number" id="lazertag_member_number" autocomplete="off" placeholder="Member Number"  value="<?php echo $lazertag_member_number; ?>">
 
-    <input type="text" class="lazertag_member_number" name="lazertag_member_number" id="lazertag_member_number" autocomplete="off" placeholder="Member Number" size="40" value="<?php echo $lazertag_member_number; ?>">
+    <input type="text" class="lazertag_bill_no" name="lazertag_bill_no" id="lazertag_bill_no" autocomplete="off" placeholder="Bill Number"  value="<?php echo $lazertag_bill_no; ?>">
+    <input type="text" class="lazertag_bill_amt" name="lazertag_bill_amt" id="lazertag_bill_amt" autocomplete="off" placeholder="Bill Amount" value="<?php echo $lazertag_bill_amt; ?>">
 
-    <input type="text" class="lazertag_bill_date" name="lazertag_bill_date" id="lazertag_bill_date"  class="lazertag_bill_date" autocomplete="off" placeholder="Bill Paid Date" size="40" value="<?php echo $lazertag_bill_date; ?>">
-
-    <input type="text" class="lazertag_bill_no" name="lazertag_bill_no" id="lazertag_bill_no" autocomplete="off" placeholder="Bill Number" size="40" value="<?php echo $lazertag_bill_no; ?>">
-
-    <input type="text" class="lazertag_bill_amt" name="lazertag_bill_amt" id="lazertag_bill_amt" autocomplete="off" placeholder="Bill Amount" size="40" value="<?php echo $lazertag_bill_amt; ?>">
-    
+    <input type="text" class="lazertag_bill_date" name="lazertag_bill_date" id="lazertag_bill_date"  autocomplete="off" placeholder="Bill From"  value="<?php echo $lazertag_bill_date; ?>">
+    <input type="text" class="lazertag_bill_date_to" name="lazertag_bill_date_to" id="lazertag_bill_date_to" autocomplete="off" placeholder="Bill To"  value="<?php echo $lazertag_bill_date_to; ?>">
+    <input type="button" Name="lazertag_report_print" id="lazertag_report_print" value="Print/Send Report " /> 
     <span class="dashicons dashicons-search search_icons_lazertag" id="icons" ></span>
 
 

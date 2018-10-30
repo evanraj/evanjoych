@@ -25,7 +25,7 @@ function chaos_adding_scripts() {
 
    
 	wp_enqueue_script('chaos_bootstrap', get_template_directory_uri().'/inc/js/bootstrap.min.js', array('jquery'),false, false);
-//	wp_enqueue_script('chaos_arrow27' , 'http://arrow.scrolltotop.com/arrow27.js', array('jquery'),false, false);	
+wp_enqueue_script('chaos_arrow27' , 'http://arrow.scrolltotop.com/arrow27.js', array('jquery'),false, false);	
     	wp_enqueue_script('chaos_scroll', get_template_directory_uri().'/inc/js/scroll.js', array('jquery'),false, false);
 	wp_enqueue_script('chaos_bxslider', get_template_directory_uri().'/inc/js/jquery.bxslider.js', array('jquery'),false, false);
 	wp_enqueue_script('easing', get_template_directory_uri().'/inc/js/jquery.easing.min.js', array('jquery'),false, false);	
@@ -95,10 +95,11 @@ add_filter('show_admin_bar', '__return_false');
 function chaos_login_redirect ($redirect_to, $url, $user) {
     if ( !isset($user->errors) ) {
     	if( is_array( $user->roles ) ) {
-			if( in_array( 'administrator', $user->roles ) ) {
-				$redirect_to = admin_url();
-			} else {
+			if( in_array( 'member', $user->roles ) ) {
 				$redirect_to = site_url('/membership-account/');
+				
+			} else {
+				$redirect_to = admin_url();
 			}
 		}
         return $redirect_to;
@@ -138,6 +139,31 @@ if ( !strstr($referrer, '?login=not_activated' )) {
   }
  }
 
-
+if (! function_exists('array_column')) {
+    function array_column(array $input, $columnKey, $indexKey = null) {
+        $array = array();
+        foreach ($input as $value) {
+            if ( !array_key_exists($columnKey, $value)) {
+                trigger_error("Key \"$columnKey\" does not exist in array");
+                return false;
+            }
+            if (is_null($indexKey)) {
+                $array[] = $value[$columnKey];
+            }
+            else {
+                if ( !array_key_exists($indexKey, $value)) {
+                    trigger_error("Key \"$indexKey\" does not exist in array");
+                    return false;
+                }
+                if ( ! is_scalar($value[$indexKey])) {
+                    trigger_error("Key \"$indexKey\" does not contain scalar value");
+                    return false;
+                }
+                $array[$value[$indexKey]] = $value[$columnKey];
+            }
+        }
+        return $array;
+    }
+}
 
 ?>
